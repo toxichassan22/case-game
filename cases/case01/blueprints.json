@@ -1,0 +1,307 @@
+{
+  "closureCatalog": {
+    "suspect_ids": ["char_sharif"],
+    "method_ids": ["method_arson_office_origin", "method_side_door_lock", "method_arson_front_door"]
+  },
+  "openableSources": [
+    "INT-SHARIF-01",
+    "INT-LAYLA-01",
+    "INT-HATEM-01",
+    "INT-ABU-KHALED-01",
+    "INT-DR-YAHYA-01",
+    "TIMELINE-BOARD",
+    "CHIEF-DESK"
+  ],
+  "blueprints": {
+    "review": [
+      {
+        "source_ref": "SCN-03",
+        "source_type": "report",
+        "interaction_id": "ORIGIN-CONFIRMED",
+        "required_result": "office_origin_confirmed",
+        "verifies_evidence": true
+      },
+      {
+        "source_ref": "SCN-04",
+        "source_type": "report",
+        "interaction_id": "OUTER-HANDLE",
+        "required_result": "outer_lock_possible",
+        "verifies_evidence": true
+      },
+      {
+        "source_ref": "DB-01",
+        "source_type": "document",
+        "interaction_id": "SHIFT-KEY-LOG",
+        "required_result": "shift_key_assigned_to_sharif",
+        "verifies_evidence": true
+      },
+      {
+        "source_ref": "DB-03",
+        "source_type": "document",
+        "interaction_id": "PURCHASE-RECEIPT",
+        "required_result": "thinner_purchase_confirmed",
+        "verifies_evidence": true
+      },
+      {
+        "source_ref": "DB-06",
+        "source_type": "document",
+        "interaction_id": "TRIP-TRACE",
+        "required_result": "layla_execution_window_broken",
+        "verifies_evidence": true
+      },
+      {
+        "source_ref": "EVID-SUP-CCTV-CORRUPTION",
+        "source_type": "report",
+        "interaction_id": "OPEN",
+        "required_result": "corruption_precedes_heat",
+        "verifies_evidence": true
+      },
+      {
+        "source_ref": "DB-07",
+        "source_type": "document",
+        "interaction_id": "OPEN",
+        "required_result": "gps_records_reviewed",
+        "verifies_evidence": true
+      },
+      {
+        "source_ref": "DB-08",
+        "source_type": "document",
+        "interaction_id": "OPEN",
+        "required_result": "financial_records_reviewed",
+        "verifies_evidence": true
+      },
+      {
+        "source_ref": "DB-09",
+        "source_type": "document",
+        "interaction_id": "OPEN",
+        "required_result": "locksmith_records_reviewed",
+        "verifies_evidence": true
+      },
+      {
+        "source_ref": "DB-05",
+        "source_type": "document",
+        "interaction_id": "OPEN",
+        "required_result": "coffee_receipt_reviewed",
+        "verifies_evidence": true
+      },
+      {
+        "source_ref": "EVID-PARTIAL-LOCK",
+        "source_type": "object",
+        "interaction_id": "OPEN",
+        "required_result": "partial_lock_reviewed",
+        "verifies_evidence": true
+      },
+      {
+        "source_ref": "EVID-PARTIAL-FALSE-ORIGIN-STORY",
+        "source_type": "statement",
+        "interaction_id": "OPEN",
+        "required_result": "false_origin_story_reviewed",
+        "verifies_evidence": true
+      },
+      {
+        "source_ref": "EVID-PARTIAL-BLACK-LEDGER",
+        "source_type": "statement",
+        "interaction_id": "OPEN",
+        "required_result": "black_ledger_statement_reviewed",
+        "verifies_evidence": true
+      },
+      {
+        "source_ref": "SCN-05",
+        "source_type": "report",
+        "interaction_id": "OPEN",
+        "required_result": "chemical_analysis_reviewed",
+        "verifies_evidence": true
+      },
+      {
+        "source_ref": "DIG-01",
+        "source_type": "report",
+        "interaction_id": "OPEN",
+        "required_result": "cctv_corruption_observed",
+        "verifies_evidence": true
+      },
+      {
+        "source_ref": "EVID-CARRYOVER-CCTV-BURNED-VIDEO",
+        "source_type": "report",
+        "interaction_id": "OPEN",
+        "required_result": "burned_video_reviewed",
+        "verifies_evidence": true
+      }
+    ],
+    "inspect": [
+      {
+        "source_ref": "OBJ-01",
+        "source_type": "object",
+        "interaction_id": "INSPECT",
+        "required_result": "black_ledger_fragments_found",
+        "verifies_evidence": true
+      },
+      {
+        "source_ref": "OBJ-02",
+        "source_type": "object",
+        "interaction_id": "INSPECT",
+        "required_result": "spare_key_found",
+        "verifies_evidence": true
+      }
+    ],
+    "dialog": [
+      {
+        "source_ref": "INT-SHARIF-01",
+        "interaction_id": "Q03",
+        "required_result": "preemptive_origin_claim_logged",
+        "display_text": "أنا قلت المخزن لأن أي حريق غالبًا بيبدأ من الكهربا... ماكنتش أقصد إني أعرف التفاصيل قبل التقرير."
+      },
+      {
+        "source_ref": "INT-SHARIF-01",
+        "interaction_id": "Q06",
+        "required_result": "key_access_statement_recorded",
+        "display_text": "المفتاح الجانبي كان مع عمي، ومعايا نسخة شغل للطوارئ أحيانًا... بس ده شيء طبيعي في الإدارة."
+      },
+      {
+        "source_ref": "INT-LAYLA-01",
+        "interaction_id": "Q02",
+        "required_result": "layla_office_entry_logged",
+        "display_text": "أيوه فتحت المكتب بسرعة قبل ما أمشي. كنت بدور على أوراق خاصة ببابا ثم خرجت فورًا."
+      },
+      {
+        "source_ref": "INT-LAYLA-01",
+        "interaction_id": "Q04",
+        "required_result": "layla_father_relationship",
+        "display_text": "بابا كان بيحب الصيدلية أكتر مننا كلنا. كان بيقضي فيها وقت أطول من البيت."
+      },
+      {
+        "source_ref": "INT-LAYLA-01",
+        "interaction_id": "Q05",
+        "required_result": "layla_key_explained",
+        "display_text": "المفتاح ده؟ بابا عطاني إياه من سنين. كنت داخلة أحيانًا أزوره أو آخد حاجة من المكتب."
+      },
+      {
+        "source_ref": "INT-LAYLA-01",
+        "interaction_id": "Q06",
+        "required_result": "layla_opinion_of_sharif",
+        "display_text": "شريف؟ ابن عمي لطيف بس... كان دايماً عايز فلوس أكتر. بابا كان بيقولي إنه بيسأل كتير عن الحسابات."
+      },
+      {
+        "source_ref": "INT-SHARIF-01",
+        "interaction_id": "Q09",
+        "required_result": "ledger_slip_logged",
+        "display_text": "دفتر إيه؟ أنا... أقصد دفاتر الحسابات العادية. أكيد كان فيه ورق كتير في المكتب."
+      },
+      {
+        "source_ref": "INT-SHARIF-01",
+        "interaction_id": "Q04",
+        "required_result": "sharif_debt_questioned",
+        "display_text": "ديون؟ لا... ما عنديش ديون كبيرة. بس كلنا عندنا التزامات مالية، ده شيء طبيعي."
+      },
+      {
+        "source_ref": "INT-SHARIF-01",
+        "interaction_id": "Q05",
+        "required_result": "sharif_entry_denied",
+        "display_text": "أنا دخلت الساعة 8 بالظبط زي ما هو واضح في السجلات. ومكنتش لوحدي، ممكن تسأل أي حد."
+      },
+      {
+        "source_ref": "INT-SHARIF-01",
+        "interaction_id": "Q07",
+        "required_result": "sharif_insurance_questioned",
+        "display_text": "التأمين؟ أكيد عمي كان مؤمن على الصيدلية، دي حاجة منطقية. بس أنا ماليش دعوة بالتفاصيل."
+      },
+      {
+        "source_ref": "INT-HATEM-01",
+        "interaction_id": "Q01",
+        "required_result": "hatem_alibi_logged",
+        "display_text": "كنت في البيت وقت الحريق. التقرير الطبي بتاعي يثبت إني مش بقدر أتحرك كتير بسبب العملية الأخيرة."
+      },
+      {
+        "source_ref": "INT-HATEM-01",
+        "interaction_id": "Q02",
+        "required_result": "hatem_grudge_admitted",
+        "display_text": "آه كنت متخانق مع العم محمود. هو اللي فصلني من الشغل! بس ده ميعنيش إني حرمق الصيدلية."
+      },
+      {
+        "source_ref": "INT-HATEM-01",
+        "interaction_id": "Q03",
+        "required_result": "hatem_location_verified",
+        "display_text": "كنت في شقتي بالدقي. ممكن تسأل الجيران أو تشوف كاميرا العمارة."
+      },
+      {
+        "source_ref": "INT-ABU-KHALED-01",
+        "interaction_id": "Q01",
+        "required_result": "abu_khaled_observation_logged",
+        "display_text": "شفت حد خارج من الباب الجانبي حوالي الساعة 11. ماكنتش متأكد هو مين بس كان لابس جاكيت داكن."
+      },
+      {
+        "source_ref": "INT-ABU-KHALED-01",
+        "interaction_id": "Q02",
+        "required_result": "abu_khaled_wiring_assessed",
+        "display_text": "الأسلاك كانت قديمة بس تمام. لو حصل ماس كهربائي هيكون في الحائط مش في المكتب."
+      },
+      {
+        "source_ref": "INT-ABU-KHALED-01",
+        "interaction_id": "Q03",
+        "required_result": "abu_khaled_payment_confirmed",
+        "display_text": "أخدتي أجرة الشغل كامل؟ أيوه عمي محمود دفعلي قبل ما يمشي. راجل كريم."
+      },
+      {
+        "source_ref": "CHIEF-DESK",
+        "interaction_id": "REQ-EVIDENCE-01",
+        "required_result": "additional_files_dispatched",
+        "display_text": "تم توجيه الدعم الفني لإرسال الملفات الإضافية من مسرح الجريمة إلى أرشيف القضية."
+      },
+      {
+        "source_ref": "INT-DR-YAHYA-01",
+        "interaction_id": "Q01",
+        "required_result": "yahya_behavioral_analysis_shared",
+        "display_text": "شريف يظهر نمطًا مثيرًا للاهتمام... النفي الاستباقي. هو يدعي أشياء قبل أن نسأله، وكأنه يحاول السيطرة على الرواية."
+      },
+      {
+        "source_ref": "INT-DR-YAHYA-01",
+        "interaction_id": "Q02",
+        "required_result": "yahya_pattern_observation",
+        "display_text": "هل لاحظت أن الجريمة منظمة أكثر من اللازم؟ الحرائق العشوائية عادةً تكون فوضوية، لكن هنا... هناك تخطيط."
+      },
+      {
+        "source_ref": "INT-DR-YAHYA-01",
+        "interaction_id": "Q03",
+        "required_result": "yahya_coping_advice",
+        "display_text": "ضغوط التحقيق طبيعية. المهم ألا تدعها تسرع قراراتك. خذ وقتك، راجع الأدلة بتمعن."
+      },
+      {
+        "source_ref": "CHIEF-DESK",
+        "interaction_id": "Q-CHIEF-02",
+        "required_result": "chief_desk_pressure_hinted",
+        "display_text": "الإدارة تريد نتائج سريعة، لكن الأهم من السرعة هي الدقة. فقط... لا تتأخر كثيرًا."
+      },
+      {
+        "source_ref": "CHIEF-DESK",
+        "interaction_id": "Q-CHIEF-03",
+        "required_result": "chief_desk_pattern_mentioned",
+        "display_text": "حرائق مماثلة؟ في الحقيقة... كانت هناك حالتان في الشهور الماضية. أُغلقتا كحوادث. لكن ربما تستحق مراجعة."
+      }
+    ],
+    "timeline": [
+      {
+        "interaction_id": "LOCK-EVENT-03",
+        "required_result": "sharif_near_side_door_confirmed"
+      },
+      {
+        "interaction_id": "LOCK-EVENT-05",
+        "required_result": "sharif_no_visual_access_to_origin"
+      },
+      {
+        "interaction_id": "LOCK-EVENT-06",
+        "required_result": "corruption_near_ignition_window"
+      }
+    ]
+  },
+  "exactSourceTypes": {
+    "TIMELINE-BOARD": "timeline"
+  },
+  "prefixSourceTypes": [
+    { "prefix": "INT-", "source_type": "interrogation" },
+    { "prefix": "SCN-", "source_type": "report" },
+    { "prefix": "DIG-", "source_type": "report" },
+    { "prefix": "EVID-", "source_type": "report" },
+    { "prefix": "DB-", "source_type": "document" },
+    { "prefix": "OBJ-", "source_type": "object" }
+  ],
+  "fallbackSourceType": "source"
+}

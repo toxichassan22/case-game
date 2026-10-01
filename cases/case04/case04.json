@@ -1,0 +1,415 @@
+{
+  "case_id": "case04",
+  "title": "الموظف المثالي",
+  "crime_type": "covert_assassination_forgery",
+  "victim_name": "محمود السعيد",
+  "overview": {
+    "public_summary": "موظف أرشيف بسيط يعثر عليه ميتاً بسكتة دماغية (ارتفاع ضغط الدم) في منزله. يبدو الأمر كوفاة طبيعية.",
+    "main_question": "لماذا تمتهن عصابة محترفة اغتيال رجل بلا أعداء؟",
+    "stakes": "تمرير عقد مزور قد يكلف الدولة أراضي بـ 4 مليار جنيه لصالح شركة الرمال الذهبية."
+  },
+  "inbox_brief": {
+    "sender": "Chief Desk",
+    "subject": "وفاة طبيعية مشبوهة - موظف الشهر العقاري",
+    "message": "رجل مسن مات ببيته بسكتة، لا شبهة مبدئية. لكنه المتصرف الوحيد في أرشيف الشهر العقاري القديم. راجع الشقة وتأكد."
+  },
+  "evidence_list": [
+    {
+      "evidence_id": "EVID-04-01",
+      "case_id": "case04",
+      "title": "أثر الحقنة الميكروسكوبية",
+      "type": "physical",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "summary": "نقطة صغيرة خلف الأذن لا يمكن رؤيتها بالعين المجردة تتعلق بموقع الحقن.",
+      "content_ref": "CASE04_BODY_NECK",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "forensics"
+      ],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_evid01_tox_screen",
+          "availability_mode": "delayed",
+          "delay_ticks": 2,
+          "scheduled_on_event": "EVENT_SOURCE_OPENED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "LAB-TOX-04",
+              "interaction_id": "RESULT-READY",
+              "expected_player_action": "review_report",
+              "required_result": "synthetic_epinephrine_detected"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "تأكيد طبي أن الوفاة ليست سكتة طبيعية بل نتيجة جرعة اصطناعية مفرطة لرفع الضغط بشكل يتسبب بانفجار المخ.",
+      "penalty_if_mishandled": [
+        "penalty_police_trust_loss"
+      ],
+      "tags": [
+        "forensics",
+        "grand_truth_seed",
+        "alchemist",
+        "murder_weapon"
+      ],
+      "route_weight": {
+        "timeline": 0,
+        "forensics": 0.7,
+        "behavioral": 0
+      },
+      "grand_truth_axis": [
+        "alchemist"
+      ]
+    },
+    {
+      "evidence_id": "EVID-04-02",
+      "case_id": "case04",
+      "title": "ميدالية المفاتيح الممسوحة",
+      "type": "object",
+      "evidence_tier": "supporting",
+      "evidence_role": "context",
+      "summary": "ميدالية المفاتيح الخاصة بالعمل في المنزل ممسوحة تماماً من أية بصمات.",
+      "content_ref": "CASE04_KEYSET",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "forensics"
+      ],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_evid02_fingerprints",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": "EVENT_EVIDENCE_VERIFIED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "object",
+              "source_ref": "CASE04_KEYSET",
+              "interaction_id": "DUSTING",
+              "expected_player_action": "inspect_object",
+              "required_result": "keys_wiped_clean"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "المفاتيح استخدمت ومسحت بدقة لعدم ترك دليل. الجريمة استهدفت الأرشيف.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline",
+        "behavioral",
+        "motive"
+      ],
+      "route_weight": {
+        "timeline": 0.3,
+        "forensics": 0.2,
+        "behavioral": 0.1
+      },
+      "grand_truth_axis": []
+    },
+    {
+      "evidence_id": "EVID-04-03",
+      "case_id": "case04",
+      "title": "العقد رقم 35 (الأراضي)",
+      "type": "document",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "summary": "عقد أرض بقيمة 4 مليارات لصالح الرمال الذهبية في ملفات 1990.",
+      "content_ref": "CASE04_FORGED_DEED",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "forensics"
+      ],
+      "depends_on_evidence_ids": [
+        "EVID-04-02"
+      ],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_evid03_ink_test",
+          "availability_mode": "delayed",
+          "delay_ticks": 1,
+          "scheduled_on_event": "EVENT_EVIDENCE_VERIFIED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "LAB-DOC-04",
+              "interaction_id": "INK-ANALYSIS",
+              "expected_player_action": "review_report",
+              "required_result": "thermal_aging_detected"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "الحبر تم تعريضه لتقادم حراري ميكرويفي ليبدو من السبعينات ولكنه مستحدث.",
+      "penalty_if_mishandled": [
+        "delay_tick_cost_at"
+      ],
+      "tags": [
+        "forensics",
+        "forgery_exposed",
+        "grand_truth_seed",
+        "clockmaker"
+      ],
+      "route_weight": {
+        "timeline": 0.1,
+        "forensics": 0.6,
+        "behavioral": 0.1
+      },
+      "grand_truth_axis": [
+        "clockmaker"
+      ]
+    },
+    {
+      "evidence_id": "EVID-04-04",
+      "case_id": "case04",
+      "title": "سجل الكاميرا 34 - الأرشيف",
+      "type": "digital",
+      "evidence_tier": "supporting",
+      "evidence_role": "context",
+      "summary": "عطل مصطنع لمدة 6 دقائق فجراً عبر استدعاء صيانة وهمي من داخل السيستم.",
+      "content_ref": "CASE04_CCTV_LOG",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "verified",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [],
+      "upgraded_summary": null,
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline",
+        "cyber",
+        "clockmaker"
+      ],
+      "route_weight": {
+        "timeline": 0.6,
+        "forensics": 0,
+        "behavioral": 0
+      },
+      "grand_truth_axis": [
+        "clockmaker"
+      ]
+    }
+  ],
+  "suspects": [
+    {
+      "character_id": "SUSP-04-NONE",
+      "name": "مجهول / العصابة (صانع الساعات والخيميائي)",
+      "cognitive_profile": {
+        "base_collapse_threshold": 10,
+        "base_lawyer_up_threshold": 1,
+        "aggression_tolerance": 5,
+        "rapport_affinity": -5,
+        "evidence_rigidity": 10
+      },
+      "pressure_response": "silence"
+    }
+  ],
+  "outcome_flags": {
+    "success": [
+      "case04_resolved_true",
+      "trinity_awareness_boost",
+      "clockmaker_tagged",
+      "forgery_exposed"
+    ],
+    "partial": [
+      "case04_resolved_partial",
+      "player_reputation_drop"
+    ],
+    "failure": [
+      "case04_resolved_false",
+      "corruption_wins",
+      "alchemist_ghost",
+      "player_reputation_drop"
+    ]
+  },
+  "closure_rules": {
+    "requires_culprit": true,
+    "requires_motive": true,
+    "requires_method_or_opportunity": true,
+    "minimum_evidence_count": 3,
+    "accepted_true_motive_ids": [
+      "motive_archive_infiltration"
+    ],
+    "false_success_motive_ids": [
+      "motive_natural_stroke"
+    ],
+    "false_success_flag": "case04_resolved_false",
+    "accepted_motive_ids": [
+      "motive_archive_infiltration",
+      "motive_natural_stroke"
+    ],
+    "validate_closure": {
+      "minimum_behavioral_chain_verified": 0,
+      "minimum_cross_route_verified": 1,
+      "no_shared_evidence_between_roles": true,
+      "behavioral_chain_evidence_ids": [],
+      "cross_route_evidence_ids": [
+        "EVID-04-03"
+      ],
+      "rejected_submission_reason_codes": [
+        "missing_forgery_evidence"
+      ]
+    }
+  },
+  "hidden_systems": {
+    "route_collaboration": {
+      "minimum_required_chains": 1,
+      "shared_evidence_completion_required": true,
+      "critical_evidence_requires_alternative_paths": false,
+      "minimum_alternative_trigger_sets_for_critical_evidence": 1
+    },
+    "evidence_reinterpretation_rules": [],
+    "soft_exposure_rules": [],
+    "forensics_queue_pressure_rules": {
+      "enabled": true,
+      "pressure_increment": 2,
+      "requires_player_facing_explanation": true,
+      "trigger_when": {
+        "action": "REVIEW_EVIDENCE",
+        "before_evidence_verified": "EVID-04-03"
+      },
+      "deterministic_variants": [
+        {
+          "variant_id": "queue_pressure_provisional_result",
+          "selector": "seed_tick_mod_2_eq_0",
+          "effect": {
+            "target_ref": "EVID-04-03",
+            "result_quality": "provisional",
+            "duration_ticks": 1
+          },
+          "visible_notice": "النتيجة الحالية أولية بسبب ضغط التحليلات الدقيقة على المعمل."
+        },
+        {
+          "variant_id": "queue_pressure_report_delay",
+          "selector": "seed_tick_mod_2_eq_1",
+          "effect": {
+            "target_ref": "EVID-04-01",
+            "delay_ticks": 1
+          },
+          "visible_notice": "تأخر تقرير الصياغة قليلًا بسبب ضغط التحاليل الفنية الإضافية."
+        }
+      ]
+    },
+    "ui_anomalies": {
+      "enabled": true,
+      "allowed_events": [
+        "ui_anomaly_report_flicker"
+      ]
+    }
+  },
+  "transition_context_hooks": [],
+  "next_case_rules": [
+    {
+      "rule_id": "case04_success",
+      "priority": 100,
+      "required_flags_all": [
+        "case04_resolved_true"
+      ],
+      "required_flags_any": [],
+      "blocked_flags": [],
+      "target_case_id": "case05",
+      "target_case_path": "cases/case05/case05.json",
+      "clarity_modifier": 0,
+      "transition_reason": "تقدم طبيعي بعد ملاحقة أثر الثالوث في العقد المزور."
+    },
+    {
+      "rule_id": "case04_fail",
+      "priority": 10,
+      "required_flags_all": [
+        "case04_resolved_false"
+      ],
+      "required_flags_any": [],
+      "blocked_flags": [],
+      "target_case_id": "case05",
+      "target_case_path": "cases/case05/case05.json",
+      "clarity_modifier": -5,
+      "transition_reason": "فشل المحقق في كشف الاغتيال، مما يعزز قوة الثالوث ويمنع الرؤية في القادم."
+    }
+  ],
+  "solution": {
+    "culprit": "TBD",
+    "motive": "TBD",
+    "method": "TBD",
+    "explanation": "Draft solution to align with schema"
+  },
+  "maxPhsLevels": 7,
+  "phs_hints": [
+    {
+      "level": "L1",
+      "type": "note",
+      "payload": {
+        "text": "هناك تفاصيل صغيرة في بداية هذا التحقيق ربما لم تلاحظها بعد. راجع كل ما لديك.",
+        "source_ref": "generic"
+      }
+    },
+    {
+      "level": "L2",
+      "type": "note",
+      "payload": {
+        "text": "ركز على تحليل \"أثر الحقنة الميكروسكوبية\". هناك معلومات ناقصة يجب أن تستكملها.",
+        "source_ref": "EVID-04-01"
+      }
+    },
+    {
+      "level": "L3",
+      "type": "note",
+      "payload": {
+        "text": "عليك فهم سلوكيات المتورطين. هناك حلقة مفقودة في السلسلة السلوكية.",
+        "metadata": {
+          "reason": "missing_behavioral_chain"
+        }
+      }
+    },
+    {
+      "level": "L4",
+      "type": "note",
+      "payload": {
+        "text": "تحليل \"أثر الحقنة الميكروسكوبية\" سيكشف لك جزءاً مهماً من اللغز إن قمت بمقاطعته مع الأدلة الأخرى.",
+        "source_ref": "EVID-04-01"
+      }
+    },
+    {
+      "level": "L5",
+      "type": "note",
+      "payload": {
+        "text": "لا تعتمد على مسار تحقيق واحد. يجب مقاطعة الأدلة من مصادر مختلفة لضمان الإغلاق.",
+        "metadata": {
+          "reason": "missing_cross_route_evidence"
+        }
+      }
+    },
+    {
+      "level": "L6",
+      "type": "note",
+      "payload": {
+        "text": "الدليل \"ميدالية المفاتيح الممسوحة\" يربط الخيوط ببعضها. حاول فهم السياق الذي وجد فيه.",
+        "source_ref": "EVID-04-02"
+      }
+    },
+    {
+      "level": "L7",
+      "type": "direct",
+      "payload": {
+        "text": "لا يمكنك إغلاق القضية دون اكتمال مسارات 'السلسلة السلوكية' و'الأدلة المتقاطعة'. راجع لوحة الأدلة لربط النقاط المفقودة."
+      }
+    }
+  ]
+}

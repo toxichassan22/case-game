@@ -1,0 +1,171 @@
+{
+  "id": "case01",
+  "audio": [
+    {
+      "id": "audio01",
+      "file": "audio01.wav",
+      "title": "",
+      "transcript": "أَنَا.. أَنَا مَكُنْتِش مَوْجُودٌ يَا حَضْرَةَ الظَّابِطِ! كُنْتُ نَايِمٌ فِي بَيْتِي.. اِتَّصَلُوا بِيَّا الصُّبْحِ قَالُوا لِي الصَّيْدَلِيَّةُ وَلَّعَتْ! عَمِّي مَحْمُودٌ كَانَ حَبِيبِي.. لِيه أَعْمَلُ فِيهِ كِدَه؟",
+      "description": "بِنَبْرَةٍ مُرْتَعِشَةٍ، يَنْهَجُ بِصُعُوبَةٍ، يَتَجَنَّبُ النَّظَرَ لِلْمُحَقِّقِ"
+    },
+    {
+      "id": "audio02",
+      "file": "audio02.wav",
+      "title": "",
+      "transcript": "مَكُنْتِش عَايِزُهُ يَمُوتَ! وَاللَّهِ مَكُنْتِش عَايِزُهُ يَمُوتَ! أَنَا كُنْتُ عَايِزُ الدَّفَاتِرَ بَس هِيَّ الَّلِي تِنْحِرِقَ.. كَانَ هَيِخْرِبَ بَيْتِي.. ٣٤٠ أَلْفَ جُنَيْهٍ كَانُوا هَيُودُّونِي فِي دَاهِيَةٍ.. سَامِحْنِي يَا عَمِّي!",
+      "description": "بُكَاءٌ مَسْمُوعٌ، نَبْرَةُ نَدَمٍ شَدِيدَةٍ، صَوْتُ ضَرْبٍ خَفِيفٍ عَلَى الطَّاوِلَةِ"
+    },
+    {
+      "id": "audio03",
+      "file": "audio03.wav",
+      "title": "",
+      "transcript": "يَا بِيَه أَنَا رَاجِلٌ صَنَايْعِي، رُحْتُ عَمِلْتُ شُغْلِي وَمَشَيْتُ! مَحْمُودُ بِيه اللَّهُ يَرْحَمُهُ كَانَ بِيَمَاطِلُ فِي الْفُلُوسِ، بَس مِش لِدَرَجَةِ إنِّي أُوَلِّعُ فِي الْمَكَانِ! أَنَا عِنْدِي عِيَالٌ عَايِزُ أَرَبِّيهُمْ!",
+      "description": "صَوْتٌ خَشِنٌ، نَبْرَةٌ حَادَّةٌ، ثِقَةٌ فِي النَّفْسِ مَمْزُوجَةٌ بِالْغَضَبِ"
+    },
+    {
+      "id": "audio04",
+      "file": "audio04.wav",
+      "title": "",
+      "transcript": "بَابَا كَانَ بِيُقْضِي كُلَّ وَقْتِهِ فِي الصَّيْدَلِيَّةِ.. كَانَ بِيُحِبَّ الرُّفُوفَ دِي أَكْتَرَ مِنْ أَيِّ حَدٍّ.. أَنَا مَش مِتْخَيِّلَةً إنِّي مِش هَشُوفُهُ تانِي قَاعِدٍ عَلَى مَكْتَبِهِ بِيُرَاجِعُ الْوَرَقَ.. كُلُّ حَاجَةٍ رَاحَتْ!",
+      "description": "صَوْتٌ خَافِتٌ مَكْسُورٌ، شَهَقَاتٌ بَيْنَ الْكَلِمَاتِ"
+    },
+    {
+      "id": "audio05",
+      "file": "audio05.wav",
+      "title": "",
+      "transcript": "اِسْمَعُوا يَا رِجَالَة.. صَيْدَلِيَّةُ السُّيُوفِي مِش مُجَرَّدِ حَرِيقٍ عَادِي. فِيهِ تَفَاصِيلُ مِش رَاكِبَةٍ عَلَى بَعْضِهَا. مَحْمُودُ السُّيُوفِي مَاتَ مَخْنُوقٍ قَبْلَ مَا النَّارِ تِمْسِكِ فِي جِسْمِهِ. عَايِزُ تَقْرِيرَ الْمَعْمَلِ الْجِنَائِيِّ عَلَى مَكْتَبِي الصُّبْحِ.. مِش هَقْبَلُ أَيَّ تَهَاوُنٍ!",
+      "description": "نَبْرَةٌ قِيَادِيَّةٌ، صَوْتٌ عَمِيقٌ وَرَزِينٌ، هُدُوءٌ يَسْبِقُ الْعَاصِفَةَ"
+    }
+  ],
+  "videos": [
+    {
+      "id": "video01",
+      "file": "video01.mp4",
+      "title": "Street CCTV Footage - Discovery",
+      "description": "Aspect Ratio: 16:9, Duration: 15s. A fixed-angle, high-mounted security camera overlooking a narrow Cairo street at night. Time: 11:14 PM. The pharmacy storefront is visible in the background. Suddenly, thick gray smoke begins to seep from the upper edges of the windows. A few street cats run away. Quality: Slightly grainy, monochromatic with a blue tint, realistic security cam overlay with timestamp."
+    },
+    {
+      "id": "video02",
+      "file": "video02.mp4",
+      "title": "Chemical Shop CCTV - Evidence",
+      "description": "Aspect Ratio: 4:3, Duration: 10s. Interior shot of \"El-Nagm Chemicals\". Time: 04:15 PM, March 12. Sharif (31y Egyptian male"
+    },
+    {
+      "id": "video03",
+      "file": "video03.mp4",
+      "title": "The Trinity Seed - Corrupted File",
+      "description": "Aspect Ratio: 4:3, Duration: 12s. Extremely distorted and corrupted video. Time: 03:30 AM. A dark silhouette is standing directly in front of the camera. The person reaches a gloved hand toward the lens to adjust it. The image glitches with digital artifacts and static. No face is visible. Quality: VHS-style static, heavy digital corruption, monochrome green night vision."
+    },
+    {
+      "id": "video04",
+      "file": "video04.mp4",
+      "title": "Mobile Phone Recording - Citizen POV",
+      "description": "Aspect Ratio: 9:16 (Vertical"
+    },
+    {
+      "id": "video05",
+      "file": "video05.mp4",
+      "title": "Forensic Lab - DVR Recovery",
+      "description": "Aspect Ratio: 16:9, Duration: 8s. A split-screen view showing a technician's hand using a digital brush on a burnt DVR hard drive, transitioning to a software screen showing a progress bar \"RECOVERING SECTOR 0330...\". Colors: Clean lab environment vs. burnt hardware. Lighting: Cool blue tech lighting."
+    }
+  ],
+  "images": [
+    {
+      "id": "photo01",
+      "file": "photo01.png",
+      "description": "Cinematic wide shot, Aspect Ratio: 16:9. A charred pharmacy storefront in Bulaq al-Dakrur, Cairo. Colors: Deep carbon black, ash gray, with subtle glowing amber embers in the debris. Text: A half-melted blue acrylic sign reads \"صيدلية السيوفي\" in elegant Arabic Naskh script and \"EL-SIOFY PHARMACY\" in bold white English letters. Numbers: A small brass plate on the door frame showing street number \"14\". Lighting: Moody early morning blue hour with street lamp reflection on shattered glass."
+    },
+    {
+      "id": "photo02",
+      "file": "photo02.png",
+      "description": "Interior shot, Area A - Main Display, Aspect Ratio: 16:9. Colors: Toxic neon greens and blues from melted plastic medicine bottles contrasting with dark soot. Text: Partially burned cardboard boxes showing fragments of \"PANADOL\" and \"ADWYA\" logos. Composition: Low angle showing a floor covered in thick black ash and white ceramic tile fragments. Lighting: Harsh shafts of light coming through broken windows, illuminating dust particles."
+    },
+    {
+      "id": "photo03",
+      "file": "photo03.png",
+      "description": "Forensic interior, Area B - Management Office, Aspect Ratio: 4:3. Colors: Monochromatic charred wood tones, sepia-stained papers, and stark white evidence markers. Numbers: Bright yellow plastic evidence markers labeled \"01\", \"02\", and \"03\" placed near a fallen wooden chair and a scorched desk. Text: A partially burned calendar on the wall showing the month \"MARCH 2024\". Lighting: High-contrast forensic flashlight style."
+    },
+    {
+      "id": "photo04",
+      "file": "photo04.png",
+      "description": "Macro shot of a safe, Aspect Ratio: 1:1. A small, heavy fire-resistant steel safe, Model \"SENTRY-SAFE 2000\". Colors: Industrial metallic gray, rust-red oxidation, and streaks of black soot. Numbers: The mechanical combination dial is visible, frozen at the number \"40\". Lighting: Cinematic rim lighting highlighting the texture of the scorched metal."
+    },
+    {
+      "id": "photo05",
+      "file": "photo05.png",
+      "description": "Macro forensic shot, Aspect Ratio: 16:9. A door handle on a charred office door. Colors: Metallic silver handle against charcoal black wood, with glowing purple UV light revealing fingerprints. Numbers: A small forensic scale ruler placed next to the handle showing measurements in centimeters. Composition: Shallow depth of field focusing on the distinct soot-free finger marks."
+    },
+    {
+      "id": "photo06",
+      "file": "photo06.png",
+      "description": "Extreme close-up, Aspect Ratio: 1:1. Fragments of a handwritten paper ledger. Colors: Aged yellow parchment, deep black ink, and gray ash edges. Text: Handwritten Arabic script in black ink reading \"شريف - عجز ٣٤٠،٠٠٠ ج.م\" (Sharif - Deficit 340,000 EGP"
+    },
+    {
+      "id": "photo07",
+      "file": "photo07.png",
+      "description": "Wide macro shot, Aspect Ratio: 16:9. Chemical residue on a burned floor. Colors: Iridescent oily rainbow shimmer (magenta, cyan, and lime green"
+    },
+    {
+      "id": "photo08",
+      "file": "photo08.png",
+      "description": "Portrait, Aspect Ratio: 2:3. Mahmoud El-Siofy, 58 years old. Colors: Warm skin tones, brilliant white lab coat with a subtle blue trim. Text: A small plastic ID badge pinned to the coat reads \"د. محمود السيوفي - مدير الصيدلية\". Lighting: Professional studio lighting with a soft gray background, creating a sense of trust and kindness."
+    },
+    {
+      "id": "photo09",
+      "file": "photo09.png",
+      "description": "Portrait, Aspect Ratio: 2:3. Sharif, 31 years old. Colors: Pale, sickly skin tones, cold blue rim light. Clothing: A clean but wrinkled light blue office shirt with sweat stains under the arms. Composition: Close-up focusing on his eyes showing extreme anxiety and dark circles. Lighting: High-key side lighting to emphasize facial tension."
+    },
+    {
+      "id": "photo10",
+      "file": "photo10.png",
+      "description": "Portrait, Aspect Ratio: 2:3. Abu Khaled, 45 years old. Colors: Sun-tanned bronze skin, dusty textures. Clothing: A worn-out indigo blue denim work shirt with grease stains. Lighting: Warm, harsh golden hour light from the side, highlighting deep wrinkles and a suspicious, defensive gaze."
+    },
+    {
+      "id": "photo11",
+      "file": "photo11.png",
+      "description": "Portrait, Aspect Ratio: 2:3. Layla, 25 years old. Colors: Soft pastel pink hijab, teary hazel eyes with red rims. Lighting: Soft, flat lighting to create a vulnerable and mournful look. Background: Out-of-focus interior of a traditional Egyptian home."
+    },
+    {
+      "id": "photo12",
+      "file": "photo12.png",
+      "description": "Portrait, Aspect Ratio: 2:3. Hatem, 28 years old. Colors: Vibrant saturated red polo shirt, tanned skin. Composition: Looking slightly away from the camera with a furrowed brow of anger. Lighting: Harsh overhead sun, creating strong shadows under the brow."
+    },
+    {
+      "id": "photo13",
+      "file": "photo13.png",
+      "description": "CCTV capture, Aspect Ratio: 4:3. Extremely grainy, high-noise monochrome green night vision. Numbers: Digital timestamp in the top-right corner reads \"2024-03-14 03:30:12 AM\". Composition: A wide-angle fisheye lens view of the pharmacy entrance. A dark, featureless silhouette is reaching a gloved hand toward the camera lens. Lighting: Infrared glow on the person's fingertips."
+    }
+  ],
+  "reports": [
+    {
+      "id": "report01",
+      "file": "report01.png",
+      "description": "Official Forensic Medical Report, Aspect Ratio: 21:29.7 (A4 Paper"
+    },
+    {
+      "id": "report02",
+      "file": "report02.png",
+      "description": "Fire Origin Investigation Report, Aspect Ratio: 21:29.7 (A4 Paper"
+    },
+    {
+      "id": "report03",
+      "file": "report03.png",
+      "description": "Handwritten Purchase Receipt, Aspect Ratio: 5:3 (Small receipt"
+    },
+    {
+      "id": "report04",
+      "file": "report04.png",
+      "description": "Bank Account Statement, Aspect Ratio: 21:29.7 (A4 Paper"
+    },
+    {
+      "id": "report05",
+      "file": "report05.png",
+      "description": "Locksmith Business Ledger, Aspect Ratio: 16:9 (Open book"
+    },
+    {
+      "id": "report06",
+      "file": "report06.png",
+      "description": "Investigation Summary Memo, Aspect Ratio: 21:29.7 (A4 Paper"
+    }
+  ]
+}

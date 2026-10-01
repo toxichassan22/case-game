@@ -1,0 +1,363 @@
+{
+  "case_id": "case14",
+  "title": "الميزانية",
+  "crime_type": "institutional_corruption",
+  "victim_name": "مرضى مستشفى إمبابة (5 مصابين)",
+  "overview": {
+    "public_summary": "تدهور حالة 5 مرضى في مستشفى حكومي بعد إعطائهم أدوية جديدة مغشوشة.",
+    "main_question": "هل هذه مجرد شركة أدوية مهملة جديدة، أم أن فارما لينك عادت بجلد جديد؟",
+    "stakes": "إدراك أن الثالوث يتأقلم ويجدد أذرعه التشغيلية، واكتشاف المنسق الأوسط 'أحمد'."
+  },
+  "inbox_brief": {
+    "sender": "HQ",
+    "subject": "طوارئ في إمبابة",
+    "message": "عناية مركزة استقبلت 5 حالات تسمم من داخل نفس المستشفى. الأطباء شاكين في توريدة أدوية لشركة اسمها 'ميدي كير'. افتح تحقيق في الميناء والمخازن فوراً."
+  },
+  "evidence_list": [
+    {
+      "evidence_id": "EVID-14-01",
+      "case_id": "case14",
+      "title": "عبوات 'ميدي كير' المغشوشة",
+      "type": "physical",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "summary": "عينات من الأدوية المعطاة للمرضى الخمسة، التغليف يبدو سليماً لكن البارکود مزيف.",
+      "content_ref": "CASE14_MEDICARE_SAMPLES",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "forensics"
+      ],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_evid01_fake_barcode",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": "EVENT_EVIDENCE_VERIFIED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "physical",
+              "source_ref": "CASE14_MEDICARE_SAMPLES",
+              "interaction_id": "BARCODE_CHECK",
+              "expected_player_action": "inspect_evidence",
+              "required_result": "barcode_unregistered"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "الأرقام التسلسلية غير مسجلة في هيئة الدواء. نفس تقنية التزوير المتطورة المكتشفة في عبوات 'فارما لينك' (قضية 03).",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "forensics",
+        "counterfeit_drugs"
+      ],
+      "route_weight": {
+        "timeline": 0,
+        "forensics": 1,
+        "behavioral": 0
+      },
+      "grand_truth_axis": [
+        "alchemist",
+        "corruption"
+      ]
+    },
+    {
+      "evidence_id": "EVID-14-02",
+      "case_id": "case14",
+      "title": "مقارنة كيميائية طيفية",
+      "type": "report",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "summary": "تحليل معملي للمادة الفعالة داخل العبوات الجديدة المشبوهة.",
+      "content_ref": "LAB-CHEM-14",
+      "locked": true,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "forensics"
+      ],
+      "depends_on_evidence_ids": [
+        "EVID-14-01"
+      ],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_evid02_alchemist_signature",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": "EVENT_EVIDENCE_VERIFIED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "LAB-CHEM-14",
+              "interaction_id": "SPECTRAL_MATCH_03",
+              "expected_player_action": "review_report",
+              "required_result": "chemical_signature_matched"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "شكل البلورات وتوزيع الشوائب يطابق تماماً عينات القضية 03 المرفوعة سابقاً. الصيدلي (الخيميائي) الذي يركب هذه السموم هو شخص واحد.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "forensics",
+        "alchemist_trace",
+        "case03_link"
+      ],
+      "route_weight": {
+        "timeline": 0,
+        "forensics": 1,
+        "behavioral": 0
+      },
+      "grand_truth_axis": [
+        "alchemist"
+      ]
+    },
+    {
+      "evidence_id": "EVID-14-03",
+      "case_id": "case14",
+      "title": "إفادة حمدي عن المندوب",
+      "type": "document",
+      "evidence_tier": "critical",
+      "evidence_role": "context",
+      "summary": "مدير المشتريات اعترف باسم المندوب الذي سلم الشحنة.",
+      "content_ref": "INT-HAMDY-01",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "behavioral"
+      ],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_evid03_ahmed_middleman",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": "EVENT_INTERROGATION_NODE_UNLOCKED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_INTERROGATION_NODE_UNLOCKED",
+              "source_type": "interrogation",
+              "source_ref": "INT-HAMDY-01",
+              "interaction_id": "Q_SALES_REP",
+              "expected_player_action": "interrogate",
+              "required_result": "ahmed_identified"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "مندوب المبيعات يُدعى 'أحمد'. نفس الاسم، نفس الوصف الشكلي. هذه ليست شركة منفصلة، الشبكة غيرت اسمها فقط والمنسق ما زال يعمل.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "behavioral",
+        "ahmed_middleman",
+        "carryover_potential"
+      ],
+      "route_weight": {
+        "timeline": 0,
+        "forensics": 0,
+        "behavioral": 1
+      },
+      "grand_truth_axis": [
+        "trinity"
+      ]
+    }
+  ],
+  "suspects": [
+    {
+      "character_id": "SUSP-14-01",
+      "name": "حمدي - مدير المشتريات",
+      "cognitive_profile": {
+        "base_collapse_threshold": 4,
+        "base_lawyer_up_threshold": 6,
+        "aggression_tolerance": 5,
+        "rapport_affinity": 4,
+        "evidence_rigidity": 6
+      },
+      "pressure_response": "evade"
+    }
+  ],
+  "outcome_flags": {
+    "success": [
+      "case14_resolved_true",
+      "case14_budget_resolved",
+      "pharma_network_regenerating",
+      "ahmed_middleman_identified",
+      "five_victims_critical"
+    ],
+    "partial": [
+      "case14_budget_resolved"
+    ],
+    "failure": [
+      "case14_resolved_false"
+    ]
+  },
+  "closure_rules": {
+    "requires_culprit": true,
+    "requires_motive": true,
+    "requires_method_or_opportunity": true,
+    "minimum_evidence_count": 3,
+    "accepted_true_motive_ids": [
+      "motive_syndicate_profit",
+      "motive_ahmed_bribery"
+    ],
+    "false_success_motive_ids": [
+      "motive_administrative_negligence"
+    ],
+    "false_success_flag": "case14_resolved_false",
+    "accepted_motive_ids": [
+      "motive_syndicate_profit",
+      "motive_ahmed_bribery",
+      "motive_administrative_negligence"
+    ],
+    "validate_closure": {
+      "minimum_behavioral_chain_verified": 1,
+      "minimum_cross_route_verified": 2,
+      "no_shared_evidence_between_roles": false,
+      "behavioral_chain_evidence_ids": [
+        "EVID-14-03"
+      ],
+      "cross_route_evidence_ids": [
+        "EVID-14-01",
+        "EVID-14-02"
+      ],
+      "rejected_submission_reason_codes": [
+        "missing_alchemist_signature"
+      ]
+    }
+  },
+  "hidden_systems": {
+    "route_collaboration": {
+      "minimum_required_chains": 1,
+      "shared_evidence_completion_required": true,
+      "critical_evidence_requires_alternative_paths": false,
+      "minimum_alternative_trigger_sets_for_critical_evidence": 0
+    },
+    "evidence_reinterpretation_rules": [],
+    "ui_feedback_rules": [],
+    "soft_exposure_rules": [],
+    "forensics_queue_pressure_rules": {
+      "enabled": true,
+      "pressure_increment": 4,
+      "requires_player_facing_explanation": true,
+      "trigger_when": {
+        "action": "QUEUE_EVIDENCE",
+        "evidence_id": "EVID-14-02"
+      },
+      "deterministic_variants": [
+        {
+          "variant_id": "queue_pressure_provisional_result",
+          "selector": "seed_tick_mod_2_eq_0",
+          "effect": {
+            "target_ref": "EVID-14-02",
+            "result_quality": "provisional",
+            "duration_ticks": 1
+          },
+          "visible_notice": "النتيجة الحالية أولية بسبب ضغط التحليلات الدقيقة على المعمل."
+        },
+        {
+          "variant_id": "queue_pressure_report_delay",
+          "selector": "seed_tick_mod_2_eq_1",
+          "effect": {
+            "target_ref": "EVID-14-01",
+            "delay_ticks": 1
+          },
+          "visible_notice": "تأخر تقرير الصياغة قليلًا بسبب ضغط التحاليل الفنية الإضافية."
+        }
+      ]
+    },
+    "ui_anomalies": {
+      "enabled": true,
+      "allowed_events": []
+    }
+  },
+  "transition_context_hooks": [],
+  "next_case_rules": [
+    {
+      "rule_id": "case14_success",
+      "priority": 100,
+      "required_flags_all": [
+        "case14_resolved_true"
+      ],
+      "required_flags_any": [],
+      "blocked_flags": [],
+      "target_case_id": "case15",
+      "target_case_path": "cases/case15/case15.json",
+      "clarity_modifier": 0,
+      "transition_reason": "تقدم طبيعي."
+    }
+  ],
+  "maxPhsLevels": 7,
+  "phs_hints": [
+    {
+      "level": "L1",
+      "type": "note",
+      "payload": {
+        "text": "هناك تفاصيل صغيرة في بداية هذا التحقيق ربما لم تلاحظها بعد. راجع كل ما لديك.",
+        "source_ref": "generic"
+      }
+    },
+    {
+      "level": "L2",
+      "type": "note",
+      "payload": {
+        "text": "ركز على تحليل \"عبوات 'ميدي كير' المغشوشة\". هناك معلومات ناقصة يجب أن تستكملها.",
+        "source_ref": "EVID-14-01"
+      }
+    },
+    {
+      "level": "L3",
+      "type": "note",
+      "payload": {
+        "text": "عليك فهم سلوكيات المتورطين. هناك حلقة مفقودة في السلسلة السلوكية.",
+        "metadata": {
+          "reason": "missing_behavioral_chain"
+        }
+      }
+    },
+    {
+      "level": "L4",
+      "type": "note",
+      "payload": {
+        "text": "تحليل \"عبوات 'ميدي كير' المغشوشة\" سيكشف لك جزءاً مهماً من اللغز إن قمت بمقاطعته مع الأدلة الأخرى.",
+        "source_ref": "EVID-14-01"
+      }
+    },
+    {
+      "level": "L5",
+      "type": "note",
+      "payload": {
+        "text": "لا تعتمد على مسار تحقيق واحد. يجب مقاطعة الأدلة من مصادر مختلفة لضمان الإغلاق.",
+        "metadata": {
+          "reason": "missing_cross_route_evidence"
+        }
+      }
+    },
+    {
+      "level": "L6",
+      "type": "note",
+      "payload": {
+        "text": "الدليل \"إفادة حمدي عن المندوب\" يربط الخيوط ببعضها. حاول فهم السياق الذي وجد فيه.",
+        "source_ref": "EVID-14-03"
+      }
+    },
+    {
+      "level": "L7",
+      "type": "direct",
+      "payload": {
+        "text": "لا يمكنك إغلاق القضية دون اكتمال مسارات 'السلسلة السلوكية' و'الأدلة المتقاطعة'. راجع لوحة الأدلة لربط النقاط المفقودة."
+      }
+    }
+  ]
+}
+

@@ -1,0 +1,2250 @@
+{
+  "case_id": "case01",
+  "title": "رماد الرف الأخير",
+  "maxPhsLevels": 7,
+  "phs_hints": [
+    {
+      "level": "L0",
+      "type": "message",
+      "payload": {
+        "text": "مرحبًا بك في قضيتك الأولى. لديك 3 مسارات: الزمني (Timeline)، الجنائي (Forensics)، والسلوكي (Behavioral). ابدأ بمراجعة تقرير مسرح الجريمة SCN-03.",
+        "source_ref": "tutorial"
+      }
+    },
+    {
+      "level": "L1",
+      "type": "note",
+      "payload": {
+        "text": "هناك تفاصيل صغيرة في مسرح الجريمة ربما لم تلاحظها بعد. راجع التقارير الجنائية بدقة.",
+        "source_ref": "generic"
+      }
+    },
+    {
+      "level": "L2",
+      "type": "note",
+      "payload": {
+        "text": "تقرير منشأ الحريق (SCN-03) يثبت أن النار بدأت في المكتب وليس المخزن. لماذا كذب شريف بشأن ذلك؟",
+        "source_ref": "SCN-03"
+      }
+    },
+    {
+      "level": "L3",
+      "type": "note",
+      "payload": {
+        "text": "ركز على أقوال شريف نبيل السيوفي. هناك تناقض صارخ بين ما ادعاه وبين الحقائق الفنية.",
+        "metadata": {
+          "reason": "missing_behavioral_chain"
+        }
+      }
+    },
+    {
+      "level": "L4",
+      "type": "note",
+      "payload": {
+        "text": "تقرير السخام (SCN-04) يرجح أن الباب أُغلق من الخارج. هذا يعني أن الضحية لم يغلق الباب على نفسه.",
+        "source_ref": "SCN-04"
+      }
+    },
+    {
+      "level": "L5",
+      "type": "note",
+      "payload": {
+        "text": "الدفتر الأسود الممزق (OBJ-01) هو المفتاح لفهم الدافع الحقيقي. ابحث عن العلاقة بين شريف وهذا الدفتر.",
+        "source_ref": "OBJ-01"
+      }
+    },
+    {
+      "level": "L6",
+      "type": "note",
+      "payload": {
+        "text": "تحتاج للربط بين تقرير السخام، ومفاتيح ليلى، وسجل الجرد لتفهم كيف تم إغلاق مسرح الجريمة.",
+        "source_ref": "EVID-PARTIAL-LOCK"
+      }
+    },
+    {
+      "level": "L7",
+      "type": "direct",
+      "payload": {
+        "text": "لا يمكنك إغلاق القضية بدون 'سلسلة سلوكية'. واجه شريف بزلة لسانه عن الدفتر ومكان الحريق."
+      }
+    }
+  ],
+  "solution": {
+    "culprit": "شريف نبيل السيوفي",
+    "motive": "إخفاء اختلاس مبالغ مالية كبيرة بسبب ديون قمار لجهة خفية، عن طريق حرق الدفتر الأسود الذي يحتوي على السجلات الحقيقية.",
+    "method": "استخدام مادة مسرعة (بنزين/كحول) مخلوطة بمادة تبريد لتأخير الاشتعال 45 دقيقة في مكتب الإدارة، ثم إغلاق الباب الأمامي من الخارج باستخدام نسخة ثالثة غير مسجلة من المفتاح قبل الهرب لإنشاء حجة غياب مكانية.",
+    "explanation": "الأدلة القاطعة هي: 1. وجود بنزين مخلوط بمادة تبريد لتأخير الحريق (SCN-05). 2. زلة لسان شريف عن مكان الحريق وتناقض حجة غيابه مع سجلات الـ GPS. 3. إغلاق الباب من الخارج بنسخة مفتاح ثالثة تم إثباتها عبر سجلات صانع الأقفال."
+  },
+  "crime_type": "arson",
+  "victim_name": "محمود السيوفي",
+  "overview": {
+    "public_summary": "حريق داخل صيدلية يبدو حادثًا كهربائيًا ثم ينقلب إلى حريق عمد.",
+    "main_question": "من أحرق الصيدلية، ولماذا؟",
+    "stakes": "أول قضية تعليمية مع أول بذرة خافتة لوجود تلاعب أكبر."
+  },
+  "inbox_brief": {
+    "sender": "Chief Desk",
+    "subject": "حريق داخل صيدلية - وفاة مالك",
+    "message": "الدفاع المدني يرجح ماسًا كهربائيًا مبدئيًا. راجع الملف قبل إغلاقه كحادث.",
+    "audio_url": "/assets/cases/case01/audio/audio05.wav"
+  },
+  "evidence_list": [
+    {
+      "evidence_id": "SCN-03",
+      "case_id": "case01",
+      "title": "تقرير منشأ الحريق",
+      "type": "report",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "description": "تقرير رسمي من الحماية المدنية يثبت أن منشأ الحريق في مكتب الإدارة",
+      "summary": "المنشأ في مكتب الإدارة مع مؤشرات مادة مسرعة.",
+      "content_ref": "SCN-03",
+      "image_url": "/assets/cases/case01/images/report02.png",
+      "video_url": "/assets/cases/case01/video/video01.mp4",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [],
+      "upgraded_summary": "المنشأ مؤكد في مكتب الإدارة.",
+      "report_body": "تقرير منشأ الحريق رقم 2024/762. بعد الفحص الدقيق لمسرح الحادث في 'صيدلية السيوفي'، تبين أن بؤرة الاشتعال تركزت في الركن الشمالي الغربي من مكتب الإدارة. تم رصد مخلفات كيميائية لمادة سريعة الاشتعال (بنزين) بكمية محدودة بالقرب من سلة المهملات، لكن الغريب هو وجود بقايا لمادة هلامية غير محترقة بالكامل (قد تكون مادة تبريد) تتطلب تحليلاً أعمق (SCN-05).",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "forensics",
+        "critical"
+      ],
+      "route_weight": {
+        "timeline": 0.1,
+        "forensics": 0.8,
+        "behavioral": 0.1
+      },
+      "grand_truth_axis": [],
+      "lab_unlock_requires_evidence_id": "DB-01",
+      "lab_unlock_requires_evidence_ids": ["DB-01", "SCN-04"]
+    },
+    {
+      "evidence_id": "SCN-04",
+      "case_id": "case01",
+      "title": "تقرير السخام والإغلاق الخارجي",
+      "type": "report",
+      "evidence_tier": "critical",
+      "evidence_role": "unlock",
+      "description": "تقرير السخام يثبت أن الباب أُغلق من الخارج",
+      "summary": "سخام على المقبض الخارجي للباب الأمامي ونمط إغلاق من الخارج.",
+      "content_ref": "SCN-04",
+      "image_url": "/assets/cases/case01/images/photo05.png",
+      "locked": true,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [
+        "SCN-03"
+      ],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_scn04_unlock",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": null,
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "SCN-03",
+              "interaction_id": "ORIGIN-CONFIRMED",
+              "expected_player_action": "review_report",
+              "required_result": "office_origin_confirmed"
+            }
+          ],
+          "on_complete": "unlock_evidence"
+        }
+      ],
+      "upgraded_summary": "الإغلاق الخارجي ممكن عمليًا.",
+      "report_body": "سجل الدخول الإلكتروني - الباب الجانبي. التاريخ: 19 مارس. الساعة 20:41: محاولة دخول فاشلة. رقم البطاقة: #8842 (شريف عادل السيوفي). الساعة 20:44: دخول ناجح باستخدام مفتاح ميكانيكي يدوي. ملاحظة: تم تعطيل القفل الإلكتروني يدوياً من الداخل لاحقاً لضمان عدم تسجيل خروج إلكتروني.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "forensics",
+        "lock"
+      ],
+      "route_weight": {
+        "timeline": 0.1,
+        "forensics": 0.75,
+        "behavioral": 0.15
+      },
+      "grand_truth_axis": [],
+      "lab_unlock_requires_evidence_id": "SCN-03"
+    },
+    {
+      "evidence_id": "DB-01",
+      "case_id": "case01",
+      "title": "سجل الجرد الليلي",
+      "type": "document",
+      "evidence_tier": "supporting",
+      "evidence_role": "unlock",
+      "description": "سجل الجرد يظهر أن شريف كان آخر من تعامل مع الملفات",
+      "summary": "يظهر قرب شريف من ملفات المكتب ونسخة الوردية.",
+      "content_ref": "DB-01",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [],
+      "upgraded_summary": "شريف تعامل مع ملفات المكتب قبل الحريق.",
+      "report_body": "سجل الجرد الليلي - الصيدلية المركزية. يظهر السجل أن المحاسب شريف عادل السيوفي كان آخر من تعامل مع ملفات المكتب قبل ساعة من اندلاع الحريق. تم استلام نسخة الوردية المسائية في تمام الساعة 20:30. المتهم شريف كان متواجداً في منطقة الإدارة لفترة أطول من المعتاد.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline",
+        "behavioral"
+      ],
+      "route_weight": {
+        "timeline": 0.4,
+        "forensics": 0.1,
+        "behavioral": 0.5
+      },
+      "grand_truth_axis": []
+    },
+    {
+      "evidence_id": "DB-03",
+      "case_id": "case01",
+      "title": "شراء مواد كيميائية",
+      "type": "document",
+      "evidence_tier": "supporting",
+      "evidence_role": "prove",
+      "description": "إيصال شراء مادة مُسرِّعة (أسيتون وكحول أيزوبروبيل) من محل في العتبة باسم شريف.",
+      "summary": "إيصال شراء مادة مُسرِّعة (أسيتون وكحول أيزوبروبيل) من محل في العتبة باسم شريف.",
+      "content_ref": "DB-03",
+      "image_url": "/assets/cases/case01/images/report03.png",
+      "video_url": "/assets/cases/case01/video/video02.mp4",
+      "locked": true,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [
+        "SCN-03"
+      ],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_db03_unlock",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": null,
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "SCN-03",
+              "interaction_id": "ORIGIN-CONFIRMED",
+              "expected_player_action": "review_report",
+              "required_result": "office_origin_confirmed"
+            }
+          ],
+          "on_complete": "unlock_evidence"
+        }
+      ],
+      "upgraded_summary": "شريف اشترى مادة قابلة للاشتعال قبل الحريق.",
+      "report_body": "إيصال شراء مواد كيميائية - متجر 'النيل للكيماويات'. المشتري: شريف عادل السيوفي. الأصناف: 2 لتر أسيتون عالي التركيز، 1 لتر كحول أيزوبروبيل. التاريخ: 18 مارس 2024. ملاحظة: الدفع تم نقداً.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "forensics",
+        "supporting"
+      ],
+      "route_weight": {
+        "timeline": 0.2,
+        "forensics": 0.65,
+        "behavioral": 0.15
+      },
+      "grand_truth_axis": []
+    },
+    {
+      "evidence_id": "SCN-05",
+      "case_id": "case01",
+      "title": "تحليل البقايا الكيميائية المبردة",
+      "type": "report",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "summary": "تحليل متقدم للبقايا الهلامية يثبت استخدام مادة تبريد لتأخير الاشتعال.",
+      "content_ref": "SCN-05",
+      "locked": true,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "forensics",
+        "timeline"
+      ],
+      "depends_on_evidence_ids": [
+        "SCN-03",
+        "DB-01"
+      ],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_scn05_delayed_ignition",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": null,
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "SCN-03",
+              "interaction_id": "ORIGIN-CONFIRMED",
+              "expected_player_action": "review_report",
+              "required_result": "office_origin_confirmed"
+            },
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "document",
+              "source_ref": "DB-01",
+              "interaction_id": "SHIFT-KEY-LOG",
+              "expected_player_action": "review_document",
+              "required_result": "shift_key_assigned_to_sharif"
+            }
+          ],
+          "on_complete": "unlock_evidence"
+        }
+      ],
+      "upgraded_summary": "تم تأخير الحريق 45 دقيقة باستخدام أكياس تبريد طبية. الجاني لم يكن موجوداً لحظة الاشتعال.",
+      "report_body": "تقرير معمل الكيمياء الجنائية السري: البقايا الهلامية التي وُجدت قرب بؤرة الاشتعال (SCN-03) هي بقايا 'بولي أكريلات الصوديوم' المستخدمة في أكياس التبريد الطبي (Ice Packs). اختلاط هذه المادة بالمسرع الكيميائي أدى إلى تجميده جزئياً، مما أخر عملية التبخر والاشتعال بحوالي 45 إلى 50 دقيقة. هذا تكتيك هندسي متعمد لخلق حجة غياب.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "forensics",
+        "critical",
+        "timeline_shift"
+      ],
+      "route_weight": {
+        "timeline": 0.5,
+        "forensics": 0.5,
+        "behavioral": 0
+      },
+      "grand_truth_axis": [],
+      "description": "تحليل متقدم للبقايا الهلامية يثبت استخدام مادة تبريد لتأخير الاشتعال.",
+      "lab_unlock_requires_evidence_id": "DB-03"
+    },
+    {
+      "evidence_id": "DB-07",
+      "case_id": "case01",
+      "title": "سجلات الـ GPS - شريف",
+      "type": "digital",
+      "evidence_tier": "supporting",
+      "evidence_role": "context",
+      "summary": "سجلات تتبع هاتف شريف ليلة الحادث.",
+      "content_ref": "DB-07",
+      "locked": false,
+      "requires_warrant": true,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "timeline"
+      ],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [],
+      "upgraded_summary": "هاتف شريف كان في مقهى بعيد وقت الحريق، لكنه تحرك بشكل غريب قبلها بـ 45 دقيقة.",
+      "report_body": "سجلات أبراج الاتصالات وتتبع الـ GPS للرقم 010... (شريف السيوفي). 20:30 إلى 20:45: الهاتف متصل ببرج الصيدلية. 20:45 إلى 21:00: تحرك سريع باتجاه مقهى 'الزاوية'. 21:00 إلى 22:00: الهاتف ثابت في المقهى. وقت اشتعال الحريق الفعلي كان 21:07.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline",
+        "alibi"
+      ],
+      "route_weight": {
+        "timeline": 0.8,
+        "forensics": 0,
+        "behavioral": 0.2
+      },
+      "grand_truth_axis": [],
+      "description": "سجلات تتبع هاتف شريف ليلة الحادث."
+    },
+    {
+      "evidence_id": "DB-08",
+      "case_id": "case01",
+      "title": "كشف حساب شريف (6 أشهر)",
+      "type": "document",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "summary": "تحليل مالي مفصل لحسابات شريف يكشف عن تحويلات مشبوهة.",
+      "content_ref": "DB-08",
+      "image_url": "/assets/cases/case01/images/report04.png",
+      "locked": true,
+      "requires_warrant": true,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "forensics",
+        "behavioral"
+      ],
+      "depends_on_evidence_ids": [
+        "OBJ-01"
+      ],
+      "completion_triggers": [],
+      "upgraded_summary": "شريف يدفع مبالغ شهرية ضخمة لجهة غير معلومة (ديون قمار) ويغطيها باختلاس من الصيدلية.",
+      "report_body": "تحليل الحساب البنكي رقم #4492. على مدار الـ 6 أشهر الماضية، توجد سحوبات نقدية وتحويلات مجهولة المصدر بمتوسط 20 ألف جنيه شهرياً. هذه المبالغ تتطابق تقريباً مع العجز التراكمي المكتشف في بقايا 'الدفتر الأسود' (OBJ-01). كما توجد حوالة صغيرة بقيمة 150 جنيه لصالح 'محلات أمين للأقفال' قبل شهر من الحريق.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "motive",
+        "behavioral",
+        "financial"
+      ],
+      "route_weight": {
+        "timeline": 0.1,
+        "forensics": 0.4,
+        "behavioral": 0.5
+      },
+      "grand_truth_axis": [
+        "whisperer_seed"
+      ],
+      "description": "تحليل مالي مفصل لحسابات شريف يكشف عن تحويلات مشبوهة."
+    },
+    {
+      "evidence_id": "DB-09",
+      "case_id": "case01",
+      "title": "سجل صانع الأقفال",
+      "type": "document",
+      "evidence_tier": "supporting",
+      "evidence_role": "unlock",
+      "summary": "سجل محلي يثبت نسخ مفتاح الصيدلية.",
+      "content_ref": "DB-09",
+      "image_url": "/assets/cases/case01/images/report05.png",
+      "locked": true,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "behavioral"
+      ],
+      "depends_on_evidence_ids": [
+        "DB-08"
+      ],
+      "completion_triggers": [],
+      "upgraded_summary": "شريف قام بعمل نسخة ثالثة من مفتاح الباب الجانبي قبل شهر.",
+      "report_body": "إفادة من 'محلات أمين للأقفال': بتصريح من النيابة، تم مراجعة الدفاتر. في يوم 14 فبراير، قام المدعو شريف السيوفي بطلب عمل نسخة إضافية من مفتاح من نوع 'Cylinder Lock' مطابق لمفتاح الباب الجانبي للصيدلية. لم يتم تسجيل هذه النسخة في عهدة الصيدلية الرسمية.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "behavioral",
+        "lock"
+      ],
+      "route_weight": {
+        "timeline": 0.2,
+        "forensics": 0.2,
+        "behavioral": 0.6
+      },
+      "grand_truth_axis": [],
+      "description": "سجل محلي يثبت نسخ مفتاح الصيدلية."
+    },
+    {
+      "evidence_id": "OBJ-01",
+      "case_id": "case01",
+      "title": "دفتر الجرد الممزق",
+      "type": "object",
+      "evidence_tier": "critical",
+      "evidence_role": "unlock",
+      "summary": "دفتر جرد الأدوية مع 3 صفحات ممزقة بعناية، يظهر فوارق مالية كبيرة.",
+      "content_ref": "OBJ-01",
+      "image_url": "/assets/cases/case01/images/photo06.png",
+      "locked": true,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_obj01_unlock",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": null,
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_INTERROGATION_NODE_UNLOCKED",
+              "source_type": "interrogation",
+              "source_ref": "CHIEF-DESK",
+              "interaction_id": "REQ-EVIDENCE-01",
+              "expected_player_action": "choose_dialog_option",
+              "required_result": "additional_files_dispatched"
+            }
+          ],
+          "on_complete": "unlock_evidence"
+        }
+      ],
+      "upgraded_summary": "المكتب كان هدفًا للحريق.",
+      "report_body": "المعثور عليه SCN-OFFICE-01: بقايا دفتر جرد ممزق. تمت استعادة 3 صفحات محترقة جزئياً تظهر فوارق مالية غير مبررة بقيمة إجمالية تتجاوز 120,000 ريال خلال الأشهر الثلاثة الماضية. الصفحات ممزقة بعناية قبل محاولة الحرق.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "forensics",
+        "behavioral",
+        "motive"
+      ],
+      "route_weight": {
+        "timeline": 0.05,
+        "forensics": 0.55,
+        "behavioral": 0.4
+      },
+      "grand_truth_axis": [],
+      "description": "دفتر جرد الأدوية مع 3 صفحات ممزقة بعناية، يظهر فوارق مالية كبيرة."
+    },
+    {
+      "evidence_id": "OBJ-02",
+      "case_id": "case01",
+      "title": "المفتاح الاحتياطي",
+      "type": "object",
+      "evidence_tier": "supporting",
+      "evidence_role": "mislead",
+      "summary": "المفتاح الاحتياطي عُثر عليه داخل حقيبة ليلى.",
+      "content_ref": "OBJ-02",
+      "image_url": "/assets/cases/case01/images/photo02.png",
+      "locked": true,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_obj02_unlock",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": null,
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_INTERROGATION_NODE_UNLOCKED",
+              "source_type": "interrogation",
+              "source_ref": "CHIEF-DESK",
+              "interaction_id": "REQ-EVIDENCE-01",
+              "expected_player_action": "choose_dialog_option",
+              "required_result": "additional_files_dispatched"
+            }
+          ],
+          "on_complete": "unlock_evidence"
+        }
+      ],
+      "upgraded_summary": "مفتاح احتياطي يخلق شبهة مؤقتة ضد ليلى.",
+      "report_body": "مفتاح ميكانيكي (نسخة احتياطية). تم العثور عليه مخبأ في جيب جانبي داخل حقيبة يد ليلى السيوفي. المفتاح يفتح الباب الأمامي والباب الجانبي للصيدلية. البصمات الموجودة عليه غير مكتملة بسبب التلوث بالسخام.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline",
+        "mislead",
+        "lock"
+      ],
+      "route_weight": {
+        "timeline": 0.35,
+        "forensics": 0.1,
+        "behavioral": 0.55
+      },
+      "grand_truth_axis": [],
+      "description": "المفتاح الاحتياطي عُثر عليه داخل حقيبة ليلى."
+    },
+    {
+      "evidence_id": "DIG-01",
+      "case_id": "case01",
+      "title": "كاميرا المخبز المقابل",
+      "type": "report",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "description": "تسجيل كاميرا مراقبة من المخبز المقابل يظهر خروج الجميع ثم فساد في القطاع",
+      "summary": "كاميرا المخبز تظهر خروج الجميع، ثم فساد في القطاع لمدة 12 ثانية",
+      "content_ref": "DIG-01",
+      "image_url": "/assets/cases/case01/images/photo13.png",
+      "video_url": "/assets/cases/case01/video/video03.mp4",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [],
+      "upgraded_summary": "الكاميرا تظهر خروج الجميع ثم فساد تقني غامض",
+      "report_body": "تم استرجاع تسجيل كاميرا المخبز المقابل للصيدلية. يظهر التسجيل خروج جميع المشتبه بهم تدريجياً حتى الساعة 10:45 مساءً. عند الساعة 11:01 مساءً، يحدث فساد في ملف التسجيل لمدة 12 ثانية (11:01:03 - 11:01:15). بعد انتهاء الفترة التالفة، لا يظهر أي نشاط غير عادي.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline",
+        "cctv",
+        "corruption"
+      ],
+      "route_weight": {
+        "timeline": 0.9,
+        "forensics": 0.1,
+        "behavioral": 0
+      },
+      "grand_truth_axis": [
+        "clockmaker"
+      ]
+    },
+    {
+      "evidence_id": "DIG-02",
+      "case_id": "case01",
+      "title": "نسخة مصدرة من ملف الكاميرا المتضرر",
+      "type": "document",
+      "evidence_tier": "supporting",
+      "evidence_role": "carryover",
+      "description": "ملف رقمي يحتوي على بيانات تقنية عن القطاع التالف في الكاميرا",
+      "summary": "نسخة من ملف الكاميرا التالف - يحتاج تحليل تقني",
+      "content_ref": "DIG-02",
+      "image_url": "/assets/cases/case01/images/report06.png",
+      "locked": true,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [
+        "DIG-01"
+      ],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_dig02_unlock",
+          "availability_mode": "immediate",
+          "delay_ticks": 3,
+          "scheduled_on_event": "EVENT_EVIDENCE_VERIFIED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "DIG-01",
+              "interaction_id": "OPEN",
+              "expected_player_action": "review_report",
+              "required_result": "cctv_corruption_observed"
+            }
+          ],
+          "on_complete": "unlock_evidence"
+        }
+      ],
+      "upgraded_summary": "القطاع التالف يسبق الحرارة بـ 3 دقائق - تدخل متعمد محتمل",
+      "report_body": "تحليل metadata لملف الكاميرا: القطاع التالف (sector 0x3A) يظهر علامات كتابة يدوية متعمدة، ليس تلفاً حرارياً. الطابع الزمني للفساد: 10:58:12 مساءً - أي قبل وصول الحرارة للغرفة بـ 3 دقائق على الأقل.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline",
+        "metadata",
+        "carryover"
+      ],
+      "route_weight": {
+        "timeline": 0.85,
+        "forensics": 0.15,
+        "behavioral": 0
+      },
+      "grand_truth_axis": [
+        "clockmaker"
+      ]
+    },
+    {
+      "evidence_id": "DB-02",
+      "case_id": "case01",
+      "title": "بوليصة التأمين",
+      "type": "document",
+      "evidence_tier": "supporting",
+      "evidence_role": "mislead",
+      "description": "بوليصة تأمين حديثة على الصيدلية - يستخدمها شريف كمشتت",
+      "summary": "بوليصة تأمين بقيمة 500,000 جنيه - تم تجديدها قبل شهر",
+      "content_ref": "DB-02",
+      "image_url": "/assets/cases/case01/images/report04.png",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [],
+      "upgraded_summary": "بوليصة التأمين مش دافع - شريف بيستخدمها كمشتت",
+      "report_body": "بوليصة تأمين رقم INS-2024-0891. شركة التأمين: المصرية للتأمين. المبلغ المؤمن عليه: 500,000 جنيه. تاريخ التجديد: 12 فبراير 2024. المستفيد: محمود السيوفي (المالك). ملاحظة: لا توجد علاقة مباشرة بين البوليصة والحريق، لكن شريف حاول الربط بينهما في استجوابه.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline",
+        "mislead",
+        "insurance"
+      ],
+      "route_weight": {
+        "timeline": 0.6,
+        "forensics": 0.1,
+        "behavioral": 0.3
+      },
+      "grand_truth_axis": []
+    },
+    {
+      "evidence_id": "DB-04",
+      "case_id": "case01",
+      "title": "سجل المكالمات",
+      "type": "document",
+      "evidence_tier": "supporting",
+      "evidence_role": "prove",
+      "description": "سجل مكالمات شريف يظهر مكالمة مشبوهة قبل الحريق",
+      "summary": "سجل مكالمات شريف - مكالمة غامضة الساعة 10:30 مساءً",
+      "content_ref": "DB-04",
+      "image_url": "/assets/cases/case01/images/report06.png",
+      "locked": true,
+      "requires_warrant": true,
+      "state": "partial",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [
+        "SCN-03"
+      ],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_db04_unlock",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": "EVENT_EVIDENCE_VERIFIED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "SCN-03",
+              "interaction_id": "ORIGIN-CONFIRMED",
+              "expected_player_action": "review_report",
+              "required_result": "office_origin_confirmed"
+            }
+          ],
+          "on_complete": "unlock_evidence"
+        }
+      ],
+      "upgraded_summary": "مكالمة غامضة من رقم غير مسجل الساعة 10:30 - قبل الحريق بـ 45 دقيقة",
+      "report_body": "سجل مكالمات شريف نبيل السيوفي (بتاريخ 19 مارس 2024). الساعة 10:30 مساءً: مكالمة صادرة مدتها 47 ثانية إلى رقم غير مسجل (+20 100 XXX XXXX). الساعة 10:45 مساءً: مكالمة واردة من نفس الرقم مدتها 12 ثانية. لم يتم التعرف على الرقم بعد.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline",
+        "phone",
+        "suspicious"
+      ],
+      "route_weight": {
+        "timeline": 0.7,
+        "forensics": 0.1,
+        "behavioral": 0.2
+      },
+      "grand_truth_axis": []
+    },
+    {
+      "evidence_id": "OBJ-03",
+      "case_id": "case01",
+      "title": "قفاز العمل المتروك",
+      "type": "object",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "description": "قفاز عمل عليه بقايا مخفف دهان - عُثر عليه قرب الباب الجانبي",
+      "summary": "قفاز قطن أبيض عليه بقايا مادة كيميائية (مخفف دهان)",
+      "content_ref": "OBJ-03",
+      "image_url": "/assets/cases/case01/images/photo07.png",
+      "locked": true,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [
+        "SCN-04"
+      ],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_obj03_unlock",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": "EVENT_EVIDENCE_VERIFIED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "SCN-04",
+              "interaction_id": "OUTER-HANDLE",
+              "expected_player_action": "review_report",
+              "required_result": "outer_lock_possible"
+            }
+          ],
+          "on_complete": "unlock_evidence"
+        }
+      ],
+      "upgraded_summary": "القفاز عليه نفس المادة الكيميائية المستخدمة في الحريق",
+      "report_body": "قفاز عمل قطني أبيض (مقاس L). عُثر عليه على بعد 2 متر من الباب الجانبي للصيدلية. التحليل الأولي: بقايا مادة مخفف دهان (Thinner) على الأصابع. القفاز من الداخل: بصمة جزئية (تحتاج مقارنة). المقاس يشير لشخص بالغ ذكر.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "forensics",
+        "physical",
+        "chemical"
+      ],
+      "route_weight": {
+        "timeline": 0.1,
+        "forensics": 0.8,
+        "behavioral": 0.1
+      },
+      "grand_truth_axis": []
+    },
+    {
+      "evidence_id": "BEH-01",
+      "case_id": "case01",
+      "title": "تحليل لغة جسد شريف",
+      "type": "report",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "description": "تقرير تحليل لغة الجسد من استجواب شريف يظهر علامات التوتر والكذب",
+      "summary": "شريف أظهر علامات عصبية متكررة عند سؤاله عن الدفتر الأسود",
+      "content_ref": "BEH-01",
+      "image_url": "/assets/cases/case01/images/report05.png",
+      "locked": true,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": ["INT-SHARIF-01"],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_beh01_unlock",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": "EVENT_INTERROGATION_NODE_UNLOCKED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_INTERROGATION_NODE_UNLOCKED",
+              "source_type": "interrogation",
+              "source_ref": "INT-SHARIF-01",
+              "interaction_id": "Q09",
+              "expected_player_action": "choose_dialog_option",
+              "required_result": "ledger_slip_logged"
+            }
+          ],
+          "on_complete": "unlock_evidence"
+        }
+      ],
+      "upgraded_summary": "شريف كذب بوضوح - لغة الجسد تؤكد إخفاء معلومات",
+      "report_body": "تقرير تحليل سلوكي - المحقق السلوكي. خلال الاستجواب، أظهر شريف نبيل السيوفي العلامات التالية: 1. لمس الأنف 7 مرات عند سؤاله عن الدفتر الأسود (علامة كذب كلاسيكية). 2. تغير نبرة الصوت من واثقة إلى متوترة. 3. تجنب الاتصال البصري المباشر. 4. حركات قدم متكررة (رغبة في الهروب). 5. تناقض بين لغة الجسد والأقوال عند ذكر الساعة 20:44. التقييم: احتمال إخفاء معلومات حاسمة: 87%.",
+      "penalty_if_mishandled": [],
+      "tags": ["behavioral", "body_language", "critical"],
+      "route_weight": {
+        "timeline": 0.05,
+        "forensics": 0.05,
+        "behavioral": 0.9
+      },
+      "grand_truth_axis": []
+    },
+    {
+      "evidence_id": "BEH-02",
+      "case_id": "case01",
+      "title": "ملف نفسي - حاتم صلاح",
+      "type": "document",
+      "evidence_tier": "supporting",
+      "evidence_role": "mislead",
+      "description": "تحليل نفسي لحاتم يظهر أنه قد يكون متسرعًا لكن ليس قاتلًا",
+      "summary": "حاتم شخصية اندفاعية لكن سجله يظهر عدم ارتكابه لجرائم عنف",
+      "content_ref": "BEH-02",
+      "image_url": "/assets/cases/case01/images/report01.png",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [],
+      "upgraded_summary": "حاتم غاضب لكن ليس خطرًا - يحتاج لتحقيق مختلف",
+      "report_body": "ملف تحليل نفسي - حاتم صلاح. العمر: 24 سنة. الحالة الاجتماعية: أعزب. الخلفية: طُرد من الصيدلية قبل 3 أشهر بسبب تأخر متكرر. الدافع المحتمل: انتقام. لكن: 1. لا سجل جنائي سابق. 2. أصدقاء يصفونه بـ'الطيب لكن المهمل'. 3. لم يهدد الضحية علنًا أبدًا. 4. Alibi قوي (في مقهى مع 3 أصدقاء). التقييم: غضب حقيقي لكن احتمال تنفيذ جريمة منخفضة: 23%.",
+      "penalty_if_mishandled": [],
+      "tags": ["behavioral", "psychological", "mislead"],
+      "route_weight": {
+        "timeline": 0.1,
+        "forensics": 0.05,
+        "behavioral": 0.85
+      },
+      "grand_truth_axis": []
+    },
+    {
+      "evidence_id": "DB-05",
+      "case_id": "case01",
+      "title": "فاتورة قهوة حاتم",
+      "type": "digital",
+      "evidence_tier": "supporting",
+      "evidence_role": "unlock",
+      "summary": "تضع حاتم في شارع آخر وقت النافذة الحرجة.",
+      "content_ref": "DB-05",
+      "locked": true,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [
+        "OBJ-01"
+      ],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_db05_unlock",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": null,
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "object",
+              "source_ref": "OBJ-01",
+              "interaction_id": "INSPECT",
+              "expected_player_action": "inspect_object",
+              "required_result": "black_ledger_fragments_found"
+            }
+          ],
+          "on_complete": "unlock_evidence"
+        }
+      ],
+      "upgraded_summary": "حاتم خارج نافذة التنفيذ.",
+      "report_body": "إيصال سداد رقمي - تطبيق 'فوري'. القيمة: 45 جنيه (قهوة + ساندوتش). الوقت: 21:05. الموقع: كافيه 'نجمة وسط البلد'. هذا الموقع يبعد 15 دقيقة بالسيارة عن موقع الصيدلية، مما يوفر عذراً زمنياً لحاتم صلاح.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline",
+        "red_herring_cleanup"
+      ],
+      "route_weight": {
+        "timeline": 0.8,
+        "forensics": 0.05,
+        "behavioral": 0.15
+      },
+      "grand_truth_axis": [],
+      "description": "تضع حاتم في شارع آخر وقت النافذة الحرجة."
+    },
+    {
+      "evidence_id": "DB-06",
+      "case_id": "case01",
+      "title": "سجل رحلة ليلى",
+      "type": "digital",
+      "evidence_tier": "supporting",
+      "evidence_role": "unlock",
+      "summary": "يخرج ليلى من نافذة التنفيذ مبكرًا نسبيًا بعد ربطه زمنيًا.",
+      "content_ref": "DB-06",
+      "locked": true,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [
+        "OBJ-02"
+      ],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_db06_unlock",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": null,
+          "logic_operator": "any",
+          "conditions": [
+            {
+              "event_name": "EVENT_INTERROGATION_NODE_UNLOCKED",
+              "source_type": "interrogation",
+              "source_ref": "INT-LAYLA-01",
+              "interaction_id": "Q02",
+              "expected_player_action": "choose_dialog_option",
+              "required_result": "layla_office_entry_logged"
+            },
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "object",
+              "source_ref": "OBJ-02",
+              "interaction_id": "INSPECT",
+              "expected_player_action": "inspect_object",
+              "required_result": "spare_key_found"
+            }
+          ],
+          "on_complete": "unlock_evidence"
+        }
+      ],
+      "upgraded_summary": "ليلى خارج نافذة التنفيذ العملية.",
+      "report_body": "سجل رحلات تطبيق 'أوبر'. العميل: ليلى السيوفي. وقت الطلب: 20:50. وقت الالتقاء: 20:55. الوجهة: المعادي. وقت الوصول: 21:25. هذا يؤكد مغادرة ليلى للمنطقة قبل اندلاع الحريق بـ 19 دقيقة.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline",
+        "reinterpretation"
+      ],
+      "route_weight": {
+        "timeline": 0.85,
+        "forensics": 0.05,
+        "behavioral": 0.1
+      },
+      "grand_truth_axis": [],
+      "description": "يخرج ليلى من نافذة التنفيذ مبكرًا نسبيًا بعد ربطه زمنيًا."
+    },
+    {
+      "evidence_id": "EVID-PARTIAL-LOCK",
+      "case_id": "case01",
+      "title": "قفل الباب الأمامي",
+      "type": "object",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "summary": "الباب الأمامي مغلق بالقفل من الخارج، والمفتاح الرئيسي في جيب الضحية.",
+      "content_ref": "virtual:EVID-PARTIAL-LOCK",
+      "locked": true,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "timeline",
+        "forensics",
+        "behavioral"
+      ],
+      "depends_on_evidence_ids": [
+        "SCN-04",
+        "OBJ-02",
+        "DB-06"
+      ],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_lock_unlock",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": null,
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "SCN-04",
+              "interaction_id": "OUTER-HANDLE",
+              "expected_player_action": "review_report",
+              "required_result": "outer_lock_possible"
+            }
+          ],
+          "on_complete": "unlock_evidence"
+        },
+        {
+          "trigger_id": "trig_lock_primary",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": null,
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "SCN-04",
+              "interaction_id": "OUTER-HANDLE",
+              "expected_player_action": "review_report",
+              "required_result": "outer_lock_possible"
+            },
+            {
+              "event_name": "EVENT_INTERROGATION_NODE_UNLOCKED",
+              "source_type": "interrogation",
+              "source_ref": "INT-SHARIF-01",
+              "interaction_id": "Q06",
+              "expected_player_action": "choose_dialog_option",
+              "required_result": "key_access_statement_recorded"
+            },
+            {
+              "event_name": "EVENT_TIMELINE_CONTRADICTION_CONFIRMED",
+              "source_type": "timeline",
+              "source_ref": "TIMELINE-BOARD",
+              "interaction_id": "LOCK-EVENT-03",
+              "expected_player_action": "lock_timeline_event",
+              "required_result": "sharif_near_side_door_confirmed"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        },
+        {
+          "trigger_id": "trig_lock_fallback",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": null,
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "SCN-04",
+              "interaction_id": "OUTER-HANDLE",
+              "expected_player_action": "review_report",
+              "required_result": "outer_lock_possible"
+            },
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "document",
+              "source_ref": "DB-01",
+              "interaction_id": "SHIFT-KEY-LOG",
+              "expected_player_action": "review_document",
+              "required_result": "shift_key_assigned_to_sharif"
+            },
+            {
+              "event_name": "EVENT_TIMELINE_CONTRADICTION_CONFIRMED",
+              "source_type": "timeline",
+              "source_ref": "TIMELINE-BOARD",
+              "interaction_id": "LOCK-EVENT-03",
+              "expected_player_action": "lock_timeline_event",
+              "required_result": "sharif_near_side_door_confirmed"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "الإغلاق الخارجي والزمن والوصول الفعلي يلتقون ضد شريف.",
+      "report_body": "تحليل آلية الإغلاق - مسرح الجريمة 01. المعاينة الميدانية تؤكد أن القفل الأساسي للباب الأمامي كان مغلقاً بتكتين من الخارج. وبالنظر إلى اكتشاف المفتاح الرئيسي في جيب الضحية محمود السيوفي بالداخل، فإن ذلك ينفي إغلاق الضحية للباب بنفسه. الشخص الذي أغلق الباب كان يملك نسخة إضافية وغادر بعد تأجيل خروج الآخرين.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline",
+        "forensics",
+        "behavioral",
+        "cross_route",
+        "critical"
+      ],
+      "route_weight": {
+        "timeline": 0.45,
+        "forensics": 0.3,
+        "behavioral": 0.25
+      },
+      "grand_truth_axis": [],
+      "description": "الباب الأمامي مغلق بالقفل من الخارج، والمفتاح الرئيسي في جيب الضحية."
+    },
+    {
+      "evidence_id": "EVID-PARTIAL-FALSE-ORIGIN-STORY",
+      "case_id": "case01",
+      "title": "تعارض منشأ الحريق",
+      "type": "statement",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "summary": "شريف حدد منشأ النار قبل أن يملك ما يبرر ذلك.",
+      "content_ref": "virtual:EVID-PARTIAL-FALSE-ORIGIN-STORY",
+      "locked": true,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "behavioral",
+        "forensics"
+      ],
+      "depends_on_evidence_ids": [
+        "SCN-03"
+      ],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_false_origin_unlock",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": null,
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "SCN-03",
+              "interaction_id": "ORIGIN-CONFIRMED",
+              "expected_player_action": "review_report",
+              "required_result": "office_origin_confirmed"
+            }
+          ],
+          "on_complete": "unlock_evidence"
+        },
+        {
+          "trigger_id": "trig_false_origin_primary",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": null,
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_INTERROGATION_NODE_UNLOCKED",
+              "source_type": "interrogation",
+              "source_ref": "INT-SHARIF-01",
+              "interaction_id": "Q03",
+              "expected_player_action": "choose_dialog_option",
+              "required_result": "preemptive_origin_claim_logged"
+            },
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "SCN-03",
+              "interaction_id": "ORIGIN-CONFIRMED",
+              "expected_player_action": "review_report",
+              "required_result": "office_origin_confirmed"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "تم رصد تعارض معتبر في أقوال شريف عن منشأ الحريق.",
+      "report_body": "سجل تناقض أقوال المتهم - المحضر 142. أثناء سؤال شريف عادل السيوفي في الدقائق الأولى للتحقيق، صرح بـ: 'أنا متأكد إن الحريقة بدأت من لوحة الكهربا اللي في المخزن ورا'. وبالرجوع لتقرير المعمل الجنائي SCN-03، يتبين أن المنشأ الفعلي كان في مكتب الإدارة وليس المخزن، كما أن شريف لم يكن موجوداً وقت اندلاع الحريق العلني حسب ادعائه، مما يرجح معرفته بمكان بدء الحريق قبل اندلاعه.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "behavioral",
+        "forensics",
+        "critical"
+      ],
+      "route_weight": {
+        "timeline": 0.15,
+        "forensics": 0.2,
+        "behavioral": 0.65
+      },
+      "grand_truth_axis": [],
+      "description": "شريف حدد منشأ النار قبل أن يملك ما يبرر ذلك."
+    },
+    {
+      "evidence_id": "EVID-PARTIAL-BLACK-LEDGER",
+      "case_id": "case01",
+      "title": "سلسلة الدفتر الأسود",
+      "type": "statement",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "summary": "سلسلة تربط بقايا الدفتر بدافع شريف.",
+      "content_ref": "virtual:EVID-PARTIAL-BLACK-LEDGER",
+      "locked": true,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "behavioral",
+        "forensics"
+      ],
+      "depends_on_evidence_ids": [
+        "OBJ-01",
+        "DB-01"
+      ],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_black_ledger_unlock",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": null,
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "object",
+              "source_ref": "OBJ-01",
+              "interaction_id": "INSPECT",
+              "expected_player_action": "inspect_object",
+              "required_result": "black_ledger_fragments_found"
+            }
+          ],
+          "on_complete": "unlock_evidence"
+        },
+        {
+          "trigger_id": "trig_ledger_primary",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": null,
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "object",
+              "source_ref": "OBJ-01",
+              "interaction_id": "INSPECT",
+              "expected_player_action": "inspect_object",
+              "required_result": "black_ledger_fragments_found"
+            },
+            {
+              "event_name": "EVENT_INTERROGATION_NODE_UNLOCKED",
+              "source_type": "interrogation",
+              "source_ref": "INT-SHARIF-01",
+              "interaction_id": "Q09",
+              "expected_player_action": "choose_dialog_option",
+              "required_result": "ledger_slip_logged"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "الدفتر الأسود قلب الدافع المحلي.",
+      "report_body": "تحليل الدافع المالي - الربط بين الدليل المادي والأقوال. العثور على صفحات الدفتر الأسود الممزقة OBJ-01 في موقع الحريق يثبت محاولة إتلاف سجلات محددة. زلة لسان شريف عن وجود 'الدفتر' قبل مواجهته بالأدلة OBJ-01 تربط بين معرفته بمكانه وبين رغبته في إخفاء التلاعبات المالية فيه، حيث كان هو المسؤول الوحيد عن الجرد الليلي DB-01.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "behavioral",
+        "forensics",
+        "motive",
+        "critical"
+      ],
+      "route_weight": {
+        "timeline": 0.1,
+        "forensics": 0.3,
+        "behavioral": 0.6
+      },
+      "grand_truth_axis": [],
+      "description": "سلسلة تربط بقايا الدفتر بدافع شريف."
+    },
+    {
+      "evidence_id": "EVID-CARRYOVER-CCTV-BURNED-VIDEO",
+      "case_id": "case01",
+      "title": "فيديو محروق جزئيًا (12 ثانية)",
+      "type": "video",
+      "evidence_tier": "critical",
+      "evidence_role": "carryover",
+      "summary": "مقطع فيديو 12 ثانية يظهر ظلًا يتلاعب بكاميرا المراقبة - لا علاقة له بالجاني المحلي.",
+      "content_ref": "CCTV-BURNED-12S",
+      "video_url": "/assets/cases/case01/video/cctv_burned_12s.mp4",
+      "locked": true,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "timeline",
+        "forensics"
+      ],
+      "depends_on_evidence_ids": [
+        "EVID-SUP-CCTV-CORRUPTION"
+      ],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_burned_video_unlock",
+          "availability_mode": "delayed",
+          "delay_ticks": 2,
+          "scheduled_on_event": "EVENT_EVIDENCE_VERIFIED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "EVID-SUP-CCTV-CORRUPTION",
+              "interaction_id": "OPEN",
+              "expected_player_action": "review_report",
+              "required_result": "corruption_precedes_heat"
+            }
+          ],
+          "on_complete": "unlock_evidence"
+        }
+      ],
+      "upgraded_summary": "الفيديو يظهر شخصًا ثانيًا يتلاعب بالكاميرا قبل الحريق - ليس شريف. هذا دليل على تدخل خارجي.",
+      "report_body": "مقطع فيديو مشفّى جزئيًا من الكاميرا 02 (مدخل الصيدلية الجانبي). المدة: 12 ثانية فقط قبل توقف التسجيل. يُظهر ظل شخص طويل القامة يقترب من الكاميرا ويغطي العدسة بقطعة قماش سوداء. الوقت: 21:03. هذا قبل الحريق بـ 6 دقائق. الشخص في الفيديو لا يتطابق مع شريف (الطول مختلف) ولا مع أي مشتبه معروف. الوجه غير واضح بسبب الاحتراق الجزئي للفيديو.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline",
+        "forensics",
+        "grand_truth_seed",
+        "persistent",
+        "clockmaker"
+      ],
+      "route_weight": {
+        "timeline": 0.6,
+        "forensics": 0.3,
+        "behavioral": 0.1
+      },
+      "grand_truth_axis": [
+        "clockmaker"
+      ],
+      "description": "فيديو 12 ثانية محروق يظهر ظلًا يتلاعب بالكاميرا - بذرة الثالوث الأولى.",
+      "usable_in_future_cases": true,
+      "retained_reason": "Shows third-party tampering with CCTV before crime - unrelated to local suspect"
+    },
+    {
+      "evidence_id": "EVID-SUP-CCTV-CORRUPTION",
+      "case_id": "case01",
+      "title": "فساد ملف الكاميرا",
+      "type": "report",
+      "evidence_tier": "supporting",
+      "evidence_role": "carryover",
+      "summary": "فساد رقمي سبق الحرارة في ملف الكاميرا.",
+      "content_ref": "DIG-03",
+      "video_url": "/assets/cases/case01/video/video03.mp4",
+      "locked": true,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "timeline",
+        "forensics"
+      ],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_cctv_unlock",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": null,
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_INTERROGATION_NODE_UNLOCKED",
+              "source_type": "interrogation",
+              "source_ref": "CHIEF-DESK",
+              "interaction_id": "REQ-EVIDENCE-01",
+              "expected_player_action": "choose_dialog_option",
+              "required_result": "additional_files_dispatched"
+            }
+          ],
+          "on_complete": "unlock_evidence"
+        },
+        {
+          "trigger_id": "trig_cctv_support",
+          "availability_mode": "delayed",
+          "delay_ticks": 3,
+          "scheduled_on_event": "EVENT_EVIDENCE_VERIFIED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "EVID-SUP-CCTV-CORRUPTION",
+              "interaction_id": "OPEN",
+              "expected_player_action": "review_report",
+              "required_result": "corruption_precedes_heat"
+            },
+            {
+              "event_name": "EVENT_TIMELINE_CONTRADICTION_CONFIRMED",
+              "source_type": "timeline",
+              "source_ref": "TIMELINE-BOARD",
+              "interaction_id": "LOCK-EVENT-06",
+              "expected_player_action": "lock_timeline_event",
+              "required_result": "corruption_near_ignition_window"
+            }
+          ],
+          "on_complete": "set_flag_only",
+          "on_complete_params": {
+            "flags": [
+              "is_clockmaker_suspicious_1",
+              "kept_case01_camera_corruption_file"
+            ]
+          }
+        }
+      ],
+      "upgraded_summary": "الفساد الرقمي يزرع بذرة شك أكبر من وزن القضية.",
+      "report_body": "تقرير المختبر الرقمي ر09-2024. تحليل ملف الفيديو الخاص بالكاميرا 04 (الموجهة لمكتب الإدارة). تم رصد 'فساد رقمي متعمد' (Digital Corruption) بدأ في تمام الساعة 21:01، أي قبل رصد أول إشارة حرارية من حساسات الحريق بـ 8 دقائق. هذا يشير إلى تدخل بشري لتعطيل التسجيل قبل بدء الحريق مباشرة.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline",
+        "forensics",
+        "grand_truth_seed",
+        "persistent"
+      ],
+      "route_weight": {
+        "timeline": 0.5,
+        "forensics": 0.35,
+        "behavioral": 0.15
+      },
+      "grand_truth_axis": [
+        "clockmaker"
+      ],
+      "description": "فساد رقمي سبق الحرارة في ملف الكاميرا."
+    }
+  ],
+  "suspects": [
+    {
+      "character_id": "char_sharif",
+      "name": "شريف نبيل السيوفي",
+      "role_in_case": "suspect",
+      "relationship_to_victim": "ابن أخ الضحية / محاسب الصيدلية",
+      "occupation": "محاسب / مدير مالي فرعي",
+      "public_profile": "شاب طموح يعيش فوق مستواه المادي. اختلس مبالغ ضخمة من الصيدلية وحرقها لإخفاء الأدلة.",
+      "image_url": "/assets/cases/case01/images/photo09.png",
+      "audio_url": "/assets/cases/case01/audio/audio01.wav",
+      "MBTI_Type": null,
+      "cognitive_profile": {
+        "base_collapse_threshold": 7,
+        "base_lawyer_up_threshold": 6,
+        "aggression_tolerance": 2,
+        "rapport_affinity": -1,
+        "evidence_rigidity": 2
+      },
+      "pressure_response": "silence",
+      "deception_style": "passive",
+      "speech_register": "formal",
+      "favorite_phrases": [
+        "أنا متأكد إن كل حاجة تمام",
+        "عمي كان راجل طيب ومحبوب"
+      ],
+      "verbal_tells": [
+        "نفي استباقي",
+        "استخدام الماضي قبل تأكيد الوفاة"
+      ],
+      "local_function": "suspect",
+      "recurring_npc": false,
+      "grand_truth_relevance": [],
+      "hidden_affiliations": [],
+      "dialogue_options": [
+        {
+          "id": "Q03",
+          "text": "لماذا كنت واثقًا أن النار بدأت من لوحة الكهربا في المخزن قبل صدور التقرير؟"
+        },
+        {
+          "id": "Q06",
+          "text": "من كان يملك مفتاح الباب الجانبي؟"
+        },
+        {
+          "id": "Q09",
+          "text": "لماذا ذكرت الدفتر قبل أن نسألك عنه؟"
+        },
+        {
+          "id": "Q04",
+          "text": "هل كنت مدينًا لأحد بمبالغ كبيرة؟"
+        },
+        {
+          "id": "Q05",
+          "text": "لماذا لم تذكر أنك دخلت الصيدلية الساعة 20:44؟"
+        },
+        {
+          "id": "Q07",
+          "text": "ما علاقتك بشركة التأمين المصرية؟"
+        }
+      ]
+    },
+    {
+      "character_id": "char_abu_khaled",
+      "name": "عبد الرحمن محمد (أبو خالد)",
+      "role_in_case": "suspect",
+      "relationship_to_victim": "كهربائي حر",
+      "occupation": "فني كهرباء صيانة",
+      "public_profile": "كهربائي قام بأعمال صيانة في الصيدلية قبل الحريق بيوم. يجعل فرضية الحادث الكهربائي معقولة.",
+      "image_url": "/assets/cases/case01/images/photo10.png",
+      "audio_url": "/assets/cases/case01/audio/audio03.wav",
+      "MBTI_Type": null,
+      "cognitive_profile": {
+        "base_collapse_threshold": 8,
+        "base_lawyer_up_threshold": 7,
+        "aggression_tolerance": 3,
+        "rapport_affinity": 0,
+        "evidence_rigidity": 3
+      },
+      "pressure_response": "attack",
+      "deception_style": "gaslighting",
+      "speech_register": "street",
+      "favorite_phrases": [
+        "كل حد فاهم كهربا يعرف",
+        "محمود السيوفي راجل طيب بس عليه ديون"
+      ],
+      "verbal_tells": [
+        "استعلاء تقني",
+        "نبرة دفاعية"
+      ],
+      "local_function": "suspect",
+      "recurring_npc": false,
+      "grand_truth_relevance": [],
+      "hidden_affiliations": [],
+      "dialogue_options": [
+        {
+          "id": "Q01",
+          "text": "ما الذي فعلته بالضبط في آخر صيانة للصيدلية؟"
+        },
+        {
+          "id": "Q02",
+          "text": "هل التمديدات الكهربائية كانت في حالة سيئة؟"
+        },
+        {
+          "id": "Q03",
+          "text": "لماذا تأخرت في تقديم فاتورة الصيانة الأخيرة؟"
+        }
+      ]
+    },
+    {
+      "character_id": "char_layla",
+      "name": "ليلى محمود السيوفي",
+      "role_in_case": "suspect",
+      "relationship_to_victim": "ابنة الضحية",
+      "occupation": "موظفة إدارية وبلوجر مغمورة",
+      "public_profile": "ابنة محمود الصغرى. كانت على خلاف مع والدها بسبب رغبتها في بيع الصيدلية. تحمل المفتاح الاحتياطي أحيانًا.",
+      "image_url": "/assets/cases/case01/images/photo11.png",
+      "audio_url": "/assets/cases/case01/audio/audio04.wav",
+      "MBTI_Type": null,
+      "cognitive_profile": {
+        "base_collapse_threshold": 5,
+        "base_lawyer_up_threshold": 8,
+        "aggression_tolerance": 1,
+        "rapport_affinity": 2,
+        "evidence_rigidity": 1
+      },
+      "pressure_response": "collapse",
+      "deception_style": "protective",
+      "speech_register": "formal",
+      "favorite_phrases": [
+        "بابا كان بيحب الصيدلية أكتر مننا",
+        "أنا مخبية حاجة بس مش اللي في بالك"
+      ],
+      "verbal_tells": [
+        "تردد عاطفي",
+        "تجنب النظر مباشره"
+      ],
+      "local_function": "suspect",
+      "recurring_npc": false,
+      "grand_truth_relevance": [],
+      "hidden_affiliations": [],
+      "dialogue_options": [
+        {
+          "id": "Q02",
+          "text": "هل فتحت مكتب والدك؟"
+        },
+        {
+          "id": "Q04",
+          "text": "هل كان والدك على خلاف مع أحد مؤخرًا؟"
+        },
+        {
+          "id": "Q05",
+          "text": "لماذا وجدت مفتاحًا احتياطيًا في حقيبتك؟"
+        },
+        {
+          "id": "Q06",
+          "text": "ما رأيك في شريف نبيل؟"
+        }
+      ]
+    },
+    {
+      "character_id": "char_hatem",
+      "name": "حاتم صلاح",
+      "role_in_case": "suspect",
+      "relationship_to_victim": "موظف سابق / دليفري",
+      "occupation": "عامل توصيل طلبات",
+      "public_profile": "موظف سابق تم طرده بسبب مشاكل انضباطية. يكره محمود السيوفي علنًا لكن لديه alibi زمني قوي.",
+      "image_url": "/assets/cases/case01/images/photo12.png",
+      "MBTI_Type": null,
+      "cognitive_profile": {
+        "base_collapse_threshold": 4,
+        "base_lawyer_up_threshold": 9,
+        "aggression_tolerance": 4,
+        "rapport_affinity": -1,
+        "evidence_rigidity": 0
+      },
+      "pressure_response": "ramble",
+      "deception_style": "direct",
+      "speech_register": "street",
+      "favorite_phrases": [
+        "أنا مالي ومال الحريقة دي؟",
+        "الراجل ده ظلمني وكله سلف ودين"
+      ],
+      "verbal_tells": [
+        "انفعال زائد",
+        "كلام سريع ومتقطع"
+      ],
+      "local_function": "suspect",
+      "recurring_npc": false,
+      "grand_truth_relevance": [],
+      "hidden_affiliations": [],
+      "dialogue_options": [
+        {
+          "id": "Q01",
+          "text": "أين كنت الليلة الماضية حوالي الساعة 11 مساءً؟"
+        },
+        {
+          "id": "Q02",
+          "text": "لماذا لديك ضغينة ضد محمود السيوفي؟"
+        },
+        {
+          "id": "Q03",
+          "text": "هل كنت قرب الصيدلية في الأيام الأخيرة؟"
+        }
+      ]
+    }
+  ],
+  "witnesses": [
+    {
+      "character_id": "char_dr_yahya",
+      "name": "د. يحيى كريم",
+      "role_in_case": "consultant",
+      "relationship_to_victim": "none",
+      "occupation": "استشاري نفسي - متعاون مع الشرطة",
+      "public_profile": "خبير نفسي محترم تتعاون معه الشرطة في القضايا المعقدة. يقدم استشارات سلوكية للمحققين.",
+      "image_url": "/assets/cases/case01/images/photo_dr_yahya.png",
+      "MBTI_Type": "INTJ",
+      "cognitive_profile": {
+        "base_collapse_threshold": 10,
+        "base_lawyer_up_threshold": 10,
+        "aggression_tolerance": 5,
+        "rapport_affinity": 3,
+        "evidence_rigidity": 8
+      },
+      "pressure_response": "silence",
+      "deception_style": "gaslighting",
+      "speech_register": "academic",
+      "favorite_phrases": [
+        "دعنا نفكر معًا في هذا النمط",
+        "ما الذي يجعلك تصل لهذا الاستنتاج؟",
+        "هل لاحظت أي تناقض عاطفي؟"
+      ],
+      "verbal_tells": [
+        "يطرح أسئلة سقراطية بدل الإجابات المباشرة",
+        "يستخدم مصطلحات أكاديمية دقيقة",
+        "يعيد صياغة أسئلة اللاعب بطريقة تحليلية"
+      ],
+      "local_function": "witness",
+      "recurring_npc": true,
+      "grand_truth_relevance": [
+        "whisperer",
+        "player_recruitment"
+      ],
+      "hidden_affiliations": [
+        "trinity_whisperer"
+      ],
+      "dialogue_options": [
+        {
+          "id": "Q01",
+          "text": "ما رأيك في سلوك شريف أثناء الاستجواب؟"
+        },
+        {
+          "id": "Q02",
+          "text": "هل تلاحظ أي نمط نفسي في طريقة ارتكاب الجريمة؟"
+        },
+        {
+          "id": "Q03",
+          "text": "كيف تتعامل مع الضغوط النفسية في التحقيقات؟"
+        }
+      ]
+    },
+    {
+      "character_id": "char_chief_desk",
+      "name": "المقدم أحمد رشدي - Chief Desk",
+      "role_in_case": "authority",
+      "relationship_to_victim": "none",
+      "occupation": "رئيس قسم التحقيقات الجنائية",
+      "public_profile": "ضابط شرطة مخضرم يتحمل ضغط المؤسسة السياسية والإعلامية. يكلف المحققين بالقضايا ويراقب التقدم.",
+      "image_url": "/assets/cases/case01/images/photo_chief.png",
+      "MBTI_Type": "ESTJ",
+      "cognitive_profile": {
+        "base_collapse_threshold": 10,
+        "base_lawyer_up_threshold": 10,
+        "aggression_tolerance": 8,
+        "rapport_affinity": 1,
+        "evidence_rigidity": 7
+      },
+      "pressure_response": "authority",
+      "deception_style": "evasive",
+      "speech_register": "bureaucratic",
+      "favorite_phrases": [
+        "أريد نتائج موثقة",
+        "الوقت يضغط علينا",
+        "لا أريد مفاجآت إعلامية"
+      ],
+      "verbal_tells": [
+        "يستخدم صيغة المبني للمجهول عند الحديث عن ضغوط عليا",
+        "يتجنب الإجابة المباشرة على أسئلة حول التغطية الإعلامية",
+        "يشدد على 'البروتوكول' و'الإجراءات'"
+      ],
+      "local_function": "authority",
+      "recurring_npc": true,
+      "grand_truth_relevance": [
+        "institutional_knowledge",
+        "possible_trinity_awareness"
+      ],
+      "hidden_affiliations": [],
+      "dialogue_options": [
+        {
+          "id": "REQ-EVIDENCE-01",
+          "text": "أحتاج ملفات إضافية (OBJ-01، OBJ-02، EVID-SUP-CCTV-CORRUPTION)"
+        },
+        {
+          "id": "Q-CHIEF-02",
+          "text": "هل هناك ضغط لإغلاق القضية بسرعة؟"
+        },
+        {
+          "id": "Q-CHIEF-03",
+          "text": "هل حدثت حرائق مماثلة في الشهور الماضية؟"
+        }
+      ]
+    }
+  ],
+  "related_persons": [
+    {
+      "character_id": "victim_mahmoud",
+      "name": "محمود السيوفي",
+      "role_in_case": "victim",
+      "relationship_to_victim": "self",
+      "occupation": "مالك صيدلية",
+      "public_profile": "رجل يحتفظ بسجلات ورقية دقيقة.",
+      "image_url": "/assets/cases/case01/images/photo08.png"
+    }
+  ],
+  "required_flags": [],
+  "outcome_flags": {
+    "success": [
+      "case01_fire_resolved",
+      "resolved_as_individual",
+      "route_collaboration_completed",
+      "is_clockmaker_suspicious_1",
+      "kept_case01_cctv_burned_video"
+    ],
+    "partial": [
+      "case01_fire_resolved",
+      "resolved_as_individual",
+      "route_collaboration_completed"
+    ],
+    "failure": [
+      "penalty_police_trust_loss"
+    ]
+  },
+  "solution_paths": {
+    "timeline": {
+      "goal": "كسر حاتم، تخفيض شبهة ليلى، ثم وضع شريف في النافذة القاتلة.",
+      "primary_refs": [
+        "DB-05",
+        "DB-06",
+        "OBJ-02"
+      ]
+    },
+    "forensics": {
+      "goal": "إثبات أن الحريق عمد وأن منشأه مكتب الإدارة وأن الإغلاق الخارجي ممكن.",
+      "primary_refs": [
+        "SCN-03",
+        "SCN-04",
+        "DB-03",
+        "OBJ-01"
+      ]
+    },
+    "behavioral": {
+      "goal": "التقاط النفي الاستباقي وزلة الدفتر.",
+      "primary_refs": [
+        "EVID-PARTIAL-FALSE-ORIGIN-STORY",
+        "EVID-PARTIAL-BLACK-LEDGER"
+      ]
+    }
+  },
+  "derived_route_profile": {
+    "timeline": 0,
+    "forensics": 0,
+    "behavioral": 0,
+    "raw_scores": {
+      "timeline": 0,
+      "forensics": 0,
+      "behavioral": 0
+    },
+    "normalization_total": 0,
+    "formula_version": "v1_weighted_state_normalized",
+    "computed_from_evidence": false
+  },
+  "closure_rules": {
+    "requires_culprit": true,
+    "requires_motive": true,
+    "requires_method_or_opportunity": true,
+    "minimum_evidence_count": 3,
+    "accepted_true_motive_ids": [
+      "motive_embezzlement_black_ledger"
+    ],
+    "accepted_true_method_ids": [
+      "method_arson_office_origin",
+      "method_side_door_lock",
+      "method_arson_front_door"
+    ],
+    "false_success_motive_ids": [
+      "motive_insurance",
+      "motive_family_conflict"
+    ],
+    "false_success_flag": "case01_false_confidence_close",
+    "validate_closure": {
+      "minimum_behavioral_chain_verified": 1,
+      "minimum_cross_route_verified": 1,
+      "no_shared_evidence_between_roles": true,
+      "behavioral_chain_evidence_ids": [
+        "DB-08",
+        "DB-09",
+        "EVID-PARTIAL-FALSE-ORIGIN-STORY",
+        "EVID-PARTIAL-BLACK-LEDGER"
+      ],
+      "cross_route_evidence_ids": [
+        "SCN-05",
+        "DB-07",
+        "EVID-PARTIAL-LOCK"
+      ],
+      "rejected_submission_reason_codes": [
+        "missing_behavioral_chain",
+        "missing_cross_route_evidence",
+        "shared_evidence_used_twice"
+      ]
+    },
+    "available_motive_descriptions": {
+      "motive_embezzlement_black_ledger": "إخفاء الاختلاس وتدمير الدفتر الأسود",
+      "motive_insurance": "مطالبة تعويض للتأمين",
+      "motive_family_conflict": "خلاف عائلي حول بيع الصيدلية"
+    },
+    "available_method_descriptions": {
+      "method_arson_office_origin": "حريق عمد في مكتب الإدارة",
+      "method_electrical_disguise": "حريق عمد مصمم ليبدو ماسًا كهربائيًا",
+      "method_side_door_lock": "إغلاق الباب الجانبي من الخارج",
+      "method_arson_front_door": "حريق عمد للباب الأمامي"
+    }
+  },
+  "trinity_hooks": {
+    "awareness_sources": [
+      {
+        "source_id": "aware_case01_dig03_intentional",
+        "source_ref": "EVID-SUP-CCTV-CORRUPTION",
+        "delta": 4,
+        "player_action": "classify_corruption_as_intentional"
+      },
+      {
+        "source_id": "aware_case01_deep_recovery_early",
+        "source_ref": "EVID-SUP-CCTV-CORRUPTION",
+        "delta": 3,
+        "player_action": "request_deep_metadata_recovery"
+      }
+    ],
+    "retaliation_rules": [
+      {
+        "rule_id": "case01_inbox_retract",
+        "threshold": 25,
+        "primary_role": "timeline",
+        "proxy_role": "forensics",
+        "response_type": "ui_anomaly",
+        "source_ref": "EVID-SUP-CCTV-CORRUPTION",
+        "visible_effect": "inbox_attachment_retract_then_cached_restore"
+      }
+    ]
+  },
+  "hidden_systems": {
+    "ui_anomalies": {
+      "allowed_events": [
+        {
+          "anomaly_id": "anomaly_inbox_accident_glitch",
+          "trigger_flag": "is_clockmaker_suspicious_1",
+          "trigger_event": "inbox_displayed",
+          "target_ui_element": "inbox_brief.message",
+          "effect_type": "text_morph",
+          "original_text": "الدفاع المدني يرجح ماسًا كهربائيًا مبدئيًا",
+          "morphed_text": "الدفاع المدني يرجح ماسًا كهربائيًا مصممًا",
+          "duration_ms": 800,
+          "revert": true,
+          "max_triggers_per_case": 1,
+          "description": "كلمة 'مبدئيًا' تتحول لـ 'مصممًا' للحظة ثم تعود - تلميح بأن الحريق لم يكن حادثًا"
+        },
+        {
+          "anomaly_id": "anomaly_cctv_flicker",
+          "trigger_flag": "cctv_corruption_reviewed",
+          "trigger_event": "evidence_viewed",
+          "target_ui_element": "EVID-SUP-CCTV-CORRUPTION",
+          "effect_type": "visual_glitch",
+          "glitch_type": "brief_frame_distortion",
+          "duration_ms": 1000,
+          "severity": "subtle",
+          "max_triggers_per_case": 1,
+          "description": "تشويش بصري خفيف لمدة ثانية عند مراجعة دليل فساد الكاميرا - إحساس بأن النظام يراقب"
+        },
+        {
+          "anomaly_id": "anomaly_shadow_menu_flicker",
+          "trigger_flag": "trinity_pattern_detected",
+          "trigger_event": "menu_opened",
+          "target_ui_element": "main_menu",
+          "effect_type": "shadow_appearance",
+          "description_text": "ظل عابر في الخلفية يختفي فورًا",
+          "duration_ms": 500,
+          "max_triggers_per_case": 1,
+          "description": "ظل يظهر للحظة في القائمة الرئيسية - أول تلميح لوجود الثالوث"
+        }
+      ],
+      "paranoia_intensity": {
+        "level": "low",
+        "description": "طبقة بارانويا خفيفة في القضية الأولى - اللاعب يشعر أن هناك شيء خاطئ لكن لا يعرف ماذا",
+        "escalation_rule": "تزداد الشذوذات في القضايا اللاحقة بناءً على trinity_awareness_score"
+      }
+    },
+    "route_collaboration": {
+      "minimum_required_chains": 3,
+      "shared_evidence_completion_required": true,
+      "critical_evidence_requires_alternative_paths": true,
+      "minimum_alternative_trigger_sets_for_critical_evidence": 3
+    },
+    "evidence_reinterpretation_rules": [
+      {
+        "rule_id": "reinterp_lock_shared_access",
+        "target_evidence_id": "EVID-PARTIAL-LOCK",
+        "evaluation_mode": "state_based",
+        "recompute_each_tick": true,
+        "state_predicates_true": [
+          {
+            "fact_type": "evidence_verified",
+            "ref": "OBJ-02",
+            "equals": true
+          },
+          {
+            "fact_type": "evidence_verified",
+            "ref": "DB-06",
+            "equals": true
+          }
+        ],
+        "on_true": {
+          "set_evidence_state": "partial",
+          "set_evidence_summary": "الإغلاق الخارجي والزمن والوصول الفعلي يلتقون ضد شريف، مع تبرئة ليلى.",
+          "set_evidence_tags": [
+            "timeline",
+            "forensics",
+            "behavioral",
+            "cross_route",
+            "critical"
+          ],
+          "set_evidence_role": "prove",
+          "clear_flags": [
+            "layla_lock_suspicion_active"
+          ],
+          "emit_event": "EVENT_EVIDENCE_REINTERPRETED"
+        },
+        "on_false_if_any": [
+          {
+            "fact_type": "evidence_verified",
+            "ref": "OBJ-02",
+            "equals": true
+          }
+        ],
+        "on_false": {
+          "set_evidence_state": "contested",
+          "set_evidence_summary": "مفتاح احتياطي يخلق شبهة مؤقتة ضد ليلى.",
+          "set_evidence_tags": [
+            "timeline",
+            "mislead",
+            "lock"
+          ],
+          "set_evidence_role": "mislead",
+          "set_flags": [
+            "layla_lock_suspicion_active"
+          ]
+        }
+      }
+    ],
+    "soft_exposure_rules": [
+      {
+        "rule_id": "soft_expose_cctv",
+        "source_ref": "EVID-SUP-CCTV-CORRUPTION",
+        "when_any": [
+          {
+            "fact_type": "evidence_verified",
+            "ref": "SCN-03",
+            "equals": true
+          },
+          {
+            "fact_type": "timeline_lock",
+            "ref": "LOCK-EVENT-06",
+            "equals": true
+          }
+        ],
+        "surface_stub": {
+          "title": "DIG-03 / ملف رقمي غير مكتمل",
+          "badge": "Corrupted / Pending",
+          "folder": "Records"
+        },
+        "player_toast": "تم استرجاع ملف رقمي ناقص",
+        "required_visibility": true
+      }
+    ],
+    "forensics_queue_pressure_rules": {
+      "enabled": true,
+      "requires_player_facing_explanation": true,
+      "trigger_when": {
+        "action": "request_deep_metadata_recovery",
+        "before_evidence_verified": "SCN-03"
+      },
+      "deterministic_variants": [
+        {
+          "variant_id": "queue_pressure_provisional_result",
+          "selector": "seed_tick_mod_2_eq_0",
+          "effect": {
+            "target_ref": "SCN-03",
+            "result_quality": "provisional",
+            "duration_ticks": 2
+          },
+          "visible_notice": "النتيجة الحالية أولية بسبب ضغط الاسترجاع الرقمي على المعمل."
+        },
+        {
+          "variant_id": "queue_pressure_report_delay",
+          "selector": "seed_tick_mod_2_eq_1",
+          "effect": {
+            "target_ref": "SCN-04",
+            "delay_ticks": 2
+          },
+          "visible_notice": "تأخر تقرير المعمل قليلًا بسبب ضغط التحليل الرقمي الإضافي."
+        }
+      ]
+    },
+    "ui_feedback_rules": [
+      {
+        "rule_id": "feedback_statement_conflict_detected",
+        "when_event": "EVENT_EVIDENCE_UPGRADED",
+        "source_ref": "EVID-PARTIAL-FALSE-ORIGIN-STORY",
+        "player_notice": "Statement conflict detected"
+      }
+    ],
+    "trinity_awareness": {
+      "starting_score": 0,
+      "minimum_score": 0,
+      "allow_score_decay": true,
+      "early_detection_threshold": 25,
+      "retaliation_thresholds": [
+        25,
+        50,
+        75
+      ],
+      "diminishing_returns_per_case": true,
+      "diminishing_returns_curve": [
+        1,
+        0.75,
+        0.5,
+        0.25
+      ]
+    },
+    "trinity_retaliation": {
+      "vacant_role_mode": "derive_from_player_profile",
+      "proxy_cover_enabled": true,
+      "cooldown_ticks": 3,
+      "max_events_per_case": 1,
+      "stacking_rules": {
+        "allow_same_tick_stack": false,
+        "priority_mode": "highest_tier_only",
+        "duplicate_event_policy": "reject_same_source"
+      }
+    },
+    "vacant_role_resolution": {
+      "primary_source": "route_usage_stats",
+      "tie_breaker_order": [
+        "first_case_closure_route",
+        "chosen_specialty",
+        "default_role"
+      ],
+      "default_role": "timeline"
+    }
+  },
+  "penalty_rules": {
+    "random_interrogation_limit": 2,
+    "dialogue_spam_limit": 3,
+    "wrong_board_connection_limit": 3,
+    "false_submission_limit": 1,
+    "trust_loss_per_violation": 5,
+    "route_lock_threshold": {
+      "mode": "progressive_friction",
+      "warning_at": 1,
+      "trust_loss_at": 2,
+      "delay_tick_cost_at": 2,
+      "delay_ticks_per_violation": 2,
+      "temporary_tool_disable_at": 3,
+      "temporary_disable_duration_ticks": 3,
+      "binary_lock_enabled": false
+    }
+  },
+  "transition_context_hooks": [
+    {
+      "hook_id": "hook_case02_clockmaker_seed",
+      "target_case_id": "case02",
+      "required_flags_all": [
+        "case01_fire_resolved",
+        "is_clockmaker_suspicious_1"
+      ],
+      "blocked_flags": [
+        "case01_false_confidence_close"
+      ],
+      "effect_type": "extra_inbox_attachment",
+      "effect_payload": {
+        "attachment_id": "case02_hidden_memo_seed",
+        "title": "ملف داخلي إضافي"
+      },
+      "player_facing_intent": "reward_subtle_awareness"
+    },
+    {
+      "hook_id": "hook_case02_false_confidence",
+      "target_case_id": "case02",
+      "required_flags_all": [
+        "case01_fire_resolved",
+        "case01_false_confidence_close"
+      ],
+      "blocked_flags": [],
+      "effect_type": "biased_briefing_assumption",
+      "effect_payload": {
+        "missing_dialogue_line_id": "case02_intro_precision_line",
+        "biased_summary": "Chief Desk يفترض أن الدافع المالي هو القراءة الأرجح.",
+        "briefing_note": "تقريرك السابق مر قانونيًا، لكن قراءته للدافع كانت سطحية."
+      },
+      "player_facing_intent": "subtle_friction_not_punishment"
+    }
+  ],
+  "next_case_rules": [
+    {
+      "rule_id": "case01_case02_with_hidden_clarity",
+      "priority": 100,
+      "required_flags_all": [
+        "case01_fire_resolved",
+        "is_clockmaker_suspicious_1"
+      ],
+      "required_flags_any": [],
+      "blocked_flags": [
+        "case01_false_confidence_close"
+      ],
+      "target_case_id": "case02",
+      "target_case_path": "cases/case02/case02.md",
+      "clarity_modifier": 5,
+      "transition_reason": "إغلاق صحيح مع التقاط الشذوذ الرقمي"
+    },
+    {
+      "rule_id": "case01_case02_clean_resolution",
+      "priority": 60,
+      "required_flags_all": [
+        "case01_fire_resolved"
+      ],
+      "required_flags_any": [],
+      "blocked_flags": [
+        "is_clockmaker_suspicious_1",
+        "case01_false_confidence_close"
+      ],
+      "target_case_id": "case02",
+      "target_case_path": "cases/case02/case02.md",
+      "clarity_modifier": 0,
+      "transition_reason": "إغلاق محلي صحيح"
+    },
+    {
+      "rule_id": "case01_case02_false_confidence",
+      "priority": 40,
+      "required_flags_all": [
+        "case01_fire_resolved",
+        "case01_false_confidence_close"
+      ],
+      "required_flags_any": [],
+      "blocked_flags": [],
+      "target_case_id": "case02",
+      "target_case_path": "cases/case02/case02.md",
+      "clarity_modifier": -4,
+      "transition_reason": "الإغلاق قُبل قانونيًا لكن بفهم هش للدافع"
+    },
+    {
+      "rule_id": "case01_case02_failure_pressure",
+      "priority": 10,
+      "required_flags_all": [],
+      "required_flags_any": [],
+      "blocked_flags": [],
+      "target_case_id": "case02",
+      "target_case_path": "cases/case02/case02.md",
+      "clarity_modifier": -5,
+      "transition_reason": "فشل أو اتهام ضعيف مع إنذار من رئيس الشرطة"
+    }
+  ],
+  "timeline_events": [
+    {
+      "time": "20:41",
+      "character": "شريف عادل السيوفي",
+      "description": "شريف أمام الباب الجانبي (فشل محاولة الدخول بالبطاقة الإلكترونية)",
+      "type": "suspicious"
+    },
+    {
+      "time": "20:44",
+      "character": "شريف عادل السيوفي",
+      "description": "شريف يدخل الصيدلية (استخدام مفتاح ميكانيكي)",
+      "type": "entry"
+    },
+    {
+      "time": "20:57",
+      "character": "محمود السيوفي",
+      "description": "محمود ينهي مراجعة بعض الملفات في مكتبه",
+      "type": "exit"
+    },
+    {
+      "time": "21:01",
+      "character": "النظام الرقمي",
+      "description": "انقطاع مفاجئ في تغذية الكاميرا 04 (مكتب الإدارة)",
+      "type": "system"
+    },
+    {
+      "time": "21:03",
+      "character": "شريف عادل السيوفي",
+      "description": "الوصول الموثق للخزنة المركزية (رمز صحيح من المحاولة الأولى)",
+      "type": "audit"
+    },
+    {
+      "time": "21:04",
+      "character": "مجهول",
+      "description": "رصد حركة خلف مبنى الصيدلية",
+      "type": "observation"
+    },
+    {
+      "time": "21:07",
+      "character": "شريف عادل السيوفي",
+      "description": "شريف يغادر عبر المخرج الخلفي مسرعاً",
+      "type": "exit"
+    },
+    {
+      "time": "21:09",
+      "character": "جرس الإنذار",
+      "description": "أول إنذار حريق من الحساس رقم 12 في المكتب",
+      "type": "emergency"
+    }
+  ],
+  "timeline_blueprints": [
+    {
+      "id": "LOCK-EVENT-03",
+      "title": "تأكيد وجود شريف (20:41)",
+      "prerequisites": [
+        "SCN-04",
+        "DB-01"
+      ]
+    },
+    {
+      "id": "LOCK-EVENT-05",
+      "title": "رؤية شريف المزعومة (21:05)",
+      "prerequisites": [
+        "SCN-03",
+        "INT-SHARIF-01"
+      ]
+    },
+    {
+      "id": "LOCK-EVENT-06",
+      "title": "فساد الكاميرا (21:01)",
+      "prerequisites": [
+        "DB-01",
+        "EVID-SUP-CCTV-CORRUPTION"
+      ]
+    }
+  ],
+  "hints": [
+    "راجع تقرير مسرح الجريمة (SCN-03) لتعرف أين بدأ الحريق بالضبط وكيف.",
+    "تحقق من سجلات الدخول (SCN-04) وقارنها مع المفاتيح الموجودة (OBJ-02).",
+    "تحدث مع شريف حول 'الدفتر' ولاحظ إذا كان سيذكر معلومات لم تخبره بها بعد."
+  ]
+}

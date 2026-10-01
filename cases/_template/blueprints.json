@@ -1,0 +1,13 @@
+{
+  "prefixSourceTypes": [
+    { "prefix": "XX-SRC", "source_type": "video" },
+    { "prefix": "XX-OBJ", "source_type": "physical" },
+    { "prefix": "XX-DOC", "source_type": "document" },
+    { "prefix": "XX-RPT", "source_type": "report" },
+    { "prefix": "XX-STM", "source_type": "statement" }
+  ],
+  "closureCatalog": {
+    "suspect_ids": ["___SUSPECT_ID_1___", "___SUSPECT_ID_2___"],
+    "method_ids": ["___METHOD_ID___"]
+  }
+}

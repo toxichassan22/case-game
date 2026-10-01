@@ -1,0 +1,73 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Build outputs
+dist/
+*/dist/
+build/
+*/build/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Database files
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Testing
+coverage/
+.nyc_output/
+.playwright/
+test-results/
+
+# Docker
+*.pid
+
+# Miscellaneous
+.cache/
+.temp/
+tmp/
+temp/
+
+# OS generated files
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# Output directory
+output/
+
+# Agents and cache
+.agents/
+.qoder/
+
+# Owner-local files (never commit or push)
+task.html
+sandbox/
+الطلوبات لليوم.md

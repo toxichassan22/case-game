@@ -1,0 +1,361 @@
+{
+  "case_id": "case11",
+  "title": "الصدى",
+  "crime_type": "syndicate_liquidation",
+  "victim_name": "سارة الشريف",
+  "overview": {
+    "public_summary": "العثور على جثة صحفية استقصائية في شقتها بوسط البلد، يُشتبه بجرعة دوائية زائدة.",
+    "main_question": "لماذا تم إسكات سارة، وماذا وجدت في تحقيقاتها الموازية؟",
+    "stakes": "إدراك أن الثالوث يراقب ويُصفي من يقترب، واكتساب معلومات استخباراتية حيوية (عملية التماثل)."
+  },
+  "inbox_brief": {
+    "sender": "HQ",
+    "subject": "وفاة صحفية بجرعة أدوية",
+    "message": "لا توجد علامات عنف في شقة سارة الشريف. عائلتها تنفي أي محاولات انتحار. هناك شيء غامض في حاسوبها الذي تم تفريغه."
+  },
+  "evidence_list": [
+    {
+      "evidence_id": "EVID-11-01",
+      "case_id": "case11",
+      "title": "المقال غير المنشور",
+      "type": "digital",
+      "evidence_tier": "critical",
+      "evidence_role": "context",
+      "summary": "ملف نصي على لابتوب الضحية يكشف شبكة 'الثالوث'.",
+      "content_ref": "CASE11_SARAH_ARTICLE",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "behavioral"
+      ],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_evid01_trinity_echo",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": "EVENT_EVIDENCE_VERIFIED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "digital",
+              "source_ref": "CASE11_SARAH_ARTICLE",
+              "interaction_id": "ARTICLE_ANALYSIS",
+              "expected_player_action": "review_document",
+              "required_result": "symmetry_operation_found"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "سارة وصلت للـ 'خيميائي' و'صانع الساعات' وسمّت منظومتهم 'عملية التماثل'. قتلولها لأنها عرفت أكثر مما ينبغي.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "behavioral",
+        "trinity_intel",
+        "carryover_potential"
+      ],
+      "route_weight": {
+        "timeline": 0,
+        "forensics": 0,
+        "behavioral": 1,
+        "cyber": 0
+      },
+      "grand_truth_axis": [
+        "trinity"
+      ]
+    },
+    {
+      "evidence_id": "EVID-11-02",
+      "case_id": "case11",
+      "title": "سجلات صيدلانية",
+      "type": "document",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "summary": "الأدوية المسببة للوفاة ليست مسجلة باسم سارة في أي روشتة.",
+      "content_ref": "CASE11_MEDICAL_HISTORY",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "forensics"
+      ],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_evid02_forced_overdose",
+          "availability_mode": "delayed",
+          "delay_ticks": 1,
+          "scheduled_on_event": "EVENT_EVIDENCE_VERIFIED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "LAB-MED-11",
+              "interaction_id": "TOXICOLOGY_REVIEW",
+              "expected_player_action": "review_report",
+              "required_result": "no_medical_history_match"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "الجرعة فُرضت عليها. شخص ما تمكن من دخول شقتها بصمت وأجبرها على تعاطي الأدوية ليبدو كأنه انتحار.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "forensics",
+        "staged_suicide"
+      ],
+      "route_weight": {
+        "timeline": 0,
+        "forensics": 1,
+        "behavioral": 0
+      },
+      "grand_truth_axis": [
+        "murder"
+      ]
+    },
+    {
+      "evidence_id": "EVID-11-03",
+      "case_id": "case11",
+      "title": "كاميرا المبنى",
+      "type": "digital",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "summary": "لقطة عابرة لشخص يغادر المبنى وقت الوفاة. بنيته الجسمانية تبدو مألوفة.",
+      "content_ref": "CASE11_CCTV_FOOTAGE",
+      "locked": false,
+      "requires_warrant": true,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "timeline"
+      ],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_evid03_shadow_match",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": "EVENT_TIMELINE_CONTRADICTION_CONFIRMED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_TIMELINE_CONTRADICTION_CONFIRMED",
+              "source_type": "timeline",
+              "source_ref": "TIMELINE-BOARD",
+              "interaction_id": "LINK-11-01",
+              "expected_player_action": "connect_evidence",
+              "required_result": "shadow_silhouette_matched"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "الظل يطابق بنية الشخص المحترق جزئياً في فيديو القضية 01. المنفذ الميداني هو نفسه في كلتا الجريمتين.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline",
+        "shadow_operative",
+        "case01_link"
+      ],
+      "route_weight": {
+        "timeline": 1,
+        "forensics": 0,
+        "behavioral": 0
+      },
+      "grand_truth_axis": [
+        "trinity",
+        "shadow"
+      ]
+    }
+  ],
+  "suspects": [
+    {
+      "character_id": "SUSP-11-01",
+      "name": "رئيس التحرير",
+      "cognitive_profile": {
+        "base_collapse_threshold": 3,
+        "base_lawyer_up_threshold": 5,
+        "aggression_tolerance": 4,
+        "rapport_affinity": 5,
+        "evidence_rigidity": 6
+      },
+      "pressure_response": "collapse"
+    }
+  ],
+  "outcome_flags": {
+    "success": [
+      "case11_resolved_true",
+      "trinity_independently_confirmed",
+      "operation_symmetry_named",
+      "sarah_article_collected"
+    ],
+    "partial": [
+      "case11_journalist_resolved"
+    ],
+    "failure": [
+      "case11_resolved_false"
+    ]
+  },
+  "closure_rules": {
+    "requires_culprit": false,
+    "requires_motive": true,
+    "requires_method_or_opportunity": true,
+    "minimum_evidence_count": 3,
+    "accepted_true_motive_ids": [
+      "motive_trinity_silencing"
+    ],
+    "false_success_motive_ids": [
+      "motive_suicide",
+      "motive_editor_dispute"
+    ],
+    "false_success_flag": "case11_resolved_false",
+    "accepted_motive_ids": [
+      "motive_trinity_silencing",
+      "motive_suicide",
+      "motive_editor_dispute"
+    ],
+    "validate_closure": {
+      "minimum_behavioral_chain_verified": 1,
+      "minimum_cross_route_verified": 1,
+      "no_shared_evidence_between_roles": false,
+      "behavioral_chain_evidence_ids": [
+        "EVID-11-01"
+      ],
+      "cross_route_evidence_ids": [
+        "EVID-11-02",
+        "EVID-11-03"
+      ],
+      "rejected_submission_reason_codes": [
+        "missing_silencing_motive"
+      ]
+    }
+  },
+  "hidden_systems": {
+    "route_collaboration": {
+      "minimum_required_chains": 1,
+      "shared_evidence_completion_required": true,
+      "critical_evidence_requires_alternative_paths": false,
+      "minimum_alternative_trigger_sets_for_critical_evidence": 0
+    },
+    "evidence_reinterpretation_rules": [],
+    "ui_feedback_rules": [],
+    "soft_exposure_rules": [],
+    "forensics_queue_pressure_rules": {
+      "enabled": true,
+      "pressure_increment": 2,
+      "requires_player_facing_explanation": true,
+      "trigger_when": {
+        "action": "REVIEW_EVIDENCE",
+        "before_evidence_verified": "EVID-11-02"
+      },
+      "deterministic_variants": [
+        {
+          "variant_id": "queue_pressure_provisional_result",
+          "selector": "seed_tick_mod_2_eq_0",
+          "effect": {
+            "target_ref": "EVID-11-02",
+            "result_quality": "provisional",
+            "duration_ticks": 1
+          },
+          "visible_notice": "النتيجة الحالية أولية بسبب ضغط التحليلات الدقيقة على المعمل."
+        },
+        {
+          "variant_id": "queue_pressure_report_delay",
+          "selector": "seed_tick_mod_2_eq_1",
+          "effect": {
+            "target_ref": "EVID-11-01",
+            "delay_ticks": 1
+          },
+          "visible_notice": "تأخر تقرير الصياغة قليلًا بسبب ضغط التحاليل الفنية الإضافية."
+        }
+      ]
+    },
+    "ui_anomalies": {
+      "enabled": true,
+      "allowed_events": []
+    }
+  },
+  "transition_context_hooks": [],
+  "next_case_rules": [
+    {
+      "rule_id": "case11_success",
+      "priority": 100,
+      "required_flags_all": [
+        "case11_resolved_true"
+      ],
+      "required_flags_any": [],
+      "blocked_flags": [],
+      "target_case_id": "case12",
+      "target_case_path": "cases/case12/case12.json",
+      "clarity_modifier": 0,
+      "transition_reason": "تقدم طبيعي."
+    }
+  ],
+  "maxPhsLevels": 7,
+  "phs_hints": [
+    {
+      "level": "L1",
+      "type": "note",
+      "payload": {
+        "text": "هناك تفاصيل صغيرة في بداية هذا التحقيق ربما لم تلاحظها بعد. راجع كل ما لديك.",
+        "source_ref": "generic"
+      }
+    },
+    {
+      "level": "L2",
+      "type": "note",
+      "payload": {
+        "text": "ركز على تحليل \"المقال غير المنشور\". هناك معلومات ناقصة يجب أن تستكملها.",
+        "source_ref": "EVID-11-01"
+      }
+    },
+    {
+      "level": "L3",
+      "type": "note",
+      "payload": {
+        "text": "عليك فهم سلوكيات المتورطين. هناك حلقة مفقودة في السلسلة السلوكية.",
+        "metadata": {
+          "reason": "missing_behavioral_chain"
+        }
+      }
+    },
+    {
+      "level": "L4",
+      "type": "note",
+      "payload": {
+        "text": "تحليل \"سجلات صيدلانية\" سيكشف لك جزءاً مهماً من اللغز إن قمت بمقاطعته مع الأدلة الأخرى.",
+        "source_ref": "EVID-11-02"
+      }
+    },
+    {
+      "level": "L5",
+      "type": "note",
+      "payload": {
+        "text": "لا تعتمد على مسار تحقيق واحد. يجب مقاطعة الأدلة من مصادر مختلفة لضمان الإغلاق.",
+        "metadata": {
+          "reason": "missing_cross_route_evidence"
+        }
+      }
+    },
+    {
+      "level": "L6",
+      "type": "note",
+      "payload": {
+        "text": "الدليل \"المقال غير المنشور\" يربط الخيوط ببعضها. حاول فهم السياق الذي وجد فيه.",
+        "source_ref": "EVID-11-01"
+      }
+    },
+    {
+      "level": "L7",
+      "type": "direct",
+      "payload": {
+        "text": "لا يمكنك إغلاق القضية دون اكتمال مسارات 'السلسلة السلوكية' و'الأدلة المتقاطعة'. راجع لوحة الأدلة لربط النقاط المفقودة."
+      }
+    }
+  ]
+}
+

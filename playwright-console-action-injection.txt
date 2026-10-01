@@ -1,0 +1,11 @@
+Total messages: 10 (Errors: 2, Warnings: 0)
+Returning 8 messages for level "info"
+
+[INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/react-dom_client.js?v=63c87a51:14336
+[LOG] [WS] Connected to server @ http://127.0.0.1:5173/src/services/websocket.ts?t=1774313214716:38
+[LOG] [WS] Disconnected @ http://127.0.0.1:5173/src/services/websocket.ts?t=1774313214716:51
+[LOG] [WS] Reconnecting in 1000ms (attempt 1/10) @ http://127.0.0.1:5173/src/services/websocket.ts?t=1774313214716:64
+[ERROR] WebSocket connection to 'ws://127.0.0.1:3001/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:5173/src/services/websocket.ts?t=1774313214716:36
+[ERROR] [WS] Error: Event @ http://127.0.0.1:5173/src/services/websocket.ts?t=1774313214716:58
+[LOG] [WS] Disconnected @ http://127.0.0.1:5173/src/services/websocket.ts?t=1774313214716:51
+[LOG] [WS] Reconnecting in 1500ms (attempt 2/10) @ http://127.0.0.1:5173/src/services/websocket.ts?t=1774313214716:64

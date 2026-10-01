@@ -1,0 +1,72 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: |
+        npm ci
+        cd server && npm ci
+        cd ../frontend && npm ci
+        cd ../runtime && npm ci
+    
+    - name: Run linting
+      run: |
+        cd server && npm run lint || true
+        cd ../frontend && npm run lint || true
+    
+    - name: Run unit tests
+      run: |
+        cd runtime && npm test || true
+    
+    - name: Run smoke tests
+      run: npm run test:smoke
+    
+    - name: Validate case files
+      run: node scripts/validate_case_schema.mjs
+    
+    - name: Build server
+      run: cd server && npm run build
+    
+    - name: Build frontend
+      run: cd frontend && npm run build
+
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    
+    - name: Build Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: false
+        tags: investigation-game:latest
+        cache-from: type=gha
+        cache-to: type=gha,mode=max

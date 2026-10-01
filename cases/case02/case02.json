@@ -1,0 +1,372 @@
+{
+  "case_id": "case02",
+  "title": "صدى صانع الساعات",
+  "solution": {
+    "culprit": "char_ibrahim_giar",
+    "motive": "motive_insurance_fraud",
+    "method": "magnetic_pulse",
+    "explanation": "مالك المكتبة إبراهيم الجيار استخدم جهاز نبض مغناطيسي (Magnetic Pulse) لتعطيل تروس الساعة التاريخية وإحداث حريق متعمد لتفعيل بوليصة التأمين وسداد ديونه المتراكمة."
+  },
+  "crime_type": "insurance_fraud_suspected",
+  "victim_name": "إبراهيم الجيار",
+  "overview": {
+    "public_summary": "حريق في مكتبة 'المرآة' التاريخية. المالك يطالب بتعويض ضخم ويحمل المحافظة مسؤولية تآكل البنية التحتية.",
+    "main_question": "هل الحريق حادث عرضي ناتج عن الإهمال، أم تخريب متعمد لإخفاء سر أكبر؟",
+    "stakes": "كشف أول رابط حقيقي بين الجرائم المحلية وبين شبكة صانع الساعات."
+  },
+  "inbox_brief": {
+    "sender": "Chief Desk",
+    "subject": "مكتبة المرآة - حريق وسط البلد",
+    "message": "الصحافة مهتمة بالمكتبة لأنها أثرية. الجيار (المالك) يضغط بسرعة للتعويض. راجع الملف وأعطني رأيًا فنيًا."
+  },
+  "evidence_list": [
+    {
+      "evidence_id": "BK-SRC-01",
+      "case_id": "case02",
+      "title": "كاميرا مراقبة ممر المكتبة",
+      "type": "video",
+      "evidence_tier": "supporting",
+      "evidence_role": "unlock",
+      "summary": "تظهر شخصًا يخرج قبل الحريق بـ 3 دقائق. الوجه غير واضح.",
+      "content_ref": "BK-SRC-01",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "scan_bk_src_01",
+          "availability_mode": "always",
+          "delay_ticks": 0,
+          "scheduled_on_event": null,
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "video",
+              "source_ref": "BK-SRC-01",
+              "interaction_id": "SCAN",
+              "expected_player_action": "review_evidence",
+              "required_result": "maint_worker_detected"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "الشخص الذي خرج يحمل حقيبة تشبه حقائب الصيانة.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline"
+      ],
+      "route_weight": {
+        "timeline": 0.6,
+        "forensics": 0.2,
+        "behavioral": 0.2
+      },
+      "grand_truth_axis": []
+    },
+    {
+      "evidence_id": "BK-OBJ-01",
+      "case_id": "case02",
+      "title": "ساعة مكتب محطمة",
+      "type": "physical",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "summary": "ساعة قديمة توقفت عند لحظة الانفجار. فيها تآكل غريب في التروس.",
+      "content_ref": "BK-OBJ-01",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "forensics",
+        "behavioral"
+      ],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "inspect_bk_obj_01",
+          "availability_mode": "always",
+          "delay_ticks": 0,
+          "scheduled_on_event": null,
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "physical",
+              "source_ref": "BK-OBJ-01",
+              "interaction_id": "DETAILED_SCAN",
+              "expected_player_action": "inspect_object",
+              "required_result": "magnetic_interference_detected"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "الساعة ليست مجرد شاهد صامت؛ التروس تم التلاعب بها مغناطيسيًا.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "forensics",
+        "clockmaker_seed"
+      ],
+      "route_weight": {
+        "timeline": 0.1,
+        "forensics": 0.7,
+        "behavioral": 0.2
+      },
+      "grand_truth_axis": [
+        "clockmaker"
+      ]
+    },
+    {
+      "evidence_id": "BK-DOC-01",
+      "case_id": "case02",
+      "title": "عقد تأمين المكتبة",
+      "type": "document",
+      "evidence_tier": "supporting",
+      "evidence_role": "context",
+      "summary": "بوليصة تأمين تغطي الحريق بقيمة 2 مليون جنيه. تم تحديثها الشهر الماضي.",
+      "content_ref": "BK-DOC-01",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "verified",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [],
+      "upgraded_summary": "بوليصة تأمين تغطي الحريق بقيمة 2 مليون جنيه. تم تحديثها الشهر الماضي.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "motive_insurance_fraud"
+      ],
+      "route_weight": {
+        "timeline": 0.3,
+        "forensics": 0.1,
+        "behavioral": 0.6
+      },
+      "grand_truth_axis": []
+    }
+  ],
+  "suspects": [
+    {
+      "character_id": "char_ibrahim_giar",
+      "name": "إبراهيم الجيار",
+      "cognitive_profile": {
+        "base_collapse_threshold": 8,
+        "base_lawyer_up_threshold": 5,
+        "aggression_tolerance": 3,
+        "rapport_affinity": -2,
+        "evidence_rigidity": 4
+      },
+      "pressure_response": "attack"
+    },
+    {
+      "character_id": "char_maint_worker",
+      "name": "عامل الصيانة (مجهول)",
+      "cognitive_profile": {
+        "base_collapse_threshold": 4,
+        "base_lawyer_up_threshold": 8,
+        "aggression_tolerance": 5,
+        "rapport_affinity": 4,
+        "evidence_rigidity": 2
+      },
+      "pressure_response": "deflect"
+    }
+  ],
+  "closure_rules": {
+    "requires_culprit": true,
+    "requires_motive": true,
+    "requires_method_or_opportunity": true,
+    "minimum_evidence_count": 3,
+    "accepted_true_motive_ids": [
+      "motive_clockmaker_shadow"
+    ],
+    "false_success_motive_ids": [
+      "motive_insurance_fraud"
+    ],
+    "false_success_flag": "case02_false_fraud_close",
+    "accepted_motive_ids": [
+      "motive_clockmaker_shadow",
+      "motive_insurance_fraud"
+    ],
+    "validate_closure": {
+      "minimum_behavioral_chain_verified": 1,
+      "minimum_cross_route_verified": 1,
+      "no_shared_evidence_between_roles": true,
+      "behavioral_chain_evidence_ids": [
+        "BK-DOC-01"
+      ],
+      "cross_route_evidence_ids": [
+        "BK-OBJ-01",
+        "BK-SRC-01"
+      ],
+      "rejected_submission_reason_codes": [
+        "missing_clockmaker_link"
+      ]
+    }
+  },
+  "transition_context_hooks": [],
+  "next_case_rules": [
+    {
+      "rule_id": "route_to_case03_true",
+      "priority": 100,
+      "required_flags_all": [
+        "case02_false_fraud_close"
+      ],
+      "required_flags_any": [],
+      "blocked_flags": [],
+      "target_case_id": "case03",
+      "target_case_path": "cases/case03/case03.json",
+      "clarity_modifier": -1,
+      "transition_reason": "Insurance fraud assumed, Clockmaker hidden."
+    },
+    {
+      "rule_id": "route_to_case03_default",
+      "priority": 10,
+      "required_flags_all": [],
+      "required_flags_any": [],
+      "blocked_flags": [],
+      "target_case_id": "case03",
+      "target_case_path": "cases/case03/case03.json",
+      "clarity_modifier": 2,
+      "transition_reason": "Clockmaker shadow revealed."
+    }
+  ],
+  "hidden_systems": {
+    "evidence_reinterpretation_rules": [
+      {
+        "rule_id": "reinterp_clock_magnet_revelation",
+        "target_evidence_id": "BK-OBJ-01",
+        "evaluation_mode": "state_based",
+        "recompute_each_tick": true,
+        "depends_on_facts": [
+          "fact_case01_video_analyzed"
+        ],
+        "state_predicates_true": [
+          {
+            "fact_type": "global_flag",
+            "ref": "is_clockmaker_suspicious_1",
+            "equals": true
+          }
+        ],
+        "on_true": {
+          "set_evidence_summary": "سرديًا: الساعة بها تآكل كيميائي يدل على مُركب (الخيميائي) وليس مجرد حريق طبيعي.",
+          "set_evidence_tags": [
+            "clockmaker_seed",
+            "alchemist_seed",
+            "superposition"
+          ],
+          "set_evidence_role": "prove",
+          "set_flags": [
+            "clockmaker_intervention_confirmed"
+          ],
+          "emit_event": "EVENT_CLOCKMAKER_REVEALED"
+        },
+        "on_false": {}
+      }
+    ],
+    "forensics_queue_pressure_rules": {
+      "enabled": true,
+      "pressure_increment": 2,
+      "requires_player_facing_explanation": true,
+      "trigger_when": {
+        "action": "REVIEW_EVIDENCE",
+        "before_evidence_verified": "BK-OBJ-01"
+      },
+      "deterministic_variants": [
+        {
+          "variant_id": "queue_pressure_provisional_result",
+          "selector": "seed_tick_mod_2_eq_0",
+          "effect": {
+            "target_ref": "BK-OBJ-01",
+            "result_quality": "provisional",
+            "duration_ticks": 1
+          },
+          "visible_notice": "النتيجة الحالية أولية بسبب ضغط التحليلات الدقيقة على المعمل."
+        },
+        {
+          "variant_id": "queue_pressure_report_delay",
+          "selector": "seed_tick_mod_2_eq_1",
+          "effect": {
+            "target_ref": "BK-SRC-01",
+            "delay_ticks": 1
+          },
+          "visible_notice": "تأخر تقرير الصياغة قليلًا بسبب ضغط التحاليل الفنية الإضافية."
+        }
+      ]
+    },
+    "ui_feedback_rules": []
+  },
+  "outcome_flags": {
+    "success": [
+      "case_resolved"
+    ],
+    "partial": [
+      "case_resolved_partial"
+    ],
+    "failure": [
+      "penalty_police_trust_loss"
+    ]
+  },
+  "maxPhsLevels": 7,
+  "phs_hints": [
+    {
+      "level": "L1",
+      "type": "note",
+      "payload": {
+        "text": "هناك تفاصيل صغيرة في بداية هذا التحقيق ربما لم تلاحظها بعد. راجع كل ما لديك.",
+        "source_ref": "generic"
+      }
+    },
+    {
+      "level": "L2",
+      "type": "note",
+      "payload": {
+        "text": "ركز على تحليل \"كاميرا مراقبة ممر المكتبة\". هناك معلومات ناقصة يجب أن تستكملها.",
+        "source_ref": "BK-SRC-01"
+      }
+    },
+    {
+      "level": "L3",
+      "type": "note",
+      "payload": {
+        "text": "عليك فهم سلوكيات المتورطين. هناك حلقة مفقودة في السلسلة السلوكية.",
+        "metadata": {
+          "reason": "missing_behavioral_chain"
+        }
+      }
+    },
+    {
+      "level": "L4",
+      "type": "note",
+      "payload": {
+        "text": "تحليل \"كاميرا مراقبة ممر المكتبة\" سيكشف لك جزءاً مهماً من اللغز إن قمت بمقاطعته مع الأدلة الأخرى.",
+        "source_ref": "BK-SRC-01"
+      }
+    },
+    {
+      "level": "L5",
+      "type": "note",
+      "payload": {
+        "text": "لا تعتمد على مسار تحقيق واحد. يجب مقاطعة الأدلة من مصادر مختلفة لضمان الإغلاق.",
+        "metadata": {
+          "reason": "missing_cross_route_evidence"
+        }
+      }
+    },
+    {
+      "level": "L6",
+      "type": "note",
+      "payload": {
+        "text": "الدليل \"عقد تأمين المكتبة\" يربط الخيوط ببعضها. حاول فهم السياق الذي وجد فيه.",
+        "source_ref": "BK-DOC-01"
+      }
+    },
+    {
+      "level": "L7",
+      "type": "direct",
+      "payload": {
+        "text": "لا يمكنك إغلاق القضية دون اكتمال مسارات 'السلسلة السلوكية' و'الأدلة المتقاطعة'. راجع لوحة الأدلة لربط النقاط المفقودة."
+      }
+    }
+  ]
+}

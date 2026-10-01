@@ -1,0 +1,200 @@
+{
+  "case_id": "caseXX",
+  "title": "___CASE_TITLE___",
+  "crime_type": "___CRIME_TYPE___",
+  "victim_name": "___VICTIM_NAME_OR_NULL___",
+  "overview": {
+    "public_summary": "___PUBLIC_SUMMARY___",
+    "main_question": "___MAIN_QUESTION___",
+    "stakes": "___STAKES___"
+  },
+  "inbox_brief": {
+    "sender": "Chief Desk",
+    "subject": "___INBOX_SUBJECT___",
+    "message": "___INBOX_MESSAGE___"
+  },
+  "evidence_list": [
+    {
+      "evidence_id": "XX-EVID-01",
+      "case_id": "caseXX",
+      "title": "___EVIDENCE_TITLE___",
+      "type": "document",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "summary": "___EVIDENCE_SUMMARY___",
+      "content_ref": "XX-EVID-01",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [],
+      "upgraded_summary": null,
+      "penalty_if_mishandled": [],
+      "tags": ["forensics"],
+      "route_weight": { "timeline": 0.33, "forensics": 0.34, "behavioral": 0.33 },
+      "grand_truth_axis": []
+    }
+  ],
+  "suspects": [
+    {
+      "character_id": "char_xxx",
+      "name": "___SUSPECT_NAME___",
+      "role_in_case": "suspect",
+      "relationship_to_victim": "___RELATIONSHIP___",
+      "occupation": "___OCCUPATION___",
+      "public_profile": "___PUBLIC_PROFILE___",
+      "MBTI_Type": null,
+      "Cognitive_Profile": {
+        "base_collapse_threshold": 7,
+        "base_lawyer_up_threshold": 6,
+        "aggression_tolerance": 2,
+        "rapport_affinity": 0,
+        "evidence_rigidity": 0
+      },
+      "pressure_response": "silence",
+      "deception_style": "direct",
+      "speech_register": "formal",
+      "favorite_phrases": [],
+      "verbal_tells": [],
+      "local_function": "suspect",
+      "recurring_npc": false,
+      "grand_truth_relevance": [],
+      "hidden_affiliations": []
+    }
+  ],
+  "witnesses": [],
+  "related_persons": [],
+  "required_flags": [],
+  "outcome_flags": {
+    "success": [],
+    "partial": [],
+    "failure": []
+  },
+  "solution_paths": {
+    "timeline": {},
+    "forensics": {},
+    "behavioral": {}
+  },
+  "derived_route_profile": {
+    "timeline": 0.0,
+    "forensics": 0.0,
+    "behavioral": 0.0,
+    "raw_scores": { "timeline": 0.0, "forensics": 0.0, "behavioral": 0.0 },
+    "normalization_total": 0.0,
+    "formula_version": "v1_weighted_state_normalized",
+    "computed_from_evidence": false
+  },
+  "closure_rules": {
+    "requires_culprit": true,
+    "requires_motive": true,
+    "requires_method_or_opportunity": true,
+    "minimum_evidence_count": 3,
+    "accepted_true_motive_ids": ["___TRUE_MOTIVE___"],
+    "false_success_motive_ids": ["___FALSE_MOTIVE___"],
+    "false_success_flag": "caseXX_false_close",
+    "accepted_motive_ids": ["___TRUE_MOTIVE___", "___FALSE_MOTIVE___"],
+    "validate_closure": {
+      "minimum_behavioral_chain_verified": 1,
+      "minimum_cross_route_verified": 1,
+      "no_shared_evidence_between_roles": true,
+      "behavioral_chain_evidence_ids": [],
+      "cross_route_evidence_ids": [],
+      "rejected_submission_reason_codes": []
+    }
+  },
+  "trinity_hooks": {
+    "awareness_sources": [],
+    "retaliation_rules": []
+  },
+  "hidden_systems": {
+    "route_collaboration": {
+      "minimum_required_chains": 1,
+      "shared_evidence_completion_required": true,
+      "critical_evidence_requires_alternative_paths": true,
+      "minimum_alternative_trigger_sets_for_critical_evidence": 2
+    },
+    "evidence_reinterpretation_rules": [],
+    "soft_exposure_rules": [],
+    "forensics_queue_pressure_rules": {
+      "enabled": true,
+      "requires_player_facing_explanation": true
+    },
+    "trinity_awareness": {
+      "starting_score": 0,
+      "minimum_score": 0,
+      "allow_score_decay": true,
+      "early_detection_threshold": 25,
+      "retaliation_thresholds": [25, 50, 75],
+      "diminishing_returns_per_case": true,
+      "diminishing_returns_curve": [1.0, 0.75, 0.5, 0.25]
+    },
+    "trinity_retaliation": {
+      "vacant_role_mode": "derive_from_player_profile",
+      "proxy_cover_enabled": true,
+      "cooldown_ticks": 3,
+      "max_events_per_case": 4,
+      "stacking_rules": {
+        "allow_same_tick_stack": false,
+        "priority_mode": "highest_tier_only",
+        "duplicate_event_policy": "reject_same_source"
+      }
+    },
+    "vacant_role_resolution": {
+      "primary_source": "route_usage_stats",
+      "tie_breaker_order": [
+        "first_case_closure_route",
+        "chosen_specialty",
+        "default_role"
+      ],
+      "default_role": "timeline"
+    },
+    "ui_anomalies": {
+      "enabled": true,
+      "allowed_events": []
+    },
+    "ui_feedback_rules": []
+  },
+  "penalty_rules": {
+    "random_interrogation_limit": 3,
+    "dialogue_spam_limit": 4,
+    "wrong_board_connection_limit": 4,
+    "false_submission_limit": 2,
+    "trust_loss_per_violation": 5,
+    "route_lock_threshold": {
+      "mode": "progressive_friction",
+      "warning_at": 1,
+      "trust_loss_at": 2,
+      "delay_tick_cost_at": 3,
+      "delay_ticks_per_violation": 1,
+      "temporary_tool_disable_at": 4,
+      "temporary_disable_duration_ticks": 2,
+      "binary_lock_enabled": false
+    }
+  },
+  "transition_context_hooks": [],
+  "next_case_rules": [
+    {
+      "rule_id": "caseXX_to_caseYY_high",
+      "priority": 100,
+      "required_flags_all": ["___HIGH_PRIORITY_FLAG___"],
+      "required_flags_any": [],
+      "blocked_flags": [],
+      "target_case_id": "caseYY",
+      "target_case_path": "cases/caseYY/caseYY.json",
+      "clarity_modifier": 5,
+      "transition_reason": "___TRANSITION_REASON___"
+    },
+    {
+      "rule_id": "caseXX_to_caseYY_default",
+      "priority": 10,
+      "required_flags_all": [],
+      "required_flags_any": [],
+      "blocked_flags": [],
+      "target_case_id": "caseYY",
+      "target_case_path": "cases/caseYY/caseYY.json",
+      "clarity_modifier": 0,
+      "transition_reason": "المسار الافتراضي"
+    }
+  ]
+}

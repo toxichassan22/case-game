@@ -1,0 +1,147 @@
+- generic [ref=e211]:
+  - main [ref=e212]:
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic: أنت الآن في القضية 01 من 59
+            - generic: رماد الرف الأخير
+          - generic: CASE01
+        - generic:
+          - generic:
+            - generic:
+              - generic: 📁 التقدم العام
+              - generic: 01 / 59 (2%)
+          - generic:
+            - generic:
+              - generic: 🔍 تقدم القضية
+              - generic: 0 / 20 (0%)
+    - generic [ref=e214]:
+      - heading "نظام التحقيق الموحد" [level=1] [ref=e215]
+      - generic [ref=e216]:
+        - generic [ref=e221]:
+          - generic [ref=e222]: 🎯
+          - generic [ref=e223]: الهدف الحالي
+        - generic [ref=e224]: 📂 اضغط على الأدلة في الحقيبة الجانبية لمراجعتها وتوثيقها.
+        - generic [ref=e225]: 💡 كل دليل يحتاج إلى مراجعة قبل الانتقال للتالي
+    - complementary [ref=e226]:
+      - generic [ref=e228]:
+        - img [ref=e229]
+        - heading "حقيبة الأدلة" [level=3] [ref=e234]
+      - generic [ref=e235]:
+        - generic "اضغط لفتح ومراجعة الدليل وتوثيقه" [ref=e236]:
+          - text: 📄 اضغط للفتح
+          - generic [ref=e237]:
+            - generic [ref=e238]: SCN-03
+            - generic [ref=e239]:
+              - generic [ref=e240]: ⚠️
+              - button "مشاركة الدليل" [ref=e241] [cursor=pointer]:
+                - img [ref=e242]
+          - generic [ref=e248]: تقرير منشأ الحريق
+          - generic [ref=e249]: 🔍 يحتاج مراجعة وتوثيق
+          - generic [ref=e250]:
+            - generic [ref=e251]: report
+            - generic [ref=e252]: جزئي
+        - generic "اضغط لفتح ومراجعة الدليل وتوثيقه" [ref=e253]:
+          - text: 📄 اضغط للفتح
+          - generic [ref=e254]:
+            - generic [ref=e255]: DB-01
+            - generic [ref=e256]:
+              - generic [ref=e257]: ⚠️
+              - button "مشاركة الدليل" [ref=e258] [cursor=pointer]:
+                - img [ref=e259]
+          - generic [ref=e265]: سجل الجرد الليلي
+          - generic [ref=e266]: 🔍 يحتاج مراجعة وتوثيق
+          - generic [ref=e267]:
+            - generic [ref=e268]: document
+            - generic [ref=e269]: جزئي
+        - generic "اضغط لفتح ومراجعة الدليل وتوثيقه" [ref=e270]:
+          - text: 📄 اضغط للفتح
+          - generic [ref=e271]:
+            - generic [ref=e272]: DB-07
+            - generic [ref=e273]:
+              - generic [ref=e274]: ⚠️
+              - button "مشاركة الدليل" [ref=e275] [cursor=pointer]:
+                - img [ref=e276]
+          - generic [ref=e282]: سجلات الـ GPS - شريف
+          - generic [ref=e283]: 🔍 يحتاج مراجعة وتوثيق
+          - generic [ref=e284]:
+            - generic [ref=e285]: digital
+            - generic [ref=e286]: جزئي
+        - generic "اضغط لفتح ومراجعة الدليل وتوثيقه" [ref=e287]:
+          - text: 📄 اضغط للفتح
+          - generic [ref=e288]:
+            - generic [ref=e289]: DIG-01
+            - generic [ref=e290]:
+              - generic [ref=e291]: ⚠️
+              - button "مشاركة الدليل" [ref=e292] [cursor=pointer]:
+                - img [ref=e293]
+          - generic [ref=e299]: كاميرا المخبز المقابل
+          - generic [ref=e300]: 🔍 يحتاج مراجعة وتوثيق
+          - generic [ref=e301]:
+            - generic [ref=e302]: report
+            - generic [ref=e303]: جزئي
+        - generic "اضغط لفتح ومراجعة الدليل وتوثيقه" [ref=e304]:
+          - text: 📄 اضغط للفتح
+          - generic [ref=e305]:
+            - generic [ref=e306]: DB-02
+            - generic [ref=e307]:
+              - generic [ref=e308]: ⚠️
+              - button "مشاركة الدليل" [ref=e309] [cursor=pointer]:
+                - img [ref=e310]
+          - generic [ref=e316]: بوليصة التأمين
+          - generic [ref=e317]: 🔍 يحتاج مراجعة وتوثيق
+          - generic [ref=e318]:
+            - generic [ref=e319]: document
+            - generic [ref=e320]: جزئي
+        - generic "اضغط لفتح ومراجعة الدليل وتوثيقه" [ref=e321]:
+          - text: 📄 اضغط للفتح
+          - generic [ref=e322]:
+            - generic [ref=e323]: BEH-02
+            - generic [ref=e324]:
+              - generic [ref=e325]: ⚠️
+              - button "مشاركة الدليل" [ref=e326] [cursor=pointer]:
+                - img [ref=e327]
+          - generic [ref=e333]: ملف نفسي - حاتم صلاح
+          - generic [ref=e334]: 🔍 يحتاج مراجعة وتوثيق
+          - generic [ref=e335]:
+            - generic [ref=e336]: document
+            - generic [ref=e337]: جزئي
+  - contentinfo [ref=e338]:
+    - generic [ref=e339]:
+      - generic [ref=e341]: الأدوات
+      - button "صندوق الوارد" [ref=e342] [cursor=pointer]:
+        - img [ref=e343]
+      - button "لوحة الخيوط" [ref=e345] [cursor=pointer]:
+        - img [ref=e346]
+      - button "قاعدة البيانات" [ref=e348] [cursor=pointer]:
+        - img [ref=e349]
+      - button "الخط الزمني" [ref=e353] [cursor=pointer]:
+        - img [ref=e354]
+      - button "المختبر" [ref=e357] [cursor=pointer]:
+        - img [ref=e358]
+      - button "المساعدة الذكية (PHS)" [ref=e362] [cursor=pointer]:
+        - img [ref=e363]
+    - generic [ref=e365]:
+      - generic [ref=e367]: الإجراءات
+      - generic [ref=e368]:
+        - text: ⏱️ المحقق الزمني
+        - button "🔄" [ref=e369] [cursor=pointer]
+      - button "⚖️ طلب إغلاق" [disabled] [ref=e370] [cursor=pointer]:
+        - generic [ref=e372]:
+          - generic [ref=e373]: ⚖️
+          - generic [ref=e374]: طلب إغلاق
+      - button "🚫 إغلاق" [ref=e375] [cursor=pointer]
+      - button "حل القضية (0/1)" [disabled] [ref=e376] [cursor=pointer]:
+        - generic [ref=e378]:
+          - img [ref=e379]
+          - generic [ref=e384]: حل القضية (0/1)
+      - generic [ref=e385]:
+        - img [ref=e386]
+        - generic [ref=e388]:
+          - generic [ref=e389]:
+            - generic [ref=e390]: الثقة المؤسسية
+            - generic [ref=e391]: 100%
+            - generic [ref=e392]: ثقة قوية
+          - generic [ref=e395]: جميع الصلاحيات متاحة. لا توجد قيود على التحقيق.
+      - generic [ref=e396]: SYS.ONLINE

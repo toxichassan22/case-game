@@ -1,0 +1,63 @@
+import json
+
+blueprints_data = {
+  "closureCatalog": {
+    "suspect_ids": ["SUSP-10-01"],
+    "method_ids": ["method_syndicate_assassination", "motive_trinity_liquidation", "motive_partner_financial_dispute"]
+  },
+  "openableSources": [
+    "INT-SAMEH-01",
+    "TIMELINE-BOARD"
+  ],
+  "blueprints": {
+    "review": [
+      {
+        "source_ref": "LAB-MED-10",
+        "source_type": "report",
+        "interaction_id": "COMPOUND-MATCH",
+        "required_result": "alchemist_compound_confirmed",
+        "verifies_evidence": True
+      },
+      {
+        "source_ref": "LAB-DOC-10",
+        "source_type": "report",
+        "interaction_id": "FINANCIAL-AUDIT",
+        "required_result": "laundering_network_identified",
+        "verifies_evidence": True
+      }
+    ],
+    "inspect": [
+      {
+        "source_ref": "CASE10_SECURITY_FOOTAGE_LOG",
+        "source_type": "digital",
+        "interaction_id": "DOWNTIME_ANALYSIS",
+        "required_result": "symmetry_detected_0330",
+        "verifies_evidence": True
+      }
+    ],
+    "dialog": [
+      {
+        "source_ref": "INT-SAMEH-01",
+        "interaction_id": "Q05",
+        "required_result": "fear_of_the_network"
+      }
+    ],
+    "timeline": []
+  },
+  "exactSourceTypes": {
+    "TIMELINE-BOARD": "timeline"
+  },
+  "prefixSourceTypes": [
+    { "prefix": "INT-", "source_type": "interrogation" },
+    { "prefix": "LAB-", "source_type": "report" },
+    { "prefix": "CASE10_", "source_type": "document" },
+    { "prefix": "CASE10_SEC", "source_type": "digital" },
+    { "prefix": "EVID-", "source_type": "report" }
+  ],
+  "fallbackSourceType": "source"
+}
+
+with open("d:/game/cases/case10/blueprints.json", "w", encoding="utf-8") as f:
+    json.dump(blueprints_data, f, ensure_ascii=False, indent=2)
+
+print("Successfully built blueprints.json for Case 10")

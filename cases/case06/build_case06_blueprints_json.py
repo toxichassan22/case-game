@@ -1,0 +1,58 @@
+import json
+
+blueprints_data = {
+  "closureCatalog": {
+    "suspect_ids": ["SUSP-06-NONE"],
+    "method_ids": ["method_psychological_manipulation_murder", "motive_psychological_manipulation_murder"]
+  },
+  "openableSources": [
+    "INT-HANY-01",
+    "INT-KARIM-01",
+    "TIMELINE-BOARD"
+  ],
+  "blueprints": {
+    "review": [
+      {
+        "source_ref": "LAB-LING-06",
+        "source_type": "report",
+        "interaction_id": "SEMANTIC-ANALYSIS",
+        "required_result": "stylistic_mismatch_detected",
+        "verifies_evidence": True
+      }
+    ],
+    "inspect": [
+      {
+        "source_ref": "CASE06_ROPE",
+        "source_type": "physical",
+        "interaction_id": "TRACING",
+        "required_result": "recent_cash_purchase_unrelated_to_victim",
+        "verifies_evidence": True
+      }
+    ],
+    "dialog": [
+      {
+        "source_ref": "INT-HANY-01",
+        "interaction_id": "Q04",
+        "required_result": "ghost_identity_confirmed"
+      }
+    ],
+    "timeline": []
+  },
+  "exactSourceTypes": {
+    "TIMELINE-BOARD": "timeline"
+  },
+  "prefixSourceTypes": [
+    { "prefix": "INT-", "source_type": "interrogation" },
+    { "prefix": "LAB-", "source_type": "report" },
+    { "prefix": "CASE06_ROPE", "source_type": "physical" },
+    { "prefix": "CASE06_SUICIDE_NOTE", "source_type": "document" },
+    { "prefix": "CASE06_NOTEBOOK", "source_type": "physical" },
+    { "prefix": "EVID-", "source_type": "report" }
+  ],
+  "fallbackSourceType": "source"
+}
+
+with open("d:/game/cases/case06/blueprints.json", "w", encoding="utf-8") as f:
+    json.dump(blueprints_data, f, ensure_ascii=False, indent=2)
+
+print("Successfully built blueprints.json for Case 06")

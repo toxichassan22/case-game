@@ -1,0 +1,363 @@
+{
+  "case_id": "case13",
+  "title": "الغريق",
+  "crime_type": "syndicate_assassination",
+  "victim_name": "كمال صلاح",
+  "overview": {
+    "public_summary": "العثور على جثة ضابط متقاعد في النيل قرب كورنيش المعادي، يشتبه في غرق عرضي أو انتحار.",
+    "main_question": "إلى أي مدى وصل كمال في تحقيقاته الفردية عن الشبكة، ولماذا توجب قتله الآن؟",
+    "stakes": "الحصول على ملاحظات كمال التي تضيق الخناق على 'المُلقن' وتثبت أن الثالوث بدأ يتخلص من المحققين."
+  },
+  "inbox_brief": {
+    "sender": "HQ",
+    "subject": "غريق المعادي - زميل سابق",
+    "message": "كمال صلاح، ضابط سابق أُحيل للتقاعد، وُجد غريقاً في النيل. زوجته السابقة تطالب بالتأمين وهناك شبهة جنائية. كمال كان يسأل أسئلة غريبة قبل موته."
+  },
+  "evidence_list": [
+    {
+      "evidence_id": "EVID-13-01",
+      "case_id": "case13",
+      "title": "تقرير السموم المتقدم",
+      "type": "report",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "summary": "الطب الشرعي وجد آثار مركب كيميائي غير מألوف يسبب شللاً عضلياً فورياً.",
+      "content_ref": "LAB-TOX-13",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "forensics"
+      ],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_evid01_paralysis_toxin",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": "EVENT_EVIDENCE_VERIFIED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "LAB-TOX-13",
+              "interaction_id": "CHEMICAL_ANALYSIS",
+              "expected_player_action": "review_report",
+              "required_result": "paralysis_toxin_identified"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "هذا السم يضمن غرق الضحية دون مقاومة لتبدو وكأنها حادثة عرضية. هذا تعقيد يحمل بصمة الخيميائي.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "forensics",
+        "alchemist_toxin",
+        "murder_weapon"
+      ],
+      "route_weight": {
+        "timeline": 0,
+        "forensics": 1,
+        "behavioral": 0,
+        "cyber": 0
+      },
+      "grand_truth_axis": [
+        "alchemist",
+        "murder"
+      ]
+    },
+    {
+      "evidence_id": "EVID-13-02",
+      "case_id": "case13",
+      "title": "مذكرات كمال",
+      "type": "document",
+      "evidence_tier": "critical",
+      "evidence_role": "context",
+      "summary": "نوتة محترقة جزئياً كانت في جيب كمال، تحتوي ملاحظات حول أشخاص ينهارون بعد تحسن مريب.",
+      "content_ref": "CASE13_KAMAL_NOTES",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "behavioral"
+      ],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_evid02_whisperer_institution",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": "EVENT_EVIDENCE_VERIFIED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "document",
+              "source_ref": "CASE13_KAMAL_NOTES",
+              "interaction_id": "PAGES_RESTORED",
+              "expected_player_action": "review_document",
+              "required_result": "institution_link_found"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "كمال استنتج أن 'المُلقن' ليس مستشاراً حراً، بل موظف في مؤسسة صحية أو نفسية يمتلك صلاحيات للوصول إلى المرضى والتلاعب بهم رسمياً.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "behavioral",
+        "whisperer_intel",
+        "carryover_potential"
+      ],
+      "route_weight": {
+        "timeline": 0,
+        "forensics": 0,
+        "behavioral": 1
+      },
+      "grand_truth_axis": [
+        "whisperer"
+      ]
+    },
+    {
+      "evidence_id": "EVID-13-03",
+      "case_id": "case13",
+      "title": "سجلات كاميرات الكورنيش",
+      "type": "digital",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "summary": "سجلات صيانة أنظمة مراقبة النيل في منطقة المعادي.",
+      "content_ref": "CASE13_CCTV_LOGS",
+      "locked": false,
+      "requires_warrant": true,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "timeline"
+      ],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_evid03_six_minutes_blind",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": "EVENT_TIMELINE_CONTRADICTION_CONFIRMED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_TIMELINE_CONTRADICTION_CONFIRMED",
+              "source_type": "timeline",
+              "source_ref": "TIMELINE-BOARD",
+              "interaction_id": "LINK-13-CCTV",
+              "expected_player_action": "connect_evidence",
+              "required_result": "six_minute_outage_verified"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "الكاميرات لم تتعطل مصادفة، بل تم إطفاؤها برمجياً لمدة 6 دقائق بالضبط. هذا تغطية مقصودة لمكان رمي الجثة من تنفيذ صانع الساعات.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline",
+        "cyber",
+        "clockmaker_trace"
+      ],
+      "route_weight": {
+        "timeline": 1,
+        "forensics": 0,
+        "behavioral": 0
+      },
+      "grand_truth_axis": [
+        "clockmaker"
+      ]
+    }
+  ],
+  "suspects": [
+    {
+      "character_id": "SUSP-13-01",
+      "name": "نهى زوجة كمال السابقة",
+      "cognitive_profile": {
+        "base_collapse_threshold": 6,
+        "base_lawyer_up_threshold": 4,
+        "aggression_tolerance": 7,
+        "rapport_affinity": 3,
+        "evidence_rigidity": 5
+      },
+      "pressure_response": "lawyer_up"
+    }
+  ],
+  "outcome_flags": {
+    "success": [
+      "case13_resolved_true",
+      "case13_drowned_resolved",
+      "whisperer_narrowed_to_institution",
+      "kamal_notes_collected",
+      "trinity_kills_investigators"
+    ],
+    "partial": [
+      "case13_drowned_resolved"
+    ],
+    "failure": [
+      "case13_resolved_false"
+    ]
+  },
+  "closure_rules": {
+    "requires_culprit": false,
+    "requires_motive": true,
+    "requires_method_or_opportunity": true,
+    "minimum_evidence_count": 3,
+    "accepted_true_motive_ids": [
+      "motive_trinity_assassination"
+    ],
+    "false_success_motive_ids": [
+      "motive_insurance_fraud",
+      "motive_accidental_drowning"
+    ],
+    "false_success_flag": "case13_resolved_false",
+    "accepted_motive_ids": [
+      "motive_insurance_fraud",
+      "motive_accidental_drowning",
+      "motive_trinity_assassination"
+    ],
+    "validate_closure": {
+      "minimum_behavioral_chain_verified": 1,
+      "minimum_cross_route_verified": 2,
+      "no_shared_evidence_between_roles": false,
+      "behavioral_chain_evidence_ids": [
+        "EVID-13-02"
+      ],
+      "cross_route_evidence_ids": [
+        "EVID-13-01",
+        "EVID-13-03"
+      ],
+      "rejected_submission_reason_codes": [
+        "missing_trinity_method_proof"
+      ]
+    }
+  },
+  "hidden_systems": {
+    "route_collaboration": {
+      "minimum_required_chains": 1,
+      "shared_evidence_completion_required": true,
+      "critical_evidence_requires_alternative_paths": false,
+      "minimum_alternative_trigger_sets_for_critical_evidence": 0
+    },
+    "evidence_reinterpretation_rules": [],
+    "ui_feedback_rules": [],
+    "soft_exposure_rules": [],
+    "forensics_queue_pressure_rules": {
+      "enabled": true,
+      "pressure_increment": 3,
+      "requires_player_facing_explanation": true,
+      "trigger_when": {
+        "action": "REVIEW_EVIDENCE",
+        "before_evidence_verified": "EVID-13-01"
+      },
+      "deterministic_variants": [
+        {
+          "variant_id": "queue_pressure_provisional_result",
+          "selector": "seed_tick_mod_2_eq_0",
+          "effect": {
+            "target_ref": "EVID-13-01",
+            "result_quality": "provisional",
+            "duration_ticks": 1
+          },
+          "visible_notice": "النتيجة الحالية أولية بسبب ضغط التحليلات الدقيقة على المعمل."
+        },
+        {
+          "variant_id": "queue_pressure_report_delay",
+          "selector": "seed_tick_mod_2_eq_1",
+          "effect": {
+            "target_ref": "EVID-13-02",
+            "delay_ticks": 1
+          },
+          "visible_notice": "تأخر تقرير الصياغة قليلًا بسبب ضغط التحاليل الفنية الإضافية."
+        }
+      ]
+    },
+    "ui_anomalies": {
+      "enabled": true,
+      "allowed_events": []
+    }
+  },
+  "transition_context_hooks": [],
+  "next_case_rules": [
+    {
+      "rule_id": "case13_success",
+      "priority": 100,
+      "required_flags_all": [
+        "case13_resolved_true"
+      ],
+      "required_flags_any": [],
+      "blocked_flags": [],
+      "target_case_id": "case14",
+      "target_case_path": "cases/case14/case14.json",
+      "clarity_modifier": 0,
+      "transition_reason": "تقدم طبيعي."
+    }
+  ],
+  "maxPhsLevels": 7,
+  "phs_hints": [
+    {
+      "level": "L1",
+      "type": "note",
+      "payload": {
+        "text": "هناك تفاصيل صغيرة في بداية هذا التحقيق ربما لم تلاحظها بعد. راجع كل ما لديك.",
+        "source_ref": "generic"
+      }
+    },
+    {
+      "level": "L2",
+      "type": "note",
+      "payload": {
+        "text": "ركز على تحليل \"تقرير السموم المتقدم\". هناك معلومات ناقصة يجب أن تستكملها.",
+        "source_ref": "EVID-13-01"
+      }
+    },
+    {
+      "level": "L3",
+      "type": "note",
+      "payload": {
+        "text": "عليك فهم سلوكيات المتورطين. هناك حلقة مفقودة في السلسلة السلوكية.",
+        "metadata": {
+          "reason": "missing_behavioral_chain"
+        }
+      }
+    },
+    {
+      "level": "L4",
+      "type": "note",
+      "payload": {
+        "text": "تحليل \"تقرير السموم المتقدم\" سيكشف لك جزءاً مهماً من اللغز إن قمت بمقاطعته مع الأدلة الأخرى.",
+        "source_ref": "EVID-13-01"
+      }
+    },
+    {
+      "level": "L5",
+      "type": "note",
+      "payload": {
+        "text": "لا تعتمد على مسار تحقيق واحد. يجب مقاطعة الأدلة من مصادر مختلفة لضمان الإغلاق.",
+        "metadata": {
+          "reason": "missing_cross_route_evidence"
+        }
+      }
+    },
+    {
+      "level": "L6",
+      "type": "note",
+      "payload": {
+        "text": "الدليل \"مذكرات كمال\" يربط الخيوط ببعضها. حاول فهم السياق الذي وجد فيه.",
+        "source_ref": "EVID-13-02"
+      }
+    },
+    {
+      "level": "L7",
+      "type": "direct",
+      "payload": {
+        "text": "لا يمكنك إغلاق القضية دون اكتمال مسارات 'السلسلة السلوكية' و'الأدلة المتقاطعة'. راجع لوحة الأدلة لربط النقاط المفقودة."
+      }
+    }
+  ]
+}
+

@@ -1,0 +1,366 @@
+{
+  "case_id": "case21",
+  "title": "الاسم الأول",
+  "crime_type": "syndicate_alchemist_coverup",
+  "victim_name": "د. فريد الطوخي (63 سنة)",
+  "overview": {
+    "public_summary": "العثور على أستاذ كيمياء عضوية مقتولاً داخل معمله بجامعة القاهرة بمادة صيدلانية.",
+    "main_question": "لماذا تم استهداف باحث أكاديمي، وما علاقة السم المستخدم بتاريخه؟",
+    "stakes": "هذه أول جريمة يرتكبها 'الخيميائي' بنفسه بشكل مباشر، وأي خطأ سيُضيع أقرب خيط لهويته."
+  },
+  "inbox_brief": {
+    "sender": "HQ",
+    "subject": "جريمة في الجامعة",
+    "message": "دكتور كيميا في جامعة القاهرة مات مسموم في معمله. نفس المركبات اللي بنشوفها اليومين دول. الراجل كان بيدور في ورق قديم يخص طلابه. دور ورا الورق ده."
+  },
+  "evidence_list": [
+    {
+      "evidence_id": "EVID-21-01",
+      "case_id": "case21",
+      "title": "قائمة الخريجين الممزقة",
+      "type": "document",
+      "evidence_tier": "critical",
+      "evidence_role": "prove",
+      "summary": "قائمة بأسماء 12 خريج، ثلاثة محاطين بدائرة، اثنان مشطوبان، والاسم الأخير مقطوع تماماً.",
+      "content_ref": "CASE21_TORN_LIST",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "forensics"
+      ],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_evid01_torn_identity",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": "EVENT_EVIDENCE_VERIFIED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "document",
+              "source_ref": "CASE21_TORN_LIST",
+              "interaction_id": "PAPER_TEAR_ANALYSIS",
+              "expected_player_action": "inspect_object",
+              "required_result": "name_intentionally_removed"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "الاسم الثالث المقطوع هو هوية الجاني 'الخيميائي'، والذي يبدو أنه كان تلميذاً للضحية. أزال اسمه ليخفي تاريخه.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "forensics",
+        "alchemist_identity",
+        "torn_name_clue"
+      ],
+      "route_weight": {
+        "timeline": 0,
+        "forensics": 1,
+        "behavioral": 0
+      },
+      "grand_truth_axis": [
+        "alchemist"
+      ]
+    },
+    {
+      "evidence_id": "EVID-21-02",
+      "case_id": "case21",
+      "title": "سجلات رسائل الماجستير السابقة",
+      "type": "digital",
+      "evidence_tier": "critical",
+      "evidence_role": "context",
+      "summary": "سجل لأبحاث أشرف عليها الضحية قبل 15 سنة.",
+      "content_ref": "FIN-ARCHIVE-UNIV",
+      "locked": false,
+      "requires_warrant": true,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "timeline"
+      ],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_evid02_thesis_match",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": "EVENT_TIMELINE_CONTRADICTION_CONFIRMED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_TIMELINE_CONTRADICTION_CONFIRMED",
+              "source_type": "timeline",
+              "source_ref": "TIMELINE-BOARD",
+              "interaction_id": "LINK-21-THESIS",
+              "expected_player_action": "lock_timeline_event",
+              "required_result": "thesis_matches_poison"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "تتطابق عناوين البحث المفقود في أرشيف الجامعة تماماً مع نوع السموم التي نتعامل معها. الخيميائي بنى كل جرائمه على أبحاث الجامعة الأساسية.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "timeline",
+        "alchemist_background",
+        "academic_coverup"
+      ],
+      "route_weight": {
+        "timeline": 1,
+        "forensics": 0,
+        "behavioral": 0
+      },
+      "grand_truth_axis": [
+        "alchemist"
+      ]
+    },
+    {
+      "evidence_id": "EVID-21-03",
+      "case_id": "case21",
+      "title": "دلالة طريقة القتل",
+      "type": "physical",
+      "evidence_tier": "supporting",
+      "evidence_role": "context",
+      "summary": "عدم محاولة الجاني إخفاء السم أو تغييره كالعادة.",
+      "content_ref": "LAB-TOX-21",
+      "locked": false,
+      "requires_warrant": false,
+      "state": "partial",
+      "requires_route_collaboration": [
+        "behavioral"
+      ],
+      "depends_on_evidence_ids": [],
+      "completion_triggers": [
+        {
+          "trigger_id": "trig_evid03_ego_killing",
+          "availability_mode": "immediate",
+          "delay_ticks": 0,
+          "scheduled_on_event": "EVENT_EVIDENCE_VERIFIED",
+          "logic_operator": "all",
+          "conditions": [
+            {
+              "event_name": "EVENT_EVIDENCE_VERIFIED",
+              "source_type": "report",
+              "source_ref": "LAB-TOX-21",
+              "interaction_id": "TOXICOLOGY_REVIEW",
+              "expected_player_action": "inspect_object",
+              "required_result": "signature_poison_used_openly"
+            }
+          ],
+          "on_complete": "upgrade_to_verified"
+        }
+      ],
+      "upgraded_summary": "الخيميائي قتل أستاذه بنفس المركب المعقد كنوع من الرسائل السيكوباتية: 'التلميذ الذي لم تعترف به قد تفوق عليك'. إثارة الذعر والتحدي.",
+      "penalty_if_mishandled": [],
+      "tags": [
+        "behavioral",
+        "alchemist_ego",
+        "psychological_profiling"
+      ],
+      "route_weight": {
+        "timeline": 0,
+        "forensics": 0,
+        "behavioral": 1
+      },
+      "grand_truth_axis": [
+        "alchemist"
+      ]
+    }
+  ],
+  "suspects": [
+    {
+      "character_id": "SUSP-21-01",
+      "name": "الخيميائي (مجهول)",
+      "cognitive_profile": {
+        "base_collapse_threshold": 10,
+        "base_lawyer_up_threshold": 10,
+        "aggression_tolerance": 8,
+        "rapport_affinity": 1,
+        "evidence_rigidity": 9
+      },
+      "pressure_response": "deflect"
+    }
+  ],
+  "outcome_flags": {
+    "success": [
+      "case21_resolved_true",
+      "case21_professor_resolved",
+      "alchemist_was_student",
+      "torn_name_clue"
+    ],
+    "partial": [
+      "case21_professor_resolved"
+    ],
+    "failure": [
+      "case21_resolved_false"
+    ]
+  },
+  "closure_rules": {
+    "requires_culprit": true,
+    "requires_motive": true,
+    "requires_method_or_opportunity": true,
+    "minimum_evidence_count": 3,
+    "accepted_true_motive_ids": [
+      "motive_syndicate_silencing",
+      "motive_ego"
+    ],
+    "false_success_motive_ids": [
+      "motive_robbery",
+      "motive_professional_jealousy"
+    ],
+    "false_success_flag": "case21_resolved_false",
+    "accepted_motive_ids": [
+      "motive_syndicate_silencing",
+      "motive_robbery",
+      "motive_professional_jealousy",
+      "motive_ego"
+    ],
+    "validate_closure": {
+      "minimum_behavioral_chain_verified": 1,
+      "minimum_cross_route_verified": 2,
+      "no_shared_evidence_between_roles": false,
+      "behavioral_chain_evidence_ids": [
+        "EVID-21-03"
+      ],
+      "cross_route_evidence_ids": [
+        "EVID-21-01",
+        "EVID-21-02"
+      ],
+      "rejected_submission_reason_codes": [
+        "missing_alchemist_link"
+      ]
+    }
+  },
+  "hidden_systems": {
+    "route_collaboration": {
+      "minimum_required_chains": 1,
+      "shared_evidence_completion_required": true,
+      "critical_evidence_requires_alternative_paths": false,
+      "minimum_alternative_trigger_sets_for_critical_evidence": 0
+    },
+    "evidence_reinterpretation_rules": [],
+    "ui_feedback_rules": [],
+    "soft_exposure_rules": [],
+    "forensics_queue_pressure_rules": {
+      "enabled": true,
+      "pressure_increment": 4,
+      "requires_player_facing_explanation": true,
+      "trigger_when": {
+        "action": "QUEUE_EVIDENCE",
+        "evidence_id": "EVID-21-01"
+      },
+      "deterministic_variants": [
+        {
+          "variant_id": "queue_pressure_provisional_result",
+          "selector": "seed_tick_mod_2_eq_0",
+          "effect": {
+            "target_ref": "EVID-21-01",
+            "result_quality": "provisional",
+            "duration_ticks": 1
+          },
+          "visible_notice": "النتيجة الحالية أولية بسبب ضغط التحليلات الدقيقة على المعمل."
+        },
+        {
+          "variant_id": "queue_pressure_report_delay",
+          "selector": "seed_tick_mod_2_eq_1",
+          "effect": {
+            "target_ref": "EVID-21-02",
+            "delay_ticks": 1
+          },
+          "visible_notice": "تأخر تقرير الصياغة قليلًا بسبب ضغط التحاليل الفنية الإضافية."
+        }
+      ]
+    },
+    "ui_anomalies": {
+      "enabled": true,
+      "allowed_events": [
+        "GLITCH_TEXT_IN_REPORTS",
+        "FAKE_BACKBUTTON",
+        "AUDIO_DISTORTION"
+      ]
+    }
+  },
+  "transition_context_hooks": [],
+  "next_case_rules": [
+    {
+      "rule_id": "case21_success",
+      "priority": 100,
+      "required_flags_all": [
+        "case21_resolved_true"
+      ],
+      "required_flags_any": [],
+      "blocked_flags": [],
+      "target_case_id": "case22",
+      "target_case_path": "cases/case22/case22.json",
+      "clarity_modifier": 0,
+      "transition_reason": "تقدم طبيعي عبر القوس."
+    }
+  ],
+  "maxPhsLevels": 7,
+  "phs_hints": [
+    {
+      "level": "L1",
+      "type": "note",
+      "payload": {
+        "text": "هناك تفاصيل صغيرة في بداية هذا التحقيق ربما لم تلاحظها بعد. راجع كل ما لديك.",
+        "source_ref": "generic"
+      }
+    },
+    {
+      "level": "L2",
+      "type": "note",
+      "payload": {
+        "text": "ركز على تحليل \"قائمة الخريجين الممزقة\". هناك معلومات ناقصة يجب أن تستكملها.",
+        "source_ref": "EVID-21-01"
+      }
+    },
+    {
+      "level": "L3",
+      "type": "note",
+      "payload": {
+        "text": "عليك فهم سلوكيات المتورطين. هناك حلقة مفقودة في السلسلة السلوكية.",
+        "metadata": {
+          "reason": "missing_behavioral_chain"
+        }
+      }
+    },
+    {
+      "level": "L4",
+      "type": "note",
+      "payload": {
+        "text": "تحليل \"قائمة الخريجين الممزقة\" سيكشف لك جزءاً مهماً من اللغز إن قمت بمقاطعته مع الأدلة الأخرى.",
+        "source_ref": "EVID-21-01"
+      }
+    },
+    {
+      "level": "L5",
+      "type": "note",
+      "payload": {
+        "text": "لا تعتمد على مسار تحقيق واحد. يجب مقاطعة الأدلة من مصادر مختلفة لضمان الإغلاق.",
+        "metadata": {
+          "reason": "missing_cross_route_evidence"
+        }
+      }
+    },
+    {
+      "level": "L6",
+      "type": "note",
+      "payload": {
+        "text": "الدليل \"سجلات رسائل الماجستير السابقة\" يربط الخيوط ببعضها. حاول فهم السياق الذي وجد فيه.",
+        "source_ref": "EVID-21-02"
+      }
+    },
+    {
+      "level": "L7",
+      "type": "direct",
+      "payload": {
+        "text": "لا يمكنك إغلاق القضية دون اكتمال مسارات 'السلسلة السلوكية' و'الأدلة المتقاطعة'. راجع لوحة الأدلة لربط النقاط المفقودة."
+      }
+    }
+  ]
+}
+

@@ -1,0 +1,27 @@
+- generic [ref=e155]:
+  - heading "تسجيل هوية المحقق" [level=2] [ref=e156]
+  - paragraph [ref=e157]: اختر صورتك الرمزية وأدخل اسمك
+  - generic [ref=e158]:
+    - button "🕵️ المحقق" [ref=e159] [cursor=pointer]:
+      - generic [ref=e160]: 🕵️
+      - generic [ref=e161]: المحقق
+    - button "🔬 الجنائي" [ref=e162] [cursor=pointer]:
+      - generic [ref=e163]: 🔬
+      - generic [ref=e164]: الجنائي
+    - button "🧠 المحلل" [ref=e165] [cursor=pointer]:
+      - generic [ref=e166]: 🧠
+      - generic [ref=e167]: المحلل
+    - button "👤 العميل" [ref=e168] [cursor=pointer]:
+      - generic [ref=e169]: 👤
+      - generic [ref=e170]: العميل
+    - button "💻 المخترق" [ref=e171] [cursor=pointer]:
+      - generic [ref=e172]: 💻
+      - generic [ref=e173]: المخترق
+    - button "👁️ المراقب" [ref=e174] [cursor=pointer]:
+      - generic [ref=e175]: 👁️
+      - generic [ref=e176]: المراقب
+  - generic [ref=e177]:
+    - generic [ref=e178]: اسم المحقق
+    - textbox "اسم المحقق" [ref=e179]:
+      - /placeholder: أدخل اسمك...
+  - button "تأكيد الهوية ←" [disabled] [ref=e180]

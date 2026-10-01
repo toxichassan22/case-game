@@ -1,0 +1,293 @@
+/* Inbox Panel - Clean Military-Style Design */
+.inbox-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  direction: rtl;
+}
+
+/* Message Header - Clean, No Borders */
+.inbox-message-header {
+  padding: 1.25rem 1.5rem;
+  background: rgba(15, 23, 42, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.inbox-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.inbox-sender-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.inbox-sender-icon {
+  color: var(--interaction-cool);
+  flex-shrink: 0;
+}
+
+.inbox-sender-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--interaction-cool);
+  margin: 0;
+}
+
+.inbox-message-time {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-family: 'Courier New', 'Consolas', monospace;
+  white-space: nowrap;
+}
+
+.inbox-message-subject {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Message Content Area */
+.inbox-message-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem; /* قللناها من 1.5rem عشان ندي مساحة عرضية */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.inbox-message-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.inbox-message-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.inbox-message-content::-webkit-scrollbar-thumb {
+  background: rgba(77, 163, 255, 0.3);
+  border-radius: 3px;
+}
+
+.inbox-message-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(77, 163, 255, 0.5);
+}
+
+/* Audio Player Container - Treated as Attachment */
+.inbox-audio-attachment {
+  margin-bottom: 1rem;
+}
+
+/* Message Bubbles - Minimal Borders */
+.inbox-bubble-wrapper {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.inbox-bubble-wrapper.outgoing {
+  flex-direction: row-reverse;
+}
+
+.inbox-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(77, 163, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--interaction-cool);
+  flex-shrink: 0;
+}
+
+.inbox-bubble {
+  flex: 1;
+  max-width: 85%;
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.inbox-bubble-wrapper.outgoing .inbox-bubble {
+  background: rgba(77, 163, 255, 0.08);
+  border-color: rgba(77, 163, 255, 0.1);
+}
+
+.inbox-bubble-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.inbox-bubble-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.inbox-bubble-time {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.inbox-bubble-text {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+/* Typing Indicator */
+.inbox-typing-indicator {
+  font-size: 0.8rem;
+  color: var(--interaction-cool);
+  font-style: italic;
+  padding: 0.5rem 1.5rem;
+}
+
+/* Reply Area - Separated with Divider */
+.inbox-reply-area {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.25rem 1.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+  max-height: 40%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.inbox-reply-header {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+/* Category Tabs - Text-Style, Not Boxes */
+.inbox-category-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.inbox-category-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.inbox-category-tab {
+  padding: 0.4rem 0.6rem;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  position: relative;
+}
+
+.inbox-category-tab:hover {
+  color: var(--text-primary);
+}
+
+.inbox-category-tab.active {
+  color: var(--interaction-cool);
+}
+
+.inbox-category-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.85rem;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--interaction-cool);
+  border-radius: 1px;
+}
+
+/* Reply Options Container */
+.inbox-reply-options {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.5rem; /* عشان الزراير ماتلزقش في السكرول بار */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(77, 163, 255, 0.3) transparent;
+}
+
+.inbox-reply-options::-webkit-scrollbar {
+  width: 4px;
+}
+
+.inbox-reply-options::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.inbox-reply-options::-webkit-scrollbar-thumb {
+  background: rgba(77, 163, 255, 0.3);
+  border-radius: 2px;
+}
+
+.inbox-reply-options::-webkit-scrollbar-thumb:hover {
+  background: rgba(77, 163, 255, 0.5);
+}
+
+/* Reply Buttons - Transparent Background */
+.inbox-reply-btn {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 8px;
+  color: #e2e8f0;
+  text-align: right;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  display: block;
+}
+
+.inbox-reply-btn:hover:not(:disabled) {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateX(-4px);
+}
+
+.inbox-reply-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Empty State */
+.inbox-empty-state {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 1.5rem 1rem;
+  font-style: italic;
+}

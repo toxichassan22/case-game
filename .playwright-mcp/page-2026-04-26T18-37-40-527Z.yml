@@ -1,0 +1,24 @@
+- generic [ref=e181]:
+  - banner [ref=e182]:
+    - generic [ref=e183]:
+      - generic [ref=e184]: 🕵️
+      - generic [ref=e185]:
+        - generic [ref=e186]: محقق الاختبار
+        - generic [ref=e187]: محقق جديد
+    - img [ref=e189]
+  - main [ref=e193]:
+    - generic [ref=e194]:
+      - generic [ref=e195]:
+        - heading "غرف متاحة على الشبكة" [level=2] [ref=e196]
+        - generic [ref=e197]: ● 0 ROOMS FOUND
+      - generic [ref=e198]:
+        - button "ابدأ Solo" [ref=e199] [cursor=pointer]:
+          - img [ref=e200]
+          - text: ابدأ Solo
+        - button "إنشاء غرفة جديدة" [ref=e202] [cursor=pointer]:
+          - img [ref=e203]
+          - text: إنشاء غرفة جديدة
+    - generic [ref=e205]:
+      - img [ref=e206]
+      - paragraph [ref=e209]: لا توجد غرف متاحة
+      - paragraph [ref=e210]: أنشئ غرفة جديدة أو العب Solo
