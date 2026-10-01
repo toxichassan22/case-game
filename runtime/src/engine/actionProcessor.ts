@@ -67,14 +67,41 @@ export class ActionProcessor {
         }
         return null;
       }
-      case PLAYER_ACTION_TYPE.CHOOSE_DIALOG_OPTION:
+      case PLAYER_ACTION_TYPE.CHOOSE_DIALOG_OPTION: {
         if (!this.adapter.dialogBlueprints.has(`${action.source_ref}:${action.interaction_id}`)) {
           return `Dialogue blueprint missing: ${action.source_ref}:${action.interaction_id}`;
         }
         if (this.state.verifiedFacts.has(`${FACT_TYPE.DIALOG_OPTION_USED}:${action.source_ref}:${action.interaction_id}`)) {
           return `Dialogue option already used: ${action.interaction_id}`;
         }
+        const sessionCharacterId = interrogationSourceRefToCharacterId(action.source_ref);
+        const session = sessionCharacterId ? this.state.interrogation_sessions[sessionCharacterId] : undefined;
+        if (session?.ended_early) {
+          return `Interrogation session ended for: ${sessionCharacterId}`;
+        }
+        if (session && (session.burned_choice_ids.includes(action.interaction_id) || session.locked_choice_ids.includes(action.interaction_id))) {
+          return `Dialogue option unavailable in this session: ${action.interaction_id}`;
+        }
         return null;
+      }
+      case PLAYER_ACTION_TYPE.PRESENT_EVIDENCE: {
+        const targetCharacterId = interrogationSourceRefToCharacterId(action.source_ref);
+        if (!targetCharacterId) {
+          return `Unknown interrogation target: ${action.source_ref}`;
+        }
+        const session = this.state.interrogation_sessions[targetCharacterId];
+        if (session?.ended_early) {
+          return `Interrogation session ended for: ${targetCharacterId}`;
+        }
+        const evidence = this.adapter.definition.evidence_list.find((e) => e.evidence_id === action.interaction_id);
+        if (!evidence) {
+          return `Unknown evidence: ${action.interaction_id}`;
+        }
+        if (this.state.evidenceStates[action.interaction_id] === "locked") {
+          return `Evidence is locked: ${action.interaction_id}`;
+        }
+        return null;
+      }
       case PLAYER_ACTION_TYPE.LOCK_TIMELINE_EVENT:
         if (!this.adapter.timelineBlueprints.has(action.interaction_id)) {
           return `Timeline blueprint missing: ${action.interaction_id}`;
@@ -139,6 +166,29 @@ export class ActionProcessor {
             action.type,
             blueprint?.required_result || "جاري التحليل... لا يوجد رد محدد حالياً.",
             blueprint?.display_text,
+          ),
+        ];
+      }
+      case PLAYER_ACTION_TYPE.PRESENT_EVIDENCE: {
+        const targetCharacterId = interrogationSourceRefToCharacterId(action.source_ref);
+        if (targetCharacterId) {
+          this.state.currentInterrogationSuspectId = targetCharacterId;
+        }
+        const evidenceTitle = this.adapter.definition.evidence_list.find(
+          (e) => e.evidence_id === action.interaction_id,
+        )?.title ?? action.interaction_id;
+        const isVerified = this.state.evidenceStates[action.interaction_id] === "verified";
+        return [
+          this.eventBus.createEvent(
+            EVENT_NAME.INTERROGATION_EVIDENCE_PRESENTED,
+            SOURCE_TYPE.INTERROGATION,
+            action.source_ref,
+            action.interaction_id,
+            action.type,
+            isVerified ? "evidence_presented_verified" : "evidence_presented_weak",
+            isVerified
+              ? `تم تقديم دليل موثّق: ${evidenceTitle}`
+              : `تم تقديم دليل غير موثّق: ${evidenceTitle}`,
           ),
         ];
       }

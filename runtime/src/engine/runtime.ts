@@ -61,7 +61,7 @@ export class CoreEngine {
     this.effectSystem = new EffectSystem(this.state, this.definition);
     this.reinterpretationSystem = new ReinterpretationSystem(this.state, this.definition, this.eventBus);
     this.closureSystem = new ClosureSystem(this.state, this.definition, this.adapter.closureCatalog);
-    this.interrogationSystem = new InterrogationSystem(this.state, this.definition);
+    this.interrogationSystem = new InterrogationSystem(this.state, this.definition, this.eventBus);
     this.routeResolver = new RouteResolver(this.state, this.definition);
 
     recomputeClosureBuckets(this.definition, this.state);

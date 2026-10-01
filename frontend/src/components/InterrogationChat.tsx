@@ -12,7 +12,10 @@ import {
 interface DialogOption {
   id: string;
   text: string;
+  /** Used (asked) options — answered already. */
   burned?: boolean;
+  /** Session-burned by mechanic (e.g. aggressive choice burned the parallel empathetic option). */
+  sessionBurned?: boolean;
 }
 
 interface DialogMessage {
@@ -45,14 +48,19 @@ const InterrogationChatInner: React.FC<InterrogationChatProps> = ({
 
   // Track which option is pending engine confirmation (sent, not yet confirmed)
   const [pendingOptionId, setPendingOptionId] = useState<string | null>(null);
+  const [showEvidencePicker, setShowEvidencePicker] = useState(false);
+  const [pendingEvidenceId, setPendingEvidenceId] = useState<string | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const processedEventsRef = useRef<Set<string>>(new Set());
 
 
   const snapshot = useGameStore((s) => s.engineSnapshot) as RuntimeSnapshot;
-  const suspectState = snapshot?.suspectStates?.[suspectId] || 'normal';
-  const pressureScore = snapshot?.suspectPressureScores?.[suspectId] || 0;
+  const session = snapshot?.interrogation_sessions?.[suspectId];
+  const suspectState = session?.current_stage === 'collapse' ? 'collapsing' : (session?.current_stage ?? snapshot?.suspectStates?.[suspectId] ?? 'normal');
+  const pressureScore = session?.pressure_score ?? snapshot?.suspectPressureScores?.[suspectId] ?? 0;
+  const burnedChoiceIds = useMemo(() => new Set(session?.burned_choice_ids ?? []), [session?.burned_choice_ids]);
+  const lockedChoiceIds = useMemo(() => new Set(session?.locked_choice_ids ?? []), [session?.locked_choice_ids]);
 
   const caseDefinition = useGameStore((s) => s.caseDefinition);
   const sendAction = useGameStore((s) => s.sendAction);
@@ -76,20 +84,26 @@ const InterrogationChatInner: React.FC<InterrogationChatProps> = ({
       )
       .map((o: { id: string; text: string }) => {
         const isUsed = snapshot?.verifiedFacts?.includes(`dialog_option_used:${sourceRef}:${o.id}`) === true;
-        return { id: o.id, text: o.text, burned: isUsed };
+        return {
+          id: o.id,
+          text: o.text,
+          burned: isUsed,
+          sessionBurned: !isUsed && (burnedChoiceIds.has(o.id) || lockedChoiceIds.has(o.id)),
+        };
       });
-  }, [suspect?.dialogue_options, supportedOptionIds, snapshot?.verifiedFacts, sourceRef]);
+  }, [suspect?.dialogue_options, supportedOptionIds, snapshot?.verifiedFacts, sourceRef, burnedChoiceIds, lockedChoiceIds]);
 
   // Scroll to bottom on new messages
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Timeout for pending option
+  // Timeout for pending option / evidence presentation
   useEffect(() => {
-    if (pendingOptionId) {
+    if (pendingOptionId || pendingEvidenceId) {
       const timer = setTimeout(() => {
         setPendingOptionId(null);
+        setPendingEvidenceId(null);
         useGameStore.getState().addNotification({
           message: 'انتهى وقت انتظار الرد. يرجى المحاولة مرة أخرى.',
           type: 'warning'
@@ -97,7 +111,7 @@ const InterrogationChatInner: React.FC<InterrogationChatProps> = ({
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [pendingOptionId]);
+  }, [pendingOptionId, pendingEvidenceId]);
 
   // Listen to engine events for responses
   useEffect(() => {
@@ -106,8 +120,13 @@ const InterrogationChatInner: React.FC<InterrogationChatProps> = ({
     const newMessages: DialogMessage[] = [];
 
     snapshot.eventTrace.forEach((ev, idx) => {
+      const isInterrogationEvent = ev.event_name === 'EVENT_INTERROGATION_NODE_UNLOCKED'
+        || ev.event_name === 'EVENT_INTERROGATION_STAGE_ENTERED'
+        || ev.event_name === 'EVENT_INTERROGATION_EVIDENCE_PRESENTED'
+        || ev.event_name === 'EVENT_INTERROGATION_COLLAPSED'
+        || ev.event_name === 'EVENT_INTERROGATION_LAWYER_UP';
       if (
-        ev.event_name === 'EVENT_INTERROGATION_NODE_UNLOCKED' &&
+        isInterrogationEvent &&
         interrogationSourceRefToCharacterId(ev.source_ref) === suspectId
       ) {
         const eventKey = `${ev.tick}-${idx}`;
@@ -127,26 +146,29 @@ const InterrogationChatInner: React.FC<InterrogationChatProps> = ({
       const timer = setTimeout(() => {
           setMessages((prev) => [...prev, ...newMessages]);
           setPendingOptionId(null);
+          setPendingEvidenceId(null);
       }, 0);
       return () => clearTimeout(timer);
-    } else if (pendingOptionId) {
+    } else if (pendingOptionId || pendingEvidenceId) {
+      const pendingRef = pendingOptionId ?? pendingEvidenceId ?? '';
       const wasRejected = snapshot.debugTrace?.some(
         (t: { kind: string; message?: string }) =>
           t.kind === 'action_rejected' &&
-          (t.message?.includes(pendingOptionId) || t.message?.includes(sourceRef))
+          (t.message?.includes(pendingRef) || t.message?.includes(sourceRef))
       );
       if (wasRejected) {
         // Move into a microtask/timer to avoid cascading render warning
         const timer = setTimeout(() => {
             setPendingOptionId(null);
+            setPendingEvidenceId(null);
         }, 0);
         return () => clearTimeout(timer);
       }
     }
-  }, [snapshot, suspectId, pendingOptionId, sourceRef]);
+  }, [snapshot, suspectId, pendingOptionId, pendingEvidenceId, sourceRef]);
 
   const handleChooseOption = (option: DialogOption) => {
-    if (option.burned || pendingOptionId) return; // prevent double-fire
+    if (option.burned || option.sessionBurned || pendingOptionId || pendingEvidenceId) return; // prevent double-fire
 
     // Add investigator's question immediately for responsiveness
     setMessages(prev => [...prev, {
@@ -163,6 +185,31 @@ const InterrogationChatInner: React.FC<InterrogationChatProps> = ({
       type: PLAYER_ACTION_TYPE.CHOOSE_DIALOG_OPTION,
       source_ref: sourceRef,
       interaction_id: option.id,
+    });
+  };
+
+  // Presenting evidence to the suspect is the spec's way of driving pressure
+  const presentableEvidence = (caseDefinition?.evidence_list ?? [])
+    .filter((ev) => snapshot?.evidenceStates?.[ev.evidence_id] && snapshot.evidenceStates[ev.evidence_id] !== 'locked')
+    .map((ev) => ({
+      id: ev.evidence_id,
+      title: ev.title,
+      verified: snapshot?.evidenceStates?.[ev.evidence_id] === 'verified',
+    }));
+
+  const handlePresentEvidence = (evidenceId: string, title: string) => {
+    if (pendingEvidenceId || pendingOptionId) return;
+    setMessages(prev => [...prev, {
+      speaker: 'investigator',
+      text: `🗂️ قدّمت الدليل: ${title}`,
+      timestamp: Date.now(),
+    }]);
+    setPendingEvidenceId(evidenceId);
+    setShowEvidencePicker(false);
+    sendAction({
+      type: PLAYER_ACTION_TYPE.PRESENT_EVIDENCE,
+      source_ref: sourceRef,
+      interaction_id: evidenceId,
     });
   };
 
@@ -185,8 +232,9 @@ const InterrogationChatInner: React.FC<InterrogationChatProps> = ({
     lawyer_up: 'var(--thread-link)',
   };
 
-  // Active = not burned AND not the one currently pending confirmation
-  const activeOptions = options.filter(o => !o.burned && o.id !== pendingOptionId);
+  // Active = not used, not session-burned, not the one currently pending confirmation
+  const activeOptions = options.filter(o => !o.burned && !o.sessionBurned && o.id !== pendingOptionId);
+  const sessionBurnedOptions = options.filter(o => o.sessionBurned);
 
   // Consolidated status strip values — thresholds are point-scale, not percentages
   const cognitiveProfile = suspect?.cognitive_profile;
@@ -310,24 +358,60 @@ const InterrogationChatInner: React.FC<InterrogationChatProps> = ({
             <AlertTriangle size={16} />
             {phase === 'collapsing' ? 'المشتبه به انهار تحت الضغط' : 'المشتبه به طلب محاميه'}
           </div>
-        ) : activeOptions.length === 0 && !pendingOptionId ? (
+        ) : activeOptions.length === 0 && sessionBurnedOptions.length === 0 && !pendingOptionId ? (
           <div className="chat-empty-state">
             {options.length === 0
               ? 'لا توجد أسئلة متاحة لهذا المشتبه به حاليًا.'
               : 'تم استنفاد جميع الأسئلة المتاحة.'}
           </div>
         ) : (
-          activeOptions.map((option) => (
+          <>
+            {activeOptions.map((option) => (
+              <button
+                key={option.id}
+                onClick={() => handleChooseOption(option)}
+                disabled={!!pendingOptionId || !!pendingEvidenceId}
+                className="chat-option-btn"
+              >
+                <MessageCircle size={12} style={{ marginLeft: '0.4rem', verticalAlign: 'middle' }} />
+                {option.text}
+              </button>
+            ))}
+            {sessionBurnedOptions.map((option) => (
+              <div key={option.id} className="chat-option-burned" title="هذا الخيار لم يعد متاحًا في هذه الجلسة">
+                🔒 {option.text}
+              </div>
+            ))}
+          </>
+        )}
+
+        {/* Present evidence to the suspect — drives the pressure mechanic */}
+        {phase !== 'collapsing' && phase !== 'lawyer_up' && presentableEvidence.length > 0 && (
+          <div className="interro-evidence">
             <button
-              key={option.id}
-              onClick={() => handleChooseOption(option)}
-              disabled={!!pendingOptionId}
-              className="chat-option-btn"
+              className="interro-evidence-toggle"
+              onClick={() => setShowEvidencePicker(v => !v)}
+              disabled={!!pendingOptionId || !!pendingEvidenceId}
             >
-              <MessageCircle size={12} style={{ marginLeft: '0.4rem', verticalAlign: 'middle' }} />
-              {option.text}
+              🗂️ مواجهة بدليل {showEvidencePicker ? '▾' : '▸'}
             </button>
-          ))
+            {showEvidencePicker && (
+              <div className="interro-evidence-list">
+                {presentableEvidence.map((ev) => (
+                  <button
+                    key={ev.id}
+                    className="interro-evidence-item"
+                    onClick={() => handlePresentEvidence(ev.id, ev.title)}
+                    title={ev.verified ? 'دليل موثّق — مواجهة قوية' : 'دليل غير موثّق — قد يضعف موقفك'}
+                  >
+                    <span className="interro-evidence-check">{ev.verified ? '✅' : '📄'}</span>
+                    <span className="interro-evidence-title">{ev.title}</span>
+                    <span className="interro-evidence-id mono-text">{ev.id}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>

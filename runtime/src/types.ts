@@ -3,7 +3,33 @@ export type { DebugTraceKind, EventName, FactType, PlayerActionType, SourceType 
 
 export type EvidenceState = "locked" | "partial" | "verified" | "contested" | "corrupted";
 export type EvidenceQuality = "final" | "provisional";
-export type SuspectState = "normal" | "collapsing" | "lawyer_up";
+export type SuspectState = "normal" | "probing" | "pressure" | "branching" | "collapsing" | "lawyer_up";
+
+/** Deterministic interrogation stages per behavior.md §3 — every session starts at "probing". */
+export type InterrogationStage = "probing" | "pressure" | "branching" | "collapse" | "lawyer_up";
+
+/** How a dialog option leans on the suspect's psyche; authored per option, defaults to "neutral". */
+export type DialogTone = "neutral" | "aggressive" | "empathetic" | "precision";
+
+/** Per-character interrogation session state (see behavior.md §3 / schema.md). */
+export interface InterrogationSession {
+  session_id: string;
+  character_id: string;
+  current_stage: InterrogationStage;
+  asked_question_ids: string[];
+  burned_choice_ids: string[];
+  locked_choice_ids: string[];
+  /** Evidence already presented in this session — repeats score as spam, not pressure. */
+  presented_evidence_ids: string[];
+  spam_score: number;
+  pressure_score: number;
+  profile_match_score: number;
+  aggression_score: number;
+  /** True once verified evidence has been presented in this session (Probing→Pressure gate). */
+  verified_evidence_presented: boolean;
+  ended_early: boolean;
+  last_action_tick: number;
+}
 export type PhsHintLevel = "L1" | "L2" | "L3" | "L4" | "L5" | "L6" | "L7+";
 export type PhsHintType = "highlight" | "note" | "message" | "direct";
 
@@ -284,6 +310,7 @@ export interface DialogOption {
   id: string;
   text: string;
   is_locked?: boolean;
+  tone?: DialogTone;
 }
 
 export interface UIAnomalyEvent {
@@ -380,6 +407,17 @@ export interface RuntimeCaseDefinition {
   hints?: string[];
   phs_hints?: PhsHint[];
   maxPhsLevels?: number;
+  /**
+   * Authored penalty thresholds (penalty_rules in case JSON). Only the fields the
+   * runtime consumes are typed; extra authored keys pass through untouched.
+   */
+  penalty_rules?: {
+    random_interrogation_limit?: number;
+    dialogue_spam_limit?: number;
+    wrong_board_connection_limit?: number;
+    false_submission_limit?: number;
+    [key: string]: unknown;
+  };
   solution?: {
     culprit: string;
     motive: string;
@@ -462,6 +500,7 @@ export type PlayerAction =
   | { type: typeof import("./engine/constants.js").PLAYER_ACTION_TYPE.REVIEW_EVIDENCE; source_ref: string }
   | { type: typeof import("./engine/constants.js").PLAYER_ACTION_TYPE.INSPECT_OBJECT; source_ref: string }
   | { type: typeof import("./engine/constants.js").PLAYER_ACTION_TYPE.CHOOSE_DIALOG_OPTION; source_ref: string; interaction_id: string }
+  | { type: typeof import("./engine/constants.js").PLAYER_ACTION_TYPE.PRESENT_EVIDENCE; source_ref: string; interaction_id: string }
   | { type: typeof import("./engine/constants.js").PLAYER_ACTION_TYPE.LOCK_TIMELINE_EVENT; interaction_id: string }
   | { type: typeof import("./engine/constants.js").PLAYER_ACTION_TYPE.REQUEST_DEEP_METADATA_RECOVERY; source_ref: string }
   | { type: typeof import("./engine/constants.js").PLAYER_ACTION_TYPE.REQUEST_PHS }
@@ -527,6 +566,7 @@ export interface RuntimeSnapshot {
   globalState: GlobalGameState;
   suspectPressureScores: Record<string, number>;
   suspectStates: Record<string, SuspectState>;
+  interrogation_sessions: Record<string, InterrogationSession>;
   phsState: PhsState;
 }
 

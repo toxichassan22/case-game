@@ -5,7 +5,7 @@ import type {
   EvidenceQuality,
   EvidenceState,
   GlobalGameState,
-
+  InterrogationSession,
   RuntimeCaseDefinition,
   PhsState,
   RuntimeNotice,
@@ -74,6 +74,7 @@ export interface EngineState {
   forensicsQueuePressure: number;
   suspectPressureScores: Record<string, number>;
   suspectStates: Record<string, SuspectState>;
+  interrogation_sessions: Record<string, InterrogationSession>;
   phsState: PhsState;
 }
 
@@ -140,6 +141,7 @@ export function createInitialState(
     forensicsQueuePressure: 0,
     suspectPressureScores: {},
     suspectStates: {},
+    interrogation_sessions: {},
     globalMemory: globalMemory ?? {
       globalFlags: [],
       playerProfile: {},
@@ -166,6 +168,22 @@ export function createInitialState(
       activeHint: null,
     },
   };
+}
+
+function cloneInterrogationSessions(
+  sessions: Record<string, InterrogationSession>,
+): Record<string, InterrogationSession> {
+  const cloned: Record<string, InterrogationSession> = {};
+  for (const [key, session] of Object.entries(sessions)) {
+    cloned[key] = {
+      ...session,
+      asked_question_ids: [...session.asked_question_ids],
+      burned_choice_ids: [...session.burned_choice_ids],
+      locked_choice_ids: [...session.locked_choice_ids],
+      presented_evidence_ids: [...(session.presented_evidence_ids ?? [])],
+    };
+  }
+  return cloned;
 }
 
 export function addNotice(state: EngineState, tick: number, code: string, message: string): void {
@@ -340,6 +358,7 @@ export function createSnapshot(definition: RuntimeCaseDefinition, state: EngineS
     globalState: { ...state.globalMemory },
     suspectPressureScores: { ...state.suspectPressureScores },
     suspectStates: { ...state.suspectStates },
+    interrogation_sessions: cloneInterrogationSessions(state.interrogation_sessions),
     phsState: { ...state.phsState },
   };
 }
@@ -376,6 +395,7 @@ export function applySnapshot(state: EngineState, snapshot: RuntimeSnapshot): vo
   state.globalMemory = { ...snapshot.globalState };
   state.suspectPressureScores = { ...snapshot.suspectPressureScores };
   state.suspectStates = { ...snapshot.suspectStates };
+  state.interrogation_sessions = cloneInterrogationSessions(snapshot.interrogation_sessions ?? {});
   state.phsState = { ...snapshot.phsState };
 
   // Restore scheduled effects
