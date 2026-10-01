@@ -48,6 +48,7 @@ function mkDefinition(overrides?: {
       requires_method_or_opportunity: true,
       minimum_evidence_count: 3,
       accepted_true_motive_ids: ['motive_true'],
+      accepted_true_method_ids: ['method_x'],
       accepted_true_culprit_ids: overrides && 'acceptedTrueCulpritIds' in overrides
         ? overrides.acceptedTrueCulpritIds
         : ['char_real'],
@@ -93,7 +94,7 @@ function mkDefinition(overrides?: {
 
 const CATALOG: ClosureCatalog = {
   suspect_ids: ['char_real', 'char_decoy'],
-  method_ids: ['method_x'],
+  method_ids: ['method_x', 'method_y'],
 };
 
 function verifyAll(state: EngineState, definition: RuntimeCaseDefinition, ids: string[]): void {
@@ -148,6 +149,12 @@ describe('ClosureSystem', () => {
     );
     expect(outcome.decision.mode).toBe('false_success');
     expect(outcome.decision.granted_flags).toContain('accused_wrong_flag');
+  });
+
+  it('downgrades to false_success when the true suspect gets the wrong method', () => {
+    const outcome = system.validateClosureAttempt(mkAttempt({ submitted_method_or_timeline: 'method_y' }));
+    expect(outcome.decision.accepted).toBe(true);
+    expect(outcome.decision.mode).toBe('false_success');
   });
 
   it('does not grant suspect flags when the real culprit is accused with a false motive', () => {

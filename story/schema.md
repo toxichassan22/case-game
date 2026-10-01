@@ -709,6 +709,7 @@ derived_route_profile(route) =
 - `true_success`
   - `submitted_suspect ∈ closure_rules.accepted_true_culprit_ids` (إن صُرّحت — وإلا أي مشتبه في الـ `closureCatalog`)
   - و`submitted_motive ∈ accepted_true_motive_ids`
+  - و`submitted_method_or_timeline ∈ accepted_true_method_ids` (إن صُرّحت — وإلا أي طريقة في الـ `closureCatalog`)
   - مع اجتياز بوابة الإغلاق كاملة (أدلة موثقة، سلسلة سلوكية، ربط عابر)
 - `false_success`
   - الاتهام اجتاز البوابة لكنه لا يحقق `true_success`: مشتبه من الـ catalog ليس الجاني الحقيقي، أو دافع من `false_success_motive_ids`

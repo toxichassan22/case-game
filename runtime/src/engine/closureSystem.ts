@@ -99,9 +99,16 @@ export class ClosureSystem {
         ? true
         : trueCulpritIds.includes(attempt.submitted_suspect);
 
+    const trueMethodIds = this.definition.closure_rules.accepted_true_method_ids;
+    const methodMatchesTrue =
+      !trueMethodIds || trueMethodIds.length === 0
+        ? true
+        : trueMethodIds.includes(attempt.submitted_method_or_timeline);
+
     const isTrueSuccess =
       this.definition.closure_rules.accepted_true_motive_ids.includes(attempt.submitted_motive) &&
-      suspectMatchesTrueCulprit;
+      suspectMatchesTrueCulprit &&
+      methodMatchesTrue;
     const grantedFlags = isTrueSuccess
       ? [...this.definition.outcome_flags.success]
       : [
