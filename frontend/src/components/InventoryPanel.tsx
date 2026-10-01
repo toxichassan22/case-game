@@ -17,6 +17,20 @@ interface InventoryPanelProps {
   onCloseMobile?: () => void;
 }
 
+const EVIDENCE_TYPE_LABELS: Record<string, string> = {
+  document: 'مستند',
+  digital: 'رقمي',
+  physical: 'مادي',
+  report: 'تقرير',
+  object: 'غرض',
+  statement: 'إفادة',
+  video: 'فيديو',
+  photo: 'صورة',
+  audio: 'تسجيل صوتي',
+  testimony: 'شهادة',
+  forensic: 'جنائي',
+};
+
 // Share Popover Component
 const SharePopover: React.FC<{ evidenceId: string; onClose: () => void }> = ({ evidenceId, onClose }) => {
   const currentRoom = useGameStore(s => s.currentRoom);
@@ -211,7 +225,7 @@ export const InventoryPanel: React.FC<InventoryPanelProps> = ({
               {!isVerified ? '🔍 يحتاج مراجعة وتوثيق' : '✓ موثق - اضغط للمراجعة'}
             </div>
             <div className="inventory-item-footer">
-              <span className="inventory-item-type">{item.type}</span>
+              <span className="inventory-item-type">{EVIDENCE_TYPE_LABELS[item.type] ?? item.type}</span>
               <span className="inventory-item-state" style={{ color: isVerified ? 'var(--state-success)' : 'var(--state-warning)' }}>
                 {isVerified ? 'موثق' : isPartial ? 'جزئي' : item.state}
               </span>

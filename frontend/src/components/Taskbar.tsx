@@ -107,8 +107,8 @@ export const Taskbar: React.FC<TaskbarProps> = ({
           </span>
         </div>
         
-        <button 
-          className={`btn mobile-only-btn ${isInventoryOpen ? 'phs-highlight' : ''}`} 
+        <button
+          className={`btn mobile-only-btn ${isInventoryOpen ? 'phs-highlight' : ''}`}
           onClick={onToggleInventory}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', padding: 0, background: isInventoryOpen ? 'var(--border-window)' : '' }}
           title="حقيبة الأدلة - اضغط لعرض الأدلة المتاحة"
@@ -116,89 +116,29 @@ export const Taskbar: React.FC<TaskbarProps> = ({
         >
           <FolderOpen size={18} />
         </button>
-        
-        {!isSolo && (
-          <button 
-            className={`btn ${highlightedSourceRef === 'Chat' ? 'phs-highlight' : ''}`} 
-            onClick={() => onOpenWindow('Chat')}
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', padding: 0, background: activeWindow === 'Chat' ? 'var(--border-window)' : '' }}
-            title="دردشة الفريق - تواصل مع فريق التحقيق"
-            aria-label="دردشة الفريق"
-          >
-            <MessageSquare size={18} />
-          </button>
-        )}
 
-        <button 
-          className={`btn ${highlightedSourceRef === 'Inbox' ? 'phs-highlight' : ''}`} 
-          onClick={() => onOpenWindow('Inbox')}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', padding: 0, background: activeWindow === 'Inbox' ? 'var(--border-window)' : '' }}
-          title="صندوق الوارد - الرسائل والتنبيهات"
-          aria-label="صندوق الوارد"
-        >
-          <Monitor size={18} />
-        </button>
-        <button 
-          className={`btn ${highlightedSourceRef === 'StringBoard' ? 'phs-highlight' : ''}`} 
-          onClick={() => onOpenWindow('StringBoard')}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', padding: 0, background: activeWindow === 'StringBoard' ? 'var(--border-window)' : '' }}
-          title="لوحة الخيوط - ربط الأدلة والعلاقات"
-          aria-label="لوحة الخيوط"
-        >
-          <FolderOpen size={18} />
-        </button>
-        {discoveredEvidenceCount > 0 && (
-          <button 
-            className={`btn ${highlightedSourceRef === 'Database' ? 'phs-highlight' : ''}`} 
-            onClick={() => onOpenWindow('Database')}
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', padding: 0, background: activeWindow === 'Database' ? 'var(--border-window)' : '' }}
-            title="قاعدة البيانات - البحث في السجلات"
-            aria-label="قاعدة البيانات"
+        {([
+          { name: 'Chat', winTitle: 'دردشة الفريق', label: 'الدردشة', icon: MessageSquare, tip: 'دردشة الفريق - تواصل مع فريق التحقيق', hidden: isSolo },
+          { name: 'Inbox', winTitle: 'صندوق الوارد', label: 'الوارد', icon: Monitor, tip: 'صندوق الوارد - الرسائل والتنبيهات', hidden: false },
+          { name: 'StringBoard', winTitle: 'لوحة الخيوط', label: 'الخيوط', icon: FolderOpen, tip: 'لوحة الخيوط - ربط الأدلة والعلاقات', hidden: false },
+          { name: 'Database', winTitle: 'قاعدة البيانات', label: 'السجلات', icon: Database, tip: 'قاعدة البيانات - البحث في السجلات', hidden: discoveredEvidenceCount === 0 },
+          { name: 'Timeline', winTitle: 'الخط الزمني', label: 'الزمني', icon: Clock, tip: 'الخط الزمني - ترتيب الأحداث', hidden: false },
+          { name: 'Workbench', winTitle: 'المختبر', label: 'المختبر', icon: Microscope, tip: 'المختبر - التحليل الجنائي', hidden: currentCaseNumber === 1 && discoveredEvidenceCount <= 2 },
+          { name: 'Explorer', winTitle: 'الأرشيف', label: 'الأرشيف', icon: FileSearch, tip: 'الأرشيف - ملفات القضايا السابقة', hidden: currentCaseNumber === null || currentCaseNumber <= 1 },
+          { name: 'PHS', winTitle: 'نظام المساعدة المتقدم (PHS)', label: 'المساعدة', icon: Lightbulb, tip: 'المساعدة الذكية (PHS) - تلميحات وتوجيهات', hidden: false },
+        ] as const).filter(t => !t.hidden).map(({ name, winTitle, label, icon: Icon, tip }) => (
+          <button
+            key={name}
+            className={`btn taskbar-tool-btn ${highlightedSourceRef === name ? 'phs-highlight' : ''}`}
+            onClick={() => onOpenWindow(name)}
+            style={{ background: activeWindow === name || activeWindow === winTitle ? 'var(--border-window)' : '' }}
+            title={tip}
+            aria-label={tip}
           >
-            <Database size={18} />
+            <Icon size={17} />
+            {!isCompactLayout && <span className="taskbar-tool-caption">{label}</span>}
           </button>
-        )}
-        <button 
-          className={`btn ${highlightedSourceRef === 'Timeline' ? 'phs-highlight' : ''}`} 
-          onClick={() => onOpenWindow('Timeline')}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', padding: 0, background: activeWindow === 'Timeline' ? 'var(--border-window)' : '' }}
-          title="الخط الزمني - ترتيب الأحداث"
-          aria-label="الخط الزمني"
-        >
-          <Clock size={18} />
-        </button>
-
-        {(currentCaseNumber !== 1 || discoveredEvidenceCount > 2) && (
-          <button 
-            className={`btn ${highlightedSourceRef === 'Workbench' ? 'phs-highlight' : ''}`} 
-            onClick={() => onOpenWindow('Workbench')}
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', padding: 0, background: activeWindow === 'Workbench' ? 'var(--border-window)' : '' }}
-            title="المختبر - التحليل الجنائي"
-            aria-label="المختبر"
-          >
-            <Microscope size={18} />
-          </button>
-        )}
-        {currentCaseNumber !== null && currentCaseNumber > 1 && (
-          <button 
-            className={`btn ${highlightedSourceRef === 'Explorer' ? 'phs-highlight' : ''}`} 
-            onClick={() => onOpenWindow('Explorer')}
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', padding: 0, background: activeWindow === 'Explorer' ? 'var(--border-window)' : '' }}
-            title="الأرشيف - ملفات القضايا السابقة"
-            aria-label="الأرشيف"
-          >
-            <FileSearch size={18} />
-          </button>
-        )}
-        <button 
-          className={`btn ${highlightedSourceRef === 'PHS' ? 'phs-highlight' : ''}`} 
-          onClick={() => onOpenWindow('PHS')}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', padding: 0, background: activeWindow === 'PHS' || activeWindow === 'نظام المساعدة المتقدم (PHS)' ? 'var(--border-window)' : '' }}
-          title="المساعدة الذكية (PHS) - تلميحات وتوجيهات"
-          aria-label="المساعدة الذكية (PHS)"
-        >
-          <Lightbulb size={18} />
-        </button>
+        ))}
       </div>
 
       <div className="taskbar-right">

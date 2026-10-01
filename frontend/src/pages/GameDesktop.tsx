@@ -49,6 +49,7 @@ type WindowData = {
   type: 'inbox' | 'board' | 'database' | 'evidence' | 'timeline' | 'workbench' | 'explorer' | 'warrant' | 'interrogation' | 'phs' | 'chat';
   payload?: CaseEvidence | Suspect | CaseCharacter | ArchivedEvidenceWindowPayload | Record<string, unknown>;
   zIndex?: number;
+  maximized?: boolean;
 };
 
 function bringWindowToFront(windows: WindowData[], id: string): WindowData[] {
@@ -499,6 +500,12 @@ export const GameDesktop: React.FC = () => {
     });
   }, []);
 
+  const toggleWindowMaximized = useCallback((id: string) => {
+    setWindows(prev => prev.map(win =>
+      win.id === id ? { ...win, maximized: !win.maximized } : win
+    ));
+  }, []);
+
   const openArchivedEvidence = useCallback((archiveCaseId: string, evidenceId: string) => {
     const archiveCase = caseArchive.find((entry) => entry.caseId === archiveCaseId);
     if (!archiveCase) return;
@@ -840,16 +847,16 @@ export const GameDesktop: React.FC = () => {
             {/* Current Objective / Next Step - HIGHEST VISUAL PRIORITY */}
             <div className="current-objective-card" style={{
               marginTop: '2.5rem',
-              padding: isCompactViewport ? '1rem 1.5rem' : '1.75rem 3rem',
-              background: 'linear-gradient(135deg, rgba(77, 163, 255, 0.15) 0%, rgba(10, 25, 45, 0.95) 100%)',
-              border: '3px solid rgba(77, 163, 255, 1)',
+              padding: isCompactViewport ? '1rem 1.5rem' : '1.5rem 2.5rem',
+              background: 'linear-gradient(135deg, rgba(77, 163, 255, 0.10) 0%, rgba(10, 25, 45, 0.92) 100%)',
+              border: '1px solid rgba(77, 163, 255, 0.45)',
+              borderRadius: '12px',
               backdropFilter: 'blur(20px)',
               display: 'inline-flex',
               flexDirection: 'column',
-              gap: '1rem',
+              gap: '0.85rem',
               alignItems: 'center',
-              boxShadow: '0 0 60px rgba(77, 163, 255, 0.35), 0 8px 32px rgba(0,0,0,0.6), inset 0 0 30px rgba(77, 163, 255, 0.15)',
-              animation: 'pulse-glow-strong 2.5s infinite alternate',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.55)',
               position: 'relative',
               overflow: 'hidden',
               maxWidth: '90vw'
@@ -860,11 +867,11 @@ export const GameDesktop: React.FC = () => {
               <div style={{ position: 'absolute', bottom: '8px', left: '8px', width: '20px', height: '20px', borderBottom: '3px solid rgba(255,255,255,0.5)', borderLeft: '3px solid rgba(255,255,255,0.5)' }} />
               <div style={{ position: 'absolute', bottom: '8px', right: '8px', width: '20px', height: '20px', borderBottom: '3px solid rgba(255,255,255,0.5)', borderRight: '3px solid rgba(255,255,255,0.5)' }} />
               
-              <span style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', fontSize: isCompactViewport ? '0.9rem' : '1.15rem', fontWeight: 900, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '3px', textShadow: '0 0 15px rgba(255, 255, 255, 0.8), 0 2px 10px rgba(77, 163, 255, 0.6)' }}>
-                <span style={{ fontSize: '1.4em' }}>🎯</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: isCompactViewport ? '0.85rem' : '1rem', fontWeight: 700, color: 'rgba(147, 197, 253, 0.95)', letterSpacing: '1px' }}>
+                <span style={{ fontSize: '1.2em' }}>🎯</span>
                 <span>الهدف الحالي</span>
               </span>
-              <span style={{ fontSize: isCompactViewport ? '1.05rem' : '1.35rem', color: '#ffffff', textAlign: 'center', fontWeight: 700, textShadow: '0 2px 12px rgba(0,0,0,0.9), 0 0 20px rgba(255,255,255,0.3)', lineHeight: '1.6', padding: '0 1rem' }}>
+              <span style={{ fontSize: isCompactViewport ? '1rem' : '1.2rem', color: '#ffffff', textAlign: 'center', fontWeight: 600, lineHeight: '1.7', padding: '0 0.5rem' }}>
                 {discoveredEvidenceCount === 0 
                   ? '📬 تفقد صندوق الوارد (Inbox) لبدء التحقيق.' 
                   : discoveredEvidenceCount > verifiedEvidenceCount 
@@ -893,19 +900,18 @@ export const GameDesktop: React.FC = () => {
           const isEvidence = win.type === 'evidence';
           const isToolWindow = !isEvidence; // All non-evidence windows are tool windows
           const isWideWindow = ['explorer', 'timeline', 'database', 'board'].includes(win.type);
-          const isMediumWindow = ['interrogation', 'workbench'].includes(win.type);
           const isInboxWindow = win.type === 'inbox';
           const isChatWindow = win.type === 'chat';
+          const isMediumWindow = ['interrogation', 'workbench', 'warrant', 'phs'].includes(win.type);
 
-          // Tool windows open fullscreen (docked to fill area between progress & taskbar, beside sidebar)
-          const shouldDockFullscreen = isToolWindow;
-          
+          // Windows float on desktop; they only dock on compact viewports or when maximized
+          const isMaximized = Boolean(win.maximized);
+          const shouldDockFullscreen = isToolWindow && (isCompactViewport || isMaximized);
+          const shouldDockWindow = shouldDockFullscreen || ((isCompactViewport || isMaximized) && isEvidence);
+
           // Evidence windows should look like vertical papers by default
-          const desiredWidth = isEvidence ? 600 : (isWideWindow ? 800 : (isMediumWindow ? 500 : (isInboxWindow ? 850 : (isChatWindow ? 350 : 400))));
-          const desiredHeight = isEvidence ? 800 : (isWideWindow ? 600 : (isInboxWindow ? 600 : (isChatWindow ? 500 : 500)));
-          
-          // Dock all tool windows fullscreen; evidence only docks on mobile
-          const shouldDockWindow = shouldDockFullscreen || (isCompactViewport && isEvidence);
+          const desiredWidth = isEvidence ? 600 : (isWideWindow ? 880 : (isInboxWindow ? 780 : (isChatWindow ? 400 : (isMediumWindow ? 640 : 560))));
+          const desiredHeight = isEvidence ? 800 : (isWideWindow ? 620 : (isInboxWindow ? 600 : (isChatWindow ? 560 : (win.type === 'interrogation' ? 720 : 600))));
           
           const defaultWidth = Math.min(desiredWidth, windowMaxWidth);
           const defaultHeight = Math.min(desiredHeight, windowMaxHeight);
@@ -946,6 +952,8 @@ export const GameDesktop: React.FC = () => {
               boundsHeight={effectiveBoundsHeight}
               docked={shouldDockWindow}
               toolFullscreen={shouldDockFullscreen}
+              isFullscreen={isMaximized}
+              onToggleFullscreen={isCompactViewport ? undefined : () => toggleWindowMaximized(win.id)}
               zIndex={win.zIndex ?? (500 + index)}
             >
               {renderWindowContent(win)}

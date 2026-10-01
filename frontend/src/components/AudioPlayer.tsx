@@ -5,12 +5,15 @@ interface AudioPlayerProps {
   src: string;
   title?: string;
   type?: 'evidence' | 'interrogation' | 'briefing';
+  /** Renders a slim single-row player for cramped contexts like interrogation headers */
+  compact?: boolean;
 }
 
 export const AudioPlayer: React.FC<AudioPlayerProps> = ({ 
   src, 
   title = 'تسجيل صوتي',
-  type = 'evidence'
+  type = 'evidence',
+  compact = false
 }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -159,6 +162,43 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
   // ✅ Simple percentage - let CSS handle the offset
   const progressPercent = Math.min(100, Math.max(0, progress));
 
+  if (compact) {
+    return (
+      <div className="audio-compact" dir="ltr">
+        <audio ref={audioRef} src={src} preload="metadata" />
+        <button
+          className="audio-compact-play"
+          onClick={togglePlay}
+          title={isPlaying ? 'إيقاف مؤقت' : 'تشغيل'}
+          aria-label={isPlaying ? 'إيقاف مؤقت' : 'تشغيل'}
+          style={{ background: colors.primary }}
+        >
+          {isPlaying ? <Pause size={11} color="#fff" /> : <Play size={11} color="#fff" style={{ marginLeft: '1px' }} />}
+        </button>
+        <span className="audio-compact-title" dir="rtl" title={title}>🎙️ {title}</span>
+        <input
+          type="range"
+          className="audio-compact-range"
+          min={0}
+          max={duration || 100}
+          value={currentTime}
+          onChange={handleSeek}
+          aria-label="شريط التقدم"
+          style={{
+            background: `linear-gradient(to right, ${colors.primary} 0%, ${colors.primary} ${progressPercent}%, rgba(148, 163, 184, 0.18) ${progressPercent}%, rgba(148, 163, 184, 0.18) 100%)`,
+          }}
+        />
+        <span className="audio-compact-time">
+          {formatTime(currentTime)} / {duration && !isNaN(duration) && isFinite(duration) ? formatTime(duration) : '0:00'}
+        </span>
+        <button className="audio-compact-mute" onClick={toggleMute} title={isMuted ? 'إلغاء كتم الصوت' : 'كتم الصوت'} aria-label={isMuted ? 'إلغاء كتم الصوت' : 'كتم الصوت'}>
+          {isMuted || volume === 0 ? <VolumeX size={12} color="#94a3b8" /> : <Volume2 size={12} color="#94a3b8" />}
+        </button>
+        {error && <span className="audio-compact-error" title={error}>⚠️</span>}
+      </div>
+    );
+  }
+
   return (
     <div style={{
       background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%)',
@@ -211,7 +251,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
                 key={i}
                 style={{
                   width: '3px',
-                  height: `${12 + Math.sin(Date.now() / 200 + i) * 8}px`,
+                  height: `${10 + i * 3}px`,
                   background: colors.primary,
                   borderRadius: '2px',
                   animation: `audioWave 0.8s ease-in-out ${i * 0.1}s infinite alternate`,

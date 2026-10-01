@@ -10,6 +10,24 @@ interface DatabaseSearchProps {
 
 type FilterType = 'all' | 'suspects' | 'evidence' | 'persons';
 
+// Only generic category tags are player-facing — narrative identifier tags stay internal
+const TAG_LABELS: Record<string, string> = {
+  behavioral: 'سلوكي',
+  forensics: 'جنائي',
+  timeline: 'زمني',
+  psychological: 'نفسي',
+  body_language: 'لغة جسد',
+  critical: 'حاسم',
+  mislead: 'مُضلِّل',
+  carryover: 'قضية مترابطة',
+  carryover_link: 'قضية مترابطة',
+  carryover_potential: 'قضية مترابطة',
+  financial_crime: 'جرائم مالية',
+  forgery: 'تزوير',
+  cyber: 'إلكتروني',
+  institutional_corruption: 'فساد مؤسسي',
+};
+
 interface SearchResult {
   id: string;
   title: string;
@@ -312,15 +330,15 @@ export const DatabaseSearch: React.FC<DatabaseSearchProps> = ({ onOpenWindow }) 
                 <div style={{ fontSize: isCompactLayout ? '0.76rem' : '0.8rem', lineHeight: 1.55, color: 'var(--text-secondary)', marginBottom: res.tags?.length ? '0.35rem' : 0 }}>
                   {res.desc}
                 </div>
-                {res.tags && res.tags.length > 0 && (
+                {res.tags && res.tags.some(t => t in TAG_LABELS) && (
                   <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
-                    {res.tags.slice(0, 4).map(tag => (
+                    {res.tags.filter(t => t in TAG_LABELS).slice(0, 4).map(tag => (
                       <span key={tag} style={{
                         fontSize: isCompactLayout ? '0.6rem' : '0.62rem', padding: '1px 6px',
                         background: 'rgba(255,255,255,0.06)',
                         borderRadius: '4px', color: 'var(--text-secondary)',
                       }}>
-                        #{tag}
+                        {TAG_LABELS[tag]}
                       </span>
                     ))}
                   </div>

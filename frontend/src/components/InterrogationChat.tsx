@@ -3,8 +3,6 @@ import { useGameStore } from '../stores/gameStore';
 import { MessageCircle, User, AlertTriangle, Loader2 } from 'lucide-react';
 import { PLAYER_ACTION_TYPE } from '../../../runtime/src/engine/constants.js';
 import type { RuntimeSnapshot } from '../../../runtime/src/types';
-import { PsychologicalProfile } from './PsychologicalProfile';
-import { PressureScore } from './PressureScore';
 import { AudioPlayer } from './AudioPlayer';
 import {
   characterIdToInterrogationSourceRef,
@@ -190,6 +188,15 @@ const InterrogationChatInner: React.FC<InterrogationChatProps> = ({
   // Active = not burned AND not the one currently pending confirmation
   const activeOptions = options.filter(o => !o.burned && o.id !== pendingOptionId);
 
+  // Consolidated status strip values — thresholds are point-scale, not percentages
+  const cognitiveProfile = suspect?.cognitive_profile;
+  const collapseThreshold = cognitiveProfile?.base_collapse_threshold ?? 0;
+  const lawyerUpThreshold = cognitiveProfile?.base_lawyer_up_threshold ?? 0;
+  const pressureScale = Math.max(collapseThreshold, lawyerUpThreshold, 1);
+  const pressurePercent = Math.min(100, Math.max(0, (pressureScore / pressureScale) * 100));
+  const pressureColor = pressurePercent < 30 ? '#48bb78' : pressurePercent < 60 ? '#ecc94b' : pressurePercent < 80 ? '#ed8936' : '#f56565';
+  const trustLevel = snapshot?.globalState?.trustLevels?.[suspectId] ?? 50;
+
   return (
     <div className="chat-container">
       {/* Suspect Header */}
@@ -219,47 +226,57 @@ const InterrogationChatInner: React.FC<InterrogationChatProps> = ({
             <User size={24} color="var(--text-secondary)" />
           )}
         </div>
-        <div>
+        <div className="chat-header-text">
           <div className="chat-header-name">{suspectName}</div>
-          <div className="chat-header-phase" style={{ color: phaseColors[phase] }}>
-            <span>{phaseLabels[phase]}</span>
-            {pressureScore > 0 && (
-              <span className="chat-pressure-badge">
-                مؤشر الضغط: {pressureScore}%
-              </span>
-            )}
-          </div>
+          <span
+            className="chat-phase-chip"
+            style={{ color: phaseColors[phase], borderColor: phaseColors[phase] }}
+          >
+            {phaseLabels[phase]}
+          </span>
         </div>
-        
-        {/* Psychological Profile Widget */}
-        <PsychologicalProfile 
-          suspectId={suspectId}
-          trustLevel={snapshot?.globalState?.trustLevels?.[suspectId] || 50}
-          pressureScore={pressureScore}
-          state={suspectState as 'normal' | 'collapsing' | 'lawyer_up'}
-        />
       </div>
-      
-      {/* Pressure Score Visualization */}
-      {suspect?.cognitive_profile && (
-        <div style={{ padding: '1rem', borderBottom: '1px solid var(--item-border)' }}>
-          <PressureScore
-            suspectName={suspectName}
-            currentPressure={pressureScore}
-            collapseThreshold={suspect.cognitive_profile.base_collapse_threshold}
-            lawyerUpThreshold={suspect.cognitive_profile.base_lawyer_up_threshold}
-            aggressionTolerance={suspect.cognitive_profile.aggression_tolerance}
-          />
+
+      {/* Consolidated status strip — pressure bar + threshold markers + trust */}
+      {cognitiveProfile && (
+        <div className="interro-status">
+          <span className="interro-status-label">ضغط</span>
+          <div className="interro-pressure-track" dir="ltr">
+            <div
+              className="interro-pressure-fill"
+              style={{ width: `${pressurePercent}%`, background: pressureColor }}
+            />
+            <i
+              className="interro-marker"
+              style={{ left: `${(lawyerUpThreshold / pressureScale) * 100}%`, background: '#ed8936' }}
+              title={`طلب المحامي عند ${lawyerUpThreshold}`}
+            />
+            <i
+              className="interro-marker"
+              style={{ left: `${(collapseThreshold / pressureScale) * 100}%`, background: '#f56565' }}
+              title={`الانهيار عند ${collapseThreshold}`}
+            />
+          </div>
+          <span className="interro-status-value mono-text" title={`مؤشر الضغط ${pressureScore} من ${pressureScale}`}>
+            {pressureScore}/{pressureScale}
+          </span>
+          <span
+            className="interro-trust"
+            title="مستوى الثقة — ثقة أعلى قد تفتح مسارات حوار إضافية"
+          >
+            🤝 {trustLevel}%
+          </span>
         </div>
       )}
 
       {/* Audio Player for Suspect */}
       {suspect?.audio_url && (
-        <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid var(--item-border)' }}>
+        <div className="interro-audio">
           <AudioPlayer 
             src={suspect.audio_url} 
             title={`تسجيل استجواب - ${suspectName}`}
             type="interrogation"
+            compact
           />
         </div>
       )}
