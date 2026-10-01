@@ -97,12 +97,25 @@
     "false_success_flag": "caseXX_false_close",
     "false_success_flags_by_suspect": {},
     "accepted_motive_ids": ["___TRUE_MOTIVE___", "___FALSE_MOTIVE___"],
+    "available_motive_descriptions": {
+      "___TRUE_MOTIVE___": "___MOTIVE_LABEL___",
+      "___FALSE_MOTIVE___": "___FALSE_MOTIVE_LABEL___"
+    },
+    "available_method_descriptions": {
+      "___TRUE_METHOD___": "___METHOD_LABEL___"
+    },
+    "outcome_text": {
+      "true_success:*": "___CLOSING_TEXT_ON_CORRECT_VERDICT___",
+      "false_success:*": "___CLOSING_TEXT_ON_WRONG_VERDICT___",
+      "false_success:___SUSPECT_ID_1___": "___CLOSING_TEXT_WHEN_AN_INNOCENT_WAS_CONVICTED___"
+    },
     "validate_closure": {
       "minimum_behavioral_chain_verified": 1,
       "minimum_cross_route_verified": 1,
       "no_shared_evidence_between_roles": true,
       "behavioral_chain_evidence_ids": [],
       "cross_route_evidence_ids": [],
+      "required_evidence_pairs": [],
       "rejected_submission_reason_codes": []
     }
   },

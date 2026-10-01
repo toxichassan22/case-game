@@ -6,6 +6,7 @@ export const CLOSURE_REASON_CODE = {
   MISSING_BEHAVIORAL_CHAIN: "missing_behavioral_chain",
   MISSING_CROSS_ROUTE_EVIDENCE: "missing_cross_route_evidence",
   SHARED_EVIDENCE_USED_TWICE: "shared_evidence_used_twice",
+  INCOMPLETE_EVIDENCE_PAIR: "incomplete_evidence_pair",
 } as const;
 
 export type ClosureReasonCode = (typeof CLOSURE_REASON_CODE)[keyof typeof CLOSURE_REASON_CODE];

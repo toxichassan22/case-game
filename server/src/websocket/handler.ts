@@ -17,7 +17,7 @@ export const lobbyClients = new Map<WebSocket, string>();
 // Maps playerId → timeout interval for disconnection grace period
 const disconnectTimeouts = new Map<string, NodeJS.Timeout>();
 
-import { loadRegisteredCaseResources } from 'runtime/src/cases/registry.js';
+import { listRegisteredCases, loadRegisteredCaseResources } from 'runtime/src/cases/registry.js';
 import { RouteResolver } from 'runtime/src/engine/routeResolver.js';
 import { PLAYER_ACTION_TYPE } from 'runtime/src/engine/constants.js';
 
@@ -439,6 +439,21 @@ export async function handleClientMessage(ws: WebSocket, rawMsg: any): Promise<v
       const globalMemory = engineSnapshot.globalState;
       const history = [...session.caseHistory, session.currentCaseId!];
 
+      // Resolve the target before touching engine state: a next_case_rules entry
+      // may name a case that has not been written yet. Announce that plainly and
+      // keep the closed case on screen instead of surfacing a generic load error.
+      if (!listRegisteredCases().some((registered) => registered.case_id === nextCaseId)) {
+        roomManager.setPhase(roomId, 'results');
+        broadcastToRoomAll(roomId, {
+          type: 'ERROR',
+          payload: {
+            code: 'NEXT_CASE_NOT_REGISTERED',
+            message: `القضية "${nextCaseId}" مذكورة في مسار الانتقال ولم تُكتب بعد. أغلقتَ ملفك بشكل صحيح — بقية القضايا قيد الإعداد.`,
+          },
+        });
+        return;
+      }
+
       try {
         const { caseDefinition, blueprintConfig } = await loadRegisteredCaseResources(nextCaseId);
         
@@ -820,6 +835,9 @@ function handleTribunalSubmit(playerId: string, roomId: string, attempt: any): v
         mode: closureDecision.mode,
         reason_codes: closureDecision.reason_codes,
         granted_flags: closureDecision.granted_flags,
+        submitted_suspect: closureDecision.submitted_suspect ?? null,
+        submitted_motive: closureDecision.submitted_motive ?? null,
+        submitted_method_or_timeline: closureDecision.submitted_method_or_timeline ?? null,
       },
     });
 

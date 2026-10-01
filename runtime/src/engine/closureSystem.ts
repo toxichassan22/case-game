@@ -30,6 +30,9 @@ export class ClosureSystem {
       this.state.closureBuckets.crossRouteVerified.has(evidenceId),
     );
     const sharedEvidence = behavioralEvidence.filter((evidenceId) => crossRouteEvidence.includes(evidenceId));
+    const incompletePairs = (this.definition.closure_rules.validate_closure.required_evidence_pairs ?? []).filter(
+      (pair) => pair.length > 0 && !pair.every((evidenceId) => validatedEvidenceIds.includes(evidenceId)),
+    );
 
     const culpritIsPresent = this.definition.closure_rules.requires_culprit
       ? this.closureCatalog.suspect_ids.includes(attempt.submitted_suspect)
@@ -71,6 +74,10 @@ export class ClosureSystem {
       reasonCodes.push(CLOSURE_REASON_CODE.SHARED_EVIDENCE_USED_TWICE);
     }
 
+    if (incompletePairs.length > 0) {
+      reasonCodes.push(CLOSURE_REASON_CODE.INCOMPLETE_EVIDENCE_PAIR);
+    }
+
     const metrics: ClosureValidationMetrics = {
       culprit_is_present: culpritIsPresent,
       motive_is_present: motiveIsPresent,
@@ -79,6 +86,7 @@ export class ClosureSystem {
       behavioral_evidence_ids: behavioralEvidence,
       cross_route_evidence_ids: crossRouteEvidence,
       shared_evidence_ids: sharedEvidence,
+      incomplete_evidence_pair_ids: incompletePairs.flat(),
     };
 
     if (reasonCodes.length > 0) {
@@ -88,6 +96,9 @@ export class ClosureSystem {
           mode: "rejected",
           reason_codes: this.normalizeRejectedCodes(reasonCodes),
           granted_flags: [],
+          submitted_suspect: attempt.submitted_suspect,
+          submitted_motive: attempt.submitted_motive,
+          submitted_method_or_timeline: attempt.submitted_method_or_timeline,
         },
         metrics,
       };
@@ -125,6 +136,9 @@ export class ClosureSystem {
         mode: isTrueSuccess ? "true_success" : "false_success",
         reason_codes: [],
         granted_flags: [...new Set(grantedFlags)],
+        submitted_suspect: attempt.submitted_suspect,
+        submitted_motive: attempt.submitted_motive,
+        submitted_method_or_timeline: attempt.submitted_method_or_timeline,
       },
       metrics,
     };
@@ -143,7 +157,8 @@ export class ClosureSystem {
       code === CLOSURE_REASON_CODE.MISSING_CULPRIT
       || code === CLOSURE_REASON_CODE.MISSING_MOTIVE
       || code === CLOSURE_REASON_CODE.MISSING_METHOD
-      || code === CLOSURE_REASON_CODE.INSUFFICIENT_EVIDENCE_COUNT,
+      || code === CLOSURE_REASON_CODE.INSUFFICIENT_EVIDENCE_COUNT
+      || code === CLOSURE_REASON_CODE.INCOMPLETE_EVIDENCE_PAIR,
     );
 
     if (structuralCodes.length > 0) {

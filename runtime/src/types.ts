@@ -130,6 +130,14 @@ export interface ValidateClosureRules {
   no_shared_evidence_between_roles: boolean;
   behavioral_chain_evidence_ids: string[];
   cross_route_evidence_ids: string[];
+  /**
+   * Groups of evidence that only carry weight as a unit. A single argument
+   * split across two records (e.g. a physical impossibility documented by a
+   * geometry report and a residue report) must be submitted whole: half of a
+   * pair is rejected with `incomplete_evidence_pair` instead of counting toward
+   * `minimum_evidence_count`.
+   */
+  required_evidence_pairs: string[][];
   rejected_submission_reason_codes: string[];
 }
 
@@ -157,6 +165,14 @@ export interface ClosureRules {
   validate_closure: ValidateClosureRules;
   available_motive_descriptions?: Record<string, string>;
   available_method_descriptions?: Record<string, string>;
+  /**
+   * Closing text shown on the results screen, resolved in order:
+   *   1. `"<mode>:<submitted_suspect_id>"` — most specific (wrong-man trial)
+   *   2. `"<mode>:*"`                         — mode-level fallback
+   * A case that convicts an innocent must state his innocence here: knowledge of
+   * the truth is a player right, never a skill gate.
+   */
+  outcome_text?: Record<string, string>;
 }
 
 export interface ReinterpretationPredicate {
@@ -505,6 +521,10 @@ export interface ClosureDecision {
   mode: "true_success" | "false_success" | "rejected";
   reason_codes: string[];
   granted_flags: string[];
+  /** Who was named in the accusation — lets the closing text address the accused by name. */
+  submitted_suspect?: string | null;
+  submitted_motive?: string | null;
+  submitted_method_or_timeline?: string | null;
 }
 
 export type PlayerAction =
@@ -649,6 +669,8 @@ export interface ClosureValidationMetrics {
   behavioral_evidence_ids: string[];
   cross_route_evidence_ids: string[];
   shared_evidence_ids: string[];
+  /** Ids from `required_evidence_pairs` that were submitted only partially. */
+  incomplete_evidence_pair_ids?: string[];
 }
 
 export interface ClosureValidationOutcome {

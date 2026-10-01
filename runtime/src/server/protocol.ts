@@ -69,7 +69,7 @@ export type ServerMessage =
   | { type: 'CLOSURE_REQUESTED'; payload: { requestedBy: string; requestedByName: string } }
   | { type: 'TRIBUNAL_STARTED'; payload: { room: RoomInfo } }
   | { type: 'TRIBUNAL_VOTE_UPDATE'; payload: { votes: Record<string, boolean | null> } }
-  | { type: 'CLOSURE_RESULT'; payload: { accepted: boolean; mode: string; reason_codes: string[]; granted_flags: string[] } }
+  | { type: 'CLOSURE_RESULT'; payload: { accepted: boolean; mode: string; reason_codes: string[]; granted_flags: string[]; submitted_suspect: string | null; submitted_motive: string | null; submitted_method_or_timeline: string | null } }
   | { type: 'NEXT_CASE_LOADED'; payload: { room: RoomInfo; caseTitle: string; snapshot: RuntimeSnapshot; caseDefinition?: any } }
   | { type: 'SHADOW_MESSAGE'; payload: { message: string } }
   | { type: 'SAVE_CONFIRMED'; payload: { timestamp: number } }

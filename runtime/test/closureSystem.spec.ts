@@ -31,6 +31,7 @@ function mkDefinition(overrides?: {
   acceptedTrueCulpritIds?: string[] | undefined;
   behavioralIds?: string[];
   crossRouteIds?: string[];
+  requiredEvidencePairs?: string[][];
 }): RuntimeCaseDefinition {
   return {
     case_id: 'test-case',
@@ -61,6 +62,7 @@ function mkDefinition(overrides?: {
         no_shared_evidence_between_roles: true,
         behavioral_chain_evidence_ids: overrides?.behavioralIds ?? ['EVID-BEHAV-01'],
         cross_route_evidence_ids: overrides?.crossRouteIds ?? ['EVID-CROSS-01'],
+        required_evidence_pairs: overrides?.requiredEvidencePairs ?? [],
         rejected_submission_reason_codes: [
           'missing_culprit',
           'missing_motive',
@@ -69,6 +71,7 @@ function mkDefinition(overrides?: {
           'missing_behavioral_chain',
           'missing_cross_route_evidence',
           'shared_evidence_used_twice',
+          'incomplete_evidence_pair',
         ],
       },
     },
@@ -209,6 +212,40 @@ describe('ClosureSystem', () => {
       mkAttempt({ submitted_evidence_ids: ['EVID-A', 'EVID-B', 'EVID-BEHAV-01'] }),
     );
     expect(outcome.decision.reason_codes).toContain('shared_evidence_used_twice');
+  });
+
+  it('rejects a half-submitted evidence pair even when the evidence count is met', () => {
+    const pairDef = mkDefinition({ requiredEvidencePairs: [['EVID-A', 'EVID-B']] });
+    const pairState = createInitialState(pairDef);
+    verifyAll(pairState, pairDef, ['EVID-A', 'EVID-B', 'EVID-BEHAV-01', 'EVID-CROSS-01']);
+    const pairSystem = new ClosureSystem(pairState, pairDef, CATALOG);
+
+    const halfPair = pairSystem.validateClosureAttempt(
+      mkAttempt({ submitted_evidence_ids: ['EVID-BEHAV-01', 'EVID-CROSS-01', 'EVID-A'] }),
+    );
+    expect(halfPair.decision.accepted).toBe(false);
+    expect(halfPair.decision.reason_codes).toContain('incomplete_evidence_pair');
+    expect(halfPair.metrics.incomplete_evidence_pair_ids).toEqual(['EVID-A', 'EVID-B']);
+  });
+
+  it('accepts the same submission once the whole pair is present', () => {
+    const pairDef = mkDefinition({ requiredEvidencePairs: [['EVID-A', 'EVID-B']] });
+    const pairState = createInitialState(pairDef);
+    verifyAll(pairState, pairDef, ['EVID-A', 'EVID-B', 'EVID-BEHAV-01', 'EVID-CROSS-01']);
+    const pairSystem = new ClosureSystem(pairState, pairDef, CATALOG);
+
+    const wholePair = pairSystem.validateClosureAttempt(
+      mkAttempt({ submitted_evidence_ids: ['EVID-BEHAV-01', 'EVID-CROSS-01', 'EVID-A', 'EVID-B'] }),
+    );
+    expect(wholePair.decision.accepted).toBe(true);
+    expect(wholePair.decision.mode).toBe('true_success');
+    expect(wholePair.metrics.incomplete_evidence_pair_ids ?? []).toEqual([]);
+  });
+
+  it('reports the accused so the closing text can address the wrong man by name', () => {
+    const outcome = system.validateClosureAttempt(mkAttempt({ submitted_suspect: 'char_decoy' }));
+    expect(outcome.decision.submitted_suspect).toBe('char_decoy');
+    expect(outcome.decision.submitted_motive).toBe('motive_true');
   });
 
   it('keeps legacy motive-only verdicts when accepted_true_culprit_ids is absent', () => {

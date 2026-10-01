@@ -23,6 +23,7 @@ export const CaseResults: React.FC = () => {
   const engineSnapshot = storeSnapshot;
 
   const lastDecision = closureResult ?? engineSnapshot?.lastClosureDecision;
+  const caseDefinition = useGameStore((s) => s.caseDefinition);
   const [revealed, setRevealed] = useState(false);
   const autoTransitionRequestedRef = useRef(false);
   const isSolo = currentRoom?.isSolo === true;
@@ -106,6 +107,21 @@ export const CaseResults: React.FC = () => {
 
   const config = getResultConfig();
   const isRejected = lastDecision && !lastDecision.accepted;
+
+  // Case-authored closing text: most specific key first, then the mode fallback.
+  // A case that convicts an innocent states his innocence here — truth is a
+  // player right, never gated behind interrogation skill.
+  const outcomeText = (() => {
+    if (!lastDecision) return null;
+    const texts = caseDefinition?.closure_rules?.outcome_text;
+    if (!texts) return null;
+    const accused = lastDecision.submitted_suspect;
+    if (accused) {
+      const specific = texts[`${lastDecision.mode}:${accused}`];
+      if (specific) return specific;
+    }
+    return texts[`${lastDecision.mode}:*`] ?? null;
+  })();
 
   if (!currentRoom || !engineSnapshot) {
     const errorNotif = notifications.find((n) => n.type === 'error');
@@ -194,6 +210,23 @@ export const CaseResults: React.FC = () => {
         }}>
           {config.subtitle}
         </p>
+
+        {/* Case-authored closing text */}
+        {outcomeText && (
+          <div style={{
+            background: config.bg,
+            border: `1px solid ${config.borderColor}`,
+            borderRadius: '8px',
+            padding: isCompactLayout ? '0.9rem' : '1.1rem',
+            marginBottom: isCompactLayout ? '1.35rem' : '2rem',
+            textAlign: 'right',
+            fontSize: isCompactLayout ? '0.88rem' : '0.95rem',
+            lineHeight: 1.75,
+            color: 'var(--text-primary)',
+          }}>
+            {outcomeText}
+          </div>
+        )}
 
         {/* Granted Flags */}
         {(lastDecision?.granted_flags?.length ?? 0) > 0 && (
