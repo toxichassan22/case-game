@@ -386,6 +386,12 @@ export interface RuntimeCaseDefinition {
     method: string;
     explanation: string;
   };
+  /**
+   * Derived at adapter build time (not authored): dialog option IDs that have a
+   * dialog blueprint response, keyed by interrogation source_ref (e.g. "INT-SHARIF-01").
+   * The client uses this to know which authored dialogue options actually produce a reply.
+   */
+  supported_dialog_options?: Record<string, string[]>;
 }
 
 export interface ClosureAttempt {

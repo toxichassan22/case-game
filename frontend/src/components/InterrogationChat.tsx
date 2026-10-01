@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useGameStore } from '../stores/gameStore';
 import { MessageCircle, User, AlertTriangle, Loader2 } from 'lucide-react';
 import { PLAYER_ACTION_TYPE } from '../../../runtime/src/engine/constants.js';
@@ -61,7 +61,14 @@ const InterrogationChatInner: React.FC<InterrogationChatProps> = ({
 
   const sourceRef = characterIdToInterrogationSourceRef(suspectId);
 
-  const suspect = caseDefinition?.suspects?.find(s => s.character_id === suspectId);
+  const suspect = useMemo(() =>
+    [
+      ...(caseDefinition?.suspects ?? []),
+      ...(caseDefinition?.witnesses ?? []),
+      ...(caseDefinition?.related_persons ?? []),
+    ].find(s => s.character_id === suspectId),
+    [caseDefinition, suspectId],
+  );
 
   // Computed options dynamically based on verifiedFacts
   const options: DialogOption[] = React.useMemo(() => {
@@ -288,9 +295,9 @@ const InterrogationChatInner: React.FC<InterrogationChatProps> = ({
           </div>
         ) : activeOptions.length === 0 && !pendingOptionId ? (
           <div className="chat-empty-state">
-            {options.every(o => o.burned)
-              ? 'تم استنفاد جميع الأسئلة المتاحة.'
-              : 'لا توجد أسئلة متاحة لهذا المشتبه به حاليًا.'}
+            {options.length === 0
+              ? 'لا توجد أسئلة متاحة لهذا المشتبه به حاليًا.'
+              : 'تم استنفاد جميع الأسئلة المتاحة.'}
           </div>
         ) : (
           activeOptions.map((option) => (

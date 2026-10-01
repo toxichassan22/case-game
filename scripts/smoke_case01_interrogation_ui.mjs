@@ -12,26 +12,34 @@ import {
 
 const startedChildren = [];
 
+// Every authored dialog option that has a blueprint response must be visible —
+// the UI merges trigger-linked options with blueprint-backed options, so all
+// authored interrogation content is reachable, not only trigger-linked items.
 const SUSPECT_WINDOWS = [
   {
     characterId: 'char_sharif',
     searchText: 'شريف',
-    expectedVisibleOptions: 3,
+    expectedVisibleOptions: 6,
   },
   {
     characterId: 'char_layla',
     searchText: 'ليلى',
-    expectedVisibleOptions: 1,
+    expectedVisibleOptions: 4,
   },
   {
     characterId: 'char_hatem',
     searchText: 'حاتم',
-    expectedVisibleOptions: 0,
+    expectedVisibleOptions: 3,
   },
   {
     characterId: 'char_abu_khaled',
     searchText: 'أبو خالد',
-    expectedVisibleOptions: 0,
+    expectedVisibleOptions: 3,
+  },
+  {
+    characterId: 'char_dr_yahya',
+    searchText: 'يحيى',
+    expectedVisibleOptions: 3,
   },
 ];
 
@@ -68,10 +76,16 @@ async function openDatabase(page) {
 async function resolveSuspectName(page, characterId) {
   const name = await page.evaluate(async (id) => {
     const { useGameStore } = await import('/src/stores/gameStore.ts');
-    return useGameStore.getState().caseDefinition?.suspects?.find((suspect) => suspect.character_id === id)?.name ?? null;
+    const def = useGameStore.getState().caseDefinition;
+    const characters = [
+      ...(def?.suspects ?? []),
+      ...(def?.witnesses ?? []),
+      ...(def?.related_persons ?? []),
+    ];
+    return characters.find((character) => character.character_id === id)?.name ?? null;
   }, characterId);
 
-  assert(name, `Could not resolve suspect name for ${characterId}`);
+  assert(name, `Could not resolve character name for ${characterId}`);
   return name;
 }
 
@@ -121,7 +135,13 @@ async function consumeVisibleOptions(page, interrogationWindow, suspect, fullNam
     return;
   }
 
+  let consumed = 0;
   for (let index = 0; index < suspect.expectedVisibleOptions; index += 1) {
+    // Aggressive options raise pressure — a suspect may lawyer up or collapse
+    // mid-interrogation, which legitimately removes the remaining options.
+    const remaining = await interrogationWindow.locator('.chat-option-btn').count();
+    if (remaining === 0) break;
+
     const optionButton = interrogationWindow.locator('.chat-option-btn').first();
     const label = (await optionButton.textContent())?.trim() || `<option-${index + 1}>`;
     const before = await readStoreMeta(page);
@@ -137,12 +157,42 @@ async function consumeVisibleOptions(page, interrogationWindow, suspect, fullNam
     const after = await readStoreMeta(page);
     assert(!after.rejectedThisTick, `Visible option "${label}" for ${fullName} was rejected`);
     assert(after.interrogationEventThisTick, `Visible option "${label}" for ${fullName} did not emit an interrogation event`);
+    consumed += 1;
   }
+  assert(consumed > 0, `${fullName} rendered options but none could be consumed`);
+}
+
+// Exercises the real inbox flow: the evidence-request reply option must reach
+// the engine as a CHIEF-DESK dialog choice, advance the tick, and emit the
+// interrogation event that unlocks the dispatched files.
+async function requestEvidenceViaInbox(page) {
+  const inboxWindow = page
+    .locator('.window-inner')
+    .filter({ has: page.locator('.window-title', { hasText: 'صندوق الوارد' }) })
+    .last();
+  // The inbox must auto-open on case entry (StrictMode-safe auto-open).
+  await inboxWindow.waitFor({ state: 'visible', timeout: 15_000 });
+
+  await inboxWindow.getByRole('button', { name: 'طلب توجيهات أولية حول القضية' }).click();
+  const requestButton = inboxWindow.getByRole('button', { name: 'هل هناك أدلة إضافية أو ملفات من مسرح الجريمة؟' });
+  await requestButton.waitFor({ state: 'visible', timeout: 10_000 });
+
+  const before = await readStoreMeta(page);
+  await requestButton.click();
+  await waitForStoreCondition(
+    page,
+    `state => (state.engineSnapshot?.currentTick ?? 0) > ${before.currentTick}`,
+    10_000,
+    'Inbox evidence request did not advance the runtime',
+  );
+
+  const after = await readStoreMeta(page);
+  assert(!after.rejectedThisTick, 'Inbox evidence request was rejected by the engine');
+  assert(after.interrogationEventThisTick, 'Inbox evidence request did not emit an interrogation event');
 }
 
 async function triggerSoftExposure(page) {
   const steps = [
-    { type: 'choose_dialog_option', source_ref: 'CHIEF-DESK', interaction_id: 'REQ-EVIDENCE-01' },
     { type: 'open_source', source_ref: 'SCN-03' },
     { type: 'review_evidence', source_ref: 'SCN-03' },
   ];
@@ -190,6 +240,10 @@ async function run() {
     ]);
 
     await page.getByText('أنت الآن في القضية 01 من 59 مخططة').waitFor({ timeout: 30_000 });
+
+    // Inbox request must run before other CHIEF-DESK usage: the dialog option
+    // burns on first use, so consuming it here also covers the UI dispatch path.
+    await requestEvidenceViaInbox(page);
 
     const databaseWindow = await openDatabase(page);
 

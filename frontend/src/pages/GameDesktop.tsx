@@ -12,7 +12,7 @@ import { EvidenceViewer } from '../components/EvidenceViewer';
 import { useGameStore, type ArchivedCaseRecord, type Specialty } from '../stores/gameStore';
 import { useRoomAutoRejoin } from '../hooks/useRoomAutoRejoin';
 import { useWindowSize } from '../hooks/useWindowSize';
-import type { CaseEvidence, Suspect, PlayerAction } from '../../../runtime/src/types.js';
+import type { CaseEvidence, CaseCharacter, Suspect, PlayerAction, RuntimeCaseDefinition } from '../../../runtime/src/types.js';
 import { PLAYER_ACTION_TYPE } from '../../../runtime/src/engine/constants.js';
 import {
   characterIdToInterrogationSourceRef,
@@ -47,7 +47,7 @@ type WindowData = {
   id: string;
   title: string;
   type: 'inbox' | 'board' | 'database' | 'evidence' | 'timeline' | 'workbench' | 'explorer' | 'warrant' | 'interrogation' | 'phs' | 'chat';
-  payload?: CaseEvidence | Suspect | ArchivedEvidenceWindowPayload | Record<string, unknown>;
+  payload?: CaseEvidence | Suspect | CaseCharacter | ArchivedEvidenceWindowPayload | Record<string, unknown>;
   zIndex?: number;
 };
 
@@ -64,13 +64,13 @@ function bringWindowToFront(windows: WindowData[], id: string): WindowData[] {
 }
 
 function getMechanicallyLinkedDialogOptionIds(
-  evidenceList: CaseEvidence[] | undefined,
+  caseDefinition: RuntimeCaseDefinition | null | undefined,
   suspectId: string,
 ): string[] {
   const sourceRef = characterIdToInterrogationSourceRef(suspectId);
-  const optionIds = new Set<string>();
+  const optionIds = new Set<string>(caseDefinition?.supported_dialog_options?.[sourceRef] ?? []);
 
-  for (const evidence of evidenceList ?? []) {
+  for (const evidence of caseDefinition?.evidence_list ?? []) {
     for (const trigger of evidence.completion_triggers ?? []) {
       for (const condition of trigger.conditions ?? []) {
         if (
@@ -97,16 +97,8 @@ export const GameDesktop: React.FC = () => {
   });
   const [highlightedSourceRef, setHighlightedSourceRef] = useState<string | null>(null);
   const [isMobileInventoryOpen, setIsMobileInventoryOpen] = useState(false);
-  // Initialize hasAutoOpenedInbox from localStorage to persist across refreshes
-  const getInitialAutoOpenedState = (): boolean => {
-    try {
-      const stored = localStorage.getItem('hasAutoOpenedInbox');
-      return stored === 'true';
-    } catch {
-      return false;
-    }
-  };
-  const hasAutoOpenedInbox = useRef<boolean>(getInitialAutoOpenedState());
+  // Tracks which case_id already auto-opened the inbox this mount (persisted per-case in localStorage)
+  const hasAutoOpenedInbox = useRef<string | null>(null);
   const hasEnteredRoom = useRef(false);
   const workspaceRef = useRef<HTMLElement | null>(null);
   const topBannerRef = useRef<HTMLDivElement | null>(null);
@@ -323,57 +315,50 @@ export const GameDesktop: React.FC = () => {
 
   // Auto-open Inbox once when investigation becomes ready (Comment 5)
   useEffect(() => {
-    console.log('[GameDesktop useEffect] Checking conditions:', {
-      hasCaseDefinition: !!caseDefinition,
-      hasEngineSnapshot: !!engineSnapshot,
-      hasAutoOpened: hasAutoOpenedInbox.current,
-      isSolo,
-      hasRoom: !!currentRoom,
-      roomPhase: currentRoom?.phase,
-      windowCount: windows.length,
-      hasStoredWindows: useGameStore.getState().activeWindows.length > 0
-    });
-    
     // Don't auto-open if we have stored windows from before refresh
     const hasStoredWindows = useGameStore.getState().activeWindows.length > 0;
-    const shouldOpenWindows = currentRoom && !hasAutoOpenedInbox.current && !hasStoredWindows;
+    const caseId = caseDefinition?.case_id ?? null;
+    const alreadyOpenedForCase = !!caseId && (
+      hasAutoOpenedInbox.current === caseId ||
+      localStorage.getItem(`hasAutoOpenedInbox:${caseId}`) === 'true'
+    );
+    const shouldOpenWindows = currentRoom && caseId && !alreadyOpenedForCase && !hasStoredWindows;
 
     if (shouldOpenWindows) {
-      hasAutoOpenedInbox.current = true;
-      // Persist to localStorage so it survives refreshes
-      try {
-        localStorage.setItem('hasAutoOpenedInbox', 'true');
-      } catch (e) {
-        console.error('[GameDesktop] Failed to save hasAutoOpenedInbox:', e);
-      }
-      
-      console.log('[GameDesktop] Auto-opening inbox and chat windows...', { 
-        isSolo, 
-        roomPhase: currentRoom.phase,
-        hasCaseDefinition: !!caseDefinition 
-      });
-      
       const newWindows: WindowData[] = [];
       newWindows.push({ id: `win-inbox-auto`, title: 'صندوق الوارد', type: 'inbox' });
       if (!isSolo) {
         newWindows.push({ id: `win-chat-auto`, title: 'دردشة الفريق', type: 'chat' });
       }
-      
-      console.log('[GameDesktop] Setting windows:', newWindows.map(w => w.type));
-      
-      // Use setTimeout to skip a frame and avoid React's "cascading renders" warning 
+
+      // Use setTimeout to skip a frame and avoid React's "cascading renders" warning
       // when updating state synchronously in an effect based on other state.
+      // NOTE: the "opened" guard is only written when the timer actually fires.
+      // StrictMode's simulated unmount runs the tracked-timeout cleanup, so
+      // writing it here would permanently suppress the auto-open in dev.
       const timer = setTimeout(() => {
+        activeTimeoutsRef.current.delete(timer);
+        hasAutoOpenedInbox.current = caseId;
+        // Persist per-case so it survives refreshes but re-opens for the next case
+        try {
+          localStorage.setItem(`hasAutoOpenedInbox:${caseId}`, 'true');
+        } catch (e) {
+          console.error('[GameDesktop] Failed to save hasAutoOpenedInbox:', e);
+        }
         setWindows(newWindows);
       }, 0);
-      return () => clearTimeout(timer);
+      activeTimeoutsRef.current.add(timer);
     }
   }, [currentRoom, isSolo, windows.length, setWindows, caseDefinition, engineSnapshot]);
 
   const openWindow = useCallback((type: string) => {
     if (type.startsWith('CHAR-') || type.startsWith('INT-')) {
        const suspectId = characterWindowTokenToCharacterId(type) ?? interrogationSourceRefToCharacterId(type);
-       const suspectData = caseDefinition?.suspects?.find((s: Suspect) => s.character_id === suspectId);
+       const suspectData = [
+         ...(caseDefinition?.suspects ?? []),
+         ...(caseDefinition?.witnesses ?? []),
+         ...(caseDefinition?.related_persons ?? []),
+       ].find((s: CaseCharacter) => s.character_id === suspectId);
        if (!suspectData) return;
 
        const winId = `interrogation-${suspectData.character_id}`;
@@ -500,7 +485,7 @@ export const GameDesktop: React.FC = () => {
       const maxZ = prev.reduce((max, w) => Math.max(max, w.zIndex ?? 500), 500);
       return [...prev, { id, title, type: internalType as WindowData['type'], zIndex: maxZ + 1 }];
     });
-  }, [caseDefinition, highlightedSourceRef, dispatchAction]);
+  }, [caseDefinition, highlightedSourceRef, dispatchAction, addNotification]);
 
   const handleWindowFocus = useCallback((id: string) => {
     setWindows(prev => {
@@ -650,7 +635,7 @@ export const GameDesktop: React.FC = () => {
               const suspect = win.payload as Suspect;
               if (!suspect || !('character_id' in suspect)) return <div>جاري التحميل...</div>;
               const supportedOptionIds = getMechanicallyLinkedDialogOptionIds(
-                caseDefinition?.evidence_list,
+                caseDefinition,
                 suspect.character_id,
               );
               

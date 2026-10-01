@@ -3,6 +3,7 @@ import { useGameStore } from '../stores/gameStore';
 import type { InboxMsg, DialogueOption } from '../stores/gameStore';
 import { ShieldAlert, Monitor } from 'lucide-react';
 import type { RuntimeCaseDefinition, RuntimeSnapshot } from '../../../runtime/src/types.js';
+import { PLAYER_ACTION_TYPE } from '../../../runtime/src/engine/constants.js';
 import { AudioPlayer } from './AudioPlayer';
 import './InboxPanel.css';
 
@@ -159,7 +160,7 @@ const buildDialogueTree = (_caseDefinition: RuntimeCaseDefinition | null, snapsh
 const InboxPanelInner: React.FC = () => {
   const caseId = useGameStore((s) => s.caseDefinition?.case_id || 'case01');
   const caseDefinition = useGameStore((s) => s.caseDefinition);
-  const snapshot = useGameStore((s) => s.engineSnapshot) as RuntimeSnapshot | null;
+  const snapshot = useGameStore((s) => s.engineSnapshot);
   const trustScore = useGameStore((s) => s.engineSnapshot?.globalState?.trustLevels?.police_trust ?? 100);
   const revealedPhsHint = useGameStore((s) => s.revealedPhsHint);
   const inboxMessages = useGameStore((s) => s.inboxMessages?.[caseId] || EMPTY_MESSAGES);
@@ -382,10 +383,14 @@ const InboxPanelInner: React.FC = () => {
     
     addInboxSentOptionId(caseId, opt.id);
     
-    // Trigger engine actions if defined
+    // Trigger engine actions if defined — the chief desk channel maps to the
+    // CHIEF-DESK interrogation source in case data.
     if (opt.triggerActionId) {
-      // Note: triggerActionId is handled separately, not via CHOOSE_DIALOG_OPTION
-      console.log(`[Inbox] Trigger action: ${opt.triggerActionId}`);
+      useGameStore.getState().sendAction({
+        type: PLAYER_ACTION_TYPE.CHOOSE_DIALOG_OPTION,
+        source_ref: 'CHIEF-DESK',
+        interaction_id: opt.triggerActionId,
+      });
     }
     
     // Apply gameplay effects

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Search, Loader2, User, FileText, Tag, Clock } from 'lucide-react';
 import { useGameStore } from '../stores/gameStore';
 import type { CaseCharacter, CaseEvidence, Suspect } from '../../../runtime/src/types.js';
-import { characterIdToCharacterWindowToken } from '../../../runtime/src/utils/interrogationRefs.js';
+import { characterIdToCharacterWindowToken, characterIdToInterrogationSourceRef } from '../../../runtime/src/utils/interrogationRefs.js';
 
 interface DatabaseSearchProps {
   onOpenWindow: (type: string) => void;
@@ -19,6 +19,7 @@ interface SearchResult {
   filterKey: FilterType;
   isSuspect?: boolean;
   isEvidence?: boolean;
+  canInterrogate?: boolean;
 }
 
 export const DatabaseSearch: React.FC<DatabaseSearchProps> = ({ onOpenWindow }) => {
@@ -96,7 +97,7 @@ export const DatabaseSearch: React.FC<DatabaseSearchProps> = ({ onOpenWindow }) 
         }
       });
 
-      // Related persons & witnesses
+      // Related persons & witnesses — interrogable when they carry authored dialog
       const persons: CaseCharacter[] = [...(caseDefinition?.related_persons || []), ...(caseDefinition?.witnesses || [])];
       persons.forEach((p) => {
         if (
@@ -104,12 +105,16 @@ export const DatabaseSearch: React.FC<DatabaseSearchProps> = ({ onOpenWindow }) 
           (p.occupation || '').includes(q) ||
           (p.public_profile || '').includes(q)
         ) {
+          const srcRef = p.character_id ? characterIdToInterrogationSourceRef(p.character_id) : '';
+          const canInterrogate = !!p.character_id &&
+            (caseDefinition?.supported_dialog_options?.[srcRef]?.length ?? 0) > 0;
           allResults.push({
             id: p.character_id || p.name,
             title: p.name,
             type: 'شخصية',
             desc: p.occupation || p.public_profile || p.role_in_case || '',
             filterKey: 'persons',
+            canInterrogate,
           });
         }
       });
@@ -271,7 +276,7 @@ export const DatabaseSearch: React.FC<DatabaseSearchProps> = ({ onOpenWindow }) 
                 className="database-result-card"
                 data-result-id={res.id}
                 onClick={() => {
-                  if (res.isSuspect) {
+                  if (res.isSuspect || res.canInterrogate) {
                     onOpenWindow(characterIdToCharacterWindowToken(res.id));
                   } else if (res.isEvidence) {
                     onOpenWindow(res.id);
@@ -280,11 +285,11 @@ export const DatabaseSearch: React.FC<DatabaseSearchProps> = ({ onOpenWindow }) 
                 style={{
                   padding: isCompactLayout ? '0.75rem 0.85rem' : '0.8rem 1rem',
                   borderBottom: idx < filteredResults!.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
-                  cursor: res.isSuspect || res.isEvidence ? 'pointer' : 'default',
+                  cursor: res.isSuspect || res.isEvidence || res.canInterrogate ? 'pointer' : 'default',
                   transition: 'background 0.15s',
                 }}
                 onMouseEnter={e => {
-                  if (res.isSuspect || res.isEvidence) {
+                  if (res.isSuspect || res.isEvidence || res.canInterrogate) {
                     e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
                   }
                 }}
@@ -320,9 +325,9 @@ export const DatabaseSearch: React.FC<DatabaseSearchProps> = ({ onOpenWindow }) 
                     ))}
                   </div>
                 )}
-                {(res.isSuspect || res.isEvidence) && (
-                  <div style={{ marginTop: '0.35rem', fontSize: isCompactLayout ? '0.68rem' : '0.7rem', color: res.isSuspect ? 'var(--state-warning)' : 'var(--interaction-cool)', opacity: 0.7 }}>
-                    {res.isSuspect ? '→ اضغط لبدء الاستجواب' : '→ اضغط لعرض الدليل'}
+                {(res.isSuspect || res.isEvidence || res.canInterrogate) && (
+                  <div style={{ marginTop: '0.35rem', fontSize: isCompactLayout ? '0.68rem' : '0.7rem', color: res.isSuspect || res.canInterrogate ? 'var(--state-warning)' : 'var(--interaction-cool)', opacity: 0.7 }}>
+                    {res.isSuspect || res.canInterrogate ? '→ اضغط لبدء الاستجواب' : '→ اضغط لعرض الدليل'}
                   </div>
                 )}
               </div>

@@ -76,6 +76,20 @@ export function buildRuntimeCaseAdapter(
   ]);
   const relatedEvidenceIdsBySourceRef = buildRelatedEvidenceIdsBySourceRef(definition);
 
+  // Expose which dialog options actually produce a response so the client can
+  // render every authored interrogation option, not only trigger-linked ones.
+  const supportedDialogOptions: Record<string, Set<string>> = {};
+  for (const key of dialogBlueprints.keys()) {
+    const sep = key.lastIndexOf(":");
+    if (sep <= 0) continue;
+    const sourceRef = key.slice(0, sep);
+    const interactionId = key.slice(sep + 1);
+    (supportedDialogOptions[sourceRef] ??= new Set<string>()).add(interactionId);
+  }
+  definition.supported_dialog_options = Object.fromEntries(
+    Object.entries(supportedDialogOptions).map(([sourceRef, ids]) => [sourceRef, [...ids].sort()]),
+  );
+
   for (const evidence of definition.evidence_list) {
     if (inspectBlueprints.has(evidence.evidence_id)) {
       evidence.ui_action = PLAYER_ACTION_TYPE.INSPECT_OBJECT;
