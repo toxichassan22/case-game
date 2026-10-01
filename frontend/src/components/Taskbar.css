@@ -53,60 +53,60 @@
 
 /* Request Closure Button */
 .btn-request-closure {
-  box-shadow: 0 0 10px rgba(77, 163, 255, 0.1);
+  box-shadow: 0 0 10px rgba(232, 163, 61, 0.12);
 }
 .btn-request-closure:hover:not(:disabled) {
-  box-shadow: 0 0 15px rgba(77, 163, 255, 0.3);
+  box-shadow: 0 0 18px rgba(232, 163, 61, 0.3);
 }
 
 .btn-request-closure .premium-btn-bg {
-  background: linear-gradient(90deg, rgba(20, 30, 48, 0.8) 0%, rgba(30, 40, 60, 0.8) 100%);
-  border: 1px solid rgba(77, 163, 255, 0.4);
+  background: linear-gradient(90deg, rgba(46, 36, 18, 0.85) 0%, rgba(30, 26, 18, 0.85) 100%);
+  border: 1px solid rgba(232, 163, 61, 0.45);
 }
 
 .btn-request-closure:hover:not(:disabled) .premium-btn-bg {
-  background: linear-gradient(90deg, rgba(30, 40, 60, 0.9) 0%, rgba(40, 50, 70, 0.9) 100%);
+  background: linear-gradient(90deg, rgba(56, 44, 22, 0.9) 0%, rgba(38, 32, 20, 0.9) 100%);
 }
 
 .btn-request-closure .premium-btn-content {
-  color: #e6f2ff;
+  color: var(--accent-amber-bright);
 }
 
 /* Close Room Button (Gray to Red on Hover) */
 .btn-close-room {
-  background: rgba(100, 100, 100, 0.15) !important;
-  color: #aaa !important;
-  border: 1px solid rgba(100, 100, 100, 0.3) !important;
+  background: rgba(100, 100, 100, 0.12) !important;
+  color: #9aa4b2 !important;
+  border: 1px solid rgba(100, 100, 100, 0.25) !important;
   transition: all 0.3s ease !important;
 }
 
 .btn-close-room:hover {
-  background: rgba(255, 59, 48, 0.15) !important;
-  color: #ff3b30 !important;
-  border: 1px solid rgba(255, 59, 48, 0.3) !important;
-  box-shadow: 0 0 10px rgba(255, 59, 48, 0.2) !important;
+  background: rgba(255, 77, 79, 0.15) !important;
+  color: var(--state-danger) !important;
+  border: 1px solid rgba(255, 77, 79, 0.35) !important;
+  box-shadow: 0 0 10px rgba(255, 77, 79, 0.2) !important;
 }
 
 /* Resolve Case Button */
 .btn-resolve-case {
-  box-shadow: 0 0 15px rgba(77, 163, 255, 0.2);
+  box-shadow: 0 0 15px rgba(91, 157, 255, 0.18);
   padding: 0.4rem 1.25rem;
 }
 .btn-resolve-case:hover:not(:disabled) {
-  box-shadow: 0 0 20px rgba(77, 163, 255, 0.4);
+  box-shadow: 0 0 22px rgba(91, 157, 255, 0.38);
 }
 
 .btn-resolve-case .premium-btn-bg {
-  background: linear-gradient(90deg, rgba(30, 58, 138, 0.8) 0%, rgba(20, 30, 60, 0.8) 100%);
-  border: 1px solid rgba(77, 163, 255, 0.5);
+  background: linear-gradient(90deg, rgba(24, 44, 76, 0.85) 0%, rgba(16, 26, 44, 0.85) 100%);
+  border: 1px solid rgba(91, 157, 255, 0.5);
 }
 
 .btn-resolve-case:hover:not(:disabled) .premium-btn-bg {
-  background: linear-gradient(90deg, rgba(30, 64, 175, 0.9) 0%, rgba(30, 40, 70, 0.9) 100%);
+  background: linear-gradient(90deg, rgba(30, 55, 94, 0.9) 0%, rgba(22, 34, 56, 0.9) 100%);
 }
 
 .btn-resolve-case .icon-pulse {
-  color: #93c5fd;
+  color: #9cc4ff;
   transition: transform 0.3s;
 }
 .btn-resolve-case:hover:not(:disabled) .icon-pulse {
@@ -119,9 +119,10 @@
 }
 
 .taskbar {
-  min-height: 48px;
-  background: #111;
-  border-top: 1px solid var(--border-window);
+  min-height: 52px;
+  background: linear-gradient(180deg, #171e29 0%, #0e131b 100%);
+  border-top: 1px solid var(--border-soft);
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
   display: flex;
   align-items: center;
   padding: 0.5rem 1rem;

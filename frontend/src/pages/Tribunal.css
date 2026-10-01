@@ -2,14 +2,18 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #111;
+  background:
+    radial-gradient(800px 400px at 50% 0%, rgba(255, 77, 79, 0.04), transparent 60%),
+    #0a0d13;
 }
 .tribunal-header {
   padding: 1.5rem;
   text-align: center;
   border-bottom: 1px solid var(--border-window);
-  background: #1a1a1a;
+  border-top: 3px solid var(--thread-link);
+  background: linear-gradient(180deg, #161c26, #0f141d);
 }
+.tribunal-header h1 { font-weight: 800; }
 .tribunal-layout {
   display: flex;
   flex: 1;
@@ -23,19 +27,23 @@
 .tribunal-sidebar {
   flex: 1;
   border-right: 1px solid var(--border-window);
-  background: #151515;
+  background: #0e131b;
   display: flex;
   flex-direction: column;
 }
 .form-section {
   margin-bottom: 2rem;
   padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-window);
+  border-radius: 12px;
 }
 .form-section h3 {
   margin-bottom: 1rem;
   color: var(--interaction-cool);
   border-bottom: 1px solid var(--border-window);
   padding-bottom: 0.5rem;
+  font-weight: 700;
 }
 .chip-grid {
   display: flex;
@@ -45,19 +53,23 @@
 .chip {
   padding: 0.6rem 1.2rem;
   border: 1px solid var(--border-window);
-  border-radius: 20px;
-  background: transparent;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
   color: var(--text-primary);
   cursor: pointer;
   transition: all 0.2s;
+  font-family: 'Cairo', sans-serif;
 }
 .chip:hover {
-  background: rgba(255,255,255,0.1);
+  background: rgba(232, 163, 61, 0.08);
+  border-color: rgba(232, 163, 61, 0.3);
 }
 .chip.selected {
-  background: var(--interaction-cool);
-  border-color: var(--interaction-cool);
-  color: #fff;
+  background: linear-gradient(180deg, #f4bc62, #e8a33d);
+  border-color: #e8a33d;
+  color: #1a1408;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(232, 163, 61, 0.25);
 }
 .evidence-list {
   flex: 1;
@@ -69,23 +81,27 @@
 }
 .evidence-item {
   padding: 1rem;
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--border-window);
-  border-radius: 6px;
+  border-right: 3px solid rgba(232, 163, 61, 0.4);
+  border-radius: 8px;
   cursor: pointer;
+  transition: all 0.2s;
 }
 .evidence-item:hover {
-  background: rgba(255,255,255,0.05);
+  background: rgba(232, 163, 61, 0.06);
 }
 .evidence-item.selected {
   border-color: var(--interaction-cool);
+  border-right-color: var(--interaction-cool);
+  background: rgba(232, 163, 61, 0.1);
 }
 .tribunal-footer {
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background: #1a1a1a;
+  background: linear-gradient(180deg, #161c26, #0f141d);
   border-top: 1px solid var(--border-window);
 }
 .voting-bar {
@@ -95,10 +111,13 @@
 }
 .vote-btn {
   padding: 0.8rem 2rem;
-  border-radius: 4px;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 800;
+  font-family: 'Cairo', sans-serif;
+  transition: all 0.2s;
 }
-.vote-btn.approve { background: var(--state-success); color: #fff; }
-.vote-btn.reject { background: var(--thread-link); color: #fff; }
+.vote-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+.vote-btn.approve { background: linear-gradient(180deg, #4ade80, #34c759); color: #06130a; }
+.vote-btn.reject { background: linear-gradient(180deg, #ff6b6d, #ff4d4f); color: #fff; }

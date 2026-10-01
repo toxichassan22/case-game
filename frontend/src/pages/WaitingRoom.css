@@ -2,12 +2,18 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #0d0f12;
+  background:
+    radial-gradient(700px 400px at 85% 0%, rgba(232, 163, 61, 0.05), transparent 60%),
+    radial-gradient(600px 400px at 10% 100%, rgba(91, 157, 255, 0.04), transparent 55%),
+    #0a0d13;
   padding: 2rem;
 }
 .waiting-header {
   text-align: center;
   margin-bottom: 2rem;
+}
+.waiting-header h1 {
+  font-weight: 800;
 }
 .waiting-content {
   display: flex;
@@ -16,12 +22,14 @@
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+  overflow: hidden;
 }
 .specialty-roles {
   flex: 2;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  overflow-y: auto;
 }
 .role-card {
   display: flex;
@@ -29,31 +37,36 @@
   padding: 1.5rem;
   gap: 1.5rem;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s ease;
   border: 1px solid var(--border-window);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
 }
 .role-card:hover:not(.taken) {
-  border-color: rgba(255,255,255,0.3);
-  background: rgba(255,255,255,0.05);
+  border-color: rgba(232, 163, 61, 0.35);
+  background: rgba(232, 163, 61, 0.04);
+  transform: translateY(-2px);
 }
 .role-card.selected {
   border-color: var(--interaction-cool);
-  background: rgba(77, 163, 255, 0.1);
+  background: rgba(232, 163, 61, 0.1);
+  box-shadow: 0 0 0 1px rgba(232, 163, 61, 0.2), 0 8px 24px rgba(232, 163, 61, 0.08);
 }
 .role-card.taken {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
   filter: grayscale(1);
 }
 .role-icon {
   width: 60px;
   height: 60px;
-  border-radius: 8px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 2rem;
-  color: #000;
+  color: #0a0d13;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 .role-info h3 { margin-bottom: 0.2rem; }
 .role-info p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;}
@@ -71,11 +84,14 @@
   align-items: center;
   gap: 1rem;
   border: 1px dashed var(--border-window);
-  border-radius: 8px;
+  border-radius: 10px;
+  color: var(--text-secondary);
 }
 .slot.filled {
   border-style: solid;
-  background: rgba(255,255,255,0.05);
+  border-color: rgba(232, 163, 61, 0.3);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
 }
 .waiting-footer {
   margin-top: 2rem;

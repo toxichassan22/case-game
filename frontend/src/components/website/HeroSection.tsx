@@ -1,65 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProfileStore } from '../../stores/profileStore';
-
-// Penrose Triangle SVG Component
-const PenroseTriangle: React.FC = () => (
-  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-    {/* Penrose Triangle - Impossible Triangle */}
-    <defs>
-      <linearGradient id="triGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#4da3ff" stopOpacity="0.8" />
-        <stop offset="100%" stopColor="#4da3ff" stopOpacity="0.3" />
-      </linearGradient>
-      <linearGradient id="triGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stopColor="#ff3b30" stopOpacity="0.6" />
-        <stop offset="100%" stopColor="#ff3b30" stopOpacity="0.2" />
-      </linearGradient>
-      <linearGradient id="triGrad3" x1="50%" y1="100%" x2="50%" y2="0%">
-        <stop offset="0%" stopColor="#f5a623" stopOpacity="0.6" />
-        <stop offset="100%" stopColor="#f5a623" stopOpacity="0.2" />
-      </linearGradient>
-    </defs>
-    
-    {/* Three sides of the Penrose triangle */}
-    <polygon 
-      points="100,20 170,140 140,140 100,70 60,140 30,140" 
-      fill="url(#triGrad1)" 
-      className="ws-penrose-fill"
-    />
-    <polygon 
-      points="30,140 60,140 100,70 100,20 65,85 30,140" 
-      fill="url(#triGrad2)" 
-      className="ws-penrose-fill"
-    />
-    <polygon 
-      points="170,140 140,140 100,70 135,85 170,140" 
-      fill="url(#triGrad3)" 
-      className="ws-penrose-fill"
-    />
-    
-    {/* Outline strokes */}
-    <path 
-      d="M100,20 L170,140 H30 Z" 
-      className="ws-penrose-path"
-      strokeLinejoin="round"
-    />
-    <path 
-      d="M100,55 L140,128 H60 Z" 
-      fill="none"
-      stroke="rgba(77, 163, 255, 0.2)"
-      strokeWidth="1"
-      strokeDasharray="300"
-      style={{ animation: 'ws-triangle-draw 3s ease 0.5s forwards', strokeDashoffset: 300 }}
-    />
-  </svg>
-);
+import { FileText, Fingerprint, Camera, Mic } from 'lucide-react';
 
 // Typing effect hook
 function useTypingEffect(text: string, speed: number = 80, delay: number = 500) {
   const [displayed, setDisplayed] = useState('');
   const [done, setDone] = useState(false);
-  
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       let i = 0;
@@ -76,12 +24,19 @@ function useTypingEffect(text: string, speed: number = 80, delay: number = 500) 
     }, delay);
     return () => clearTimeout(timeout);
   }, [text, speed, delay]);
-  
+
   return { displayed, done };
 }
 
+const dossierItems = [
+  { icon: FileText, id: 'DB-01', name: 'سجل الجرد الليلي', state: 'مستند' },
+  { icon: Fingerprint, id: 'SCN-03', name: 'تقرير مسرح الجريمة', state: 'جنائي' },
+  { icon: Camera, id: 'DIG-01', name: 'كاميرا المخزن المقابلة', state: 'رقمي' },
+  { icon: Mic, id: 'INT-02', name: 'تسجيل استجواب الشاهد', state: 'صوتي' },
+];
+
 export const HeroSection: React.FC<{ onPlay?: () => void }> = ({ onPlay }) => {
-  const { displayed, done } = useTypingEffect('نظام التحقيق الموحد', 100, 800);
+  const { displayed, done } = useTypingEffect('نظام التحقيق الموحد', 90, 600);
   const navigate = useNavigate();
   const hasProfile = useProfileStore(s => s.hasProfile());
 
@@ -89,41 +44,79 @@ export const HeroSection: React.FC<{ onPlay?: () => void }> = ({ onPlay }) => {
     if (onPlay) {
       onPlay();
     } else {
-      navigate(hasProfile ? '/lobby' : '/profile');
+      void navigate(hasProfile ? '/lobby' : '/profile');
     }
   };
-  
+
   return (
     <section className="ws-hero" id="hero">
-      {/* Backgrounds */}
       <div className="ws-hero-grid" />
       <div className="ws-hero-scanline" />
-      <div className="ws-hero-glow" />
-      
-      {/* Content */}
-      <div className="ws-hero-content">
-        <div className="ws-penrose-container">
-          <PenroseTriangle />
+      <div className="ws-hero-vignette" />
+
+      <div className="ws-hero-layout">
+        {/* Copy side */}
+        <div className="ws-hero-content">
+          <div className="ws-hero-kicker">
+            <span className="ws-hero-kicker-dot" />
+            وزارة الداخلية — منظومة التحقيق المركزية
+          </div>
+
+          <h1 className="ws-hero-title">
+            {displayed}
+            {!done && <span className="ws-typing-cursor" />}
+          </h1>
+
+          <p className="ws-hero-tagline">
+            ٥٩ قضية. ٣ تخصصات. حقيقة واحدة مخفية.
+            <br />
+            هل تقدر تكشف الحقيقة قبل ما الحقيقة تكشفك؟
+          </p>
+
+          <div className="ws-hero-actions">
+            <button className="ws-cta-btn" onClick={handlePlay}>
+              {hasProfile ? 'دخول النظام' : 'تأسيس هوية'}
+              <span className="ws-cta-arrow">←</span>
+            </button>
+            <a href="#features" className="ws-ghost-btn">استكشف الأنظمة</a>
+          </div>
+
+          <div className="ws-hero-status">
+            SYS.STATUS: ONLINE&nbsp;&nbsp;|&nbsp;&nbsp;CLEARANCE: PUBLIC&nbsp;&nbsp;|&nbsp;&nbsp;BUILD 1.0.4
+          </div>
         </div>
-        
-        <h1 className="ws-hero-title">
-          {displayed}
-          {!done && <span className="ws-typing-cursor" />}
-        </h1>
-        
-        <p className="ws-hero-tagline">
-          ٥٩ قضية. ٣ تخصصات. حقيقة واحدة مخفية.
-          <br />
-          هل تقدر تكشف الحقيقة قبل ما الحقيقة تكشفك؟
-        </p>
-        
-        <button className="ws-cta-btn" onClick={handlePlay}>
-          {hasProfile ? 'دخول النظام' : 'تأسيس هوية'}
-          <span style={{ fontSize: '1.3rem' }}>←</span>
-        </button>
+
+        {/* Dossier visual side */}
+        <div className="ws-dossier-wrap" aria-hidden="true">
+          <div className="ws-dossier">
+            <div className="ws-dossier-tab">CASE FILE</div>
+            <div className="ws-dossier-head">
+              <div>
+                <div className="ws-dossier-case">القضية ٠١</div>
+                <div className="ws-dossier-name">رماد الرصيف الأخير</div>
+              </div>
+              <div className="ws-dossier-stamp">سري للغاية</div>
+            </div>
+            <div className="ws-dossier-list">
+              {dossierItems.map((item) => (
+                <div className="ws-dossier-item" key={item.id}>
+                  <span className="ws-dossier-item-icon"><item.icon size={15} /></span>
+                  <span className="ws-dossier-item-name">{item.name}</span>
+                  <span className="ws-dossier-item-id">{item.id}</span>
+                  <span className="ws-dossier-item-state">{item.state}</span>
+                </div>
+              ))}
+            </div>
+            <div className="ws-dossier-foot">
+              <span>٢٠ ملف مرفق</span>
+              <span className="ws-dossier-thread" />
+              <span>THREAD: ACTIVE</span>
+            </div>
+          </div>
+          <div className="ws-dossier-string" />
+        </div>
       </div>
-      
-      {/* Scroll indicator */}
+
       <div className="ws-scroll-indicator">
         <span>SCROLL</span>
         <div className="ws-scroll-arrow" />

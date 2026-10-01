@@ -2,7 +2,9 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #0a0b0d;
+  background:
+    radial-gradient(800px 420px at 50% 0%, rgba(232, 163, 61, 0.05), transparent 60%),
+    #080a0f;
   overflow-y: auto;
   padding: 2rem;
 }
@@ -10,13 +12,15 @@
   max-width: 800px;
   margin: 0 auto;
   width: 100%;
-  background: rgba(255,255,255,0.03);
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-window);
-  border-radius: 12px;
+  border-top: 3px solid var(--interaction-cool);
+  border-radius: 14px;
   padding: 3rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
 }
 .result-header { text-align: center; }
 .result-status {
@@ -25,8 +29,8 @@
   margin-bottom: 0.5rem;
   text-transform: uppercase;
 }
-.result-status.success { color: var(--state-success); }
-.result-status.failure { color: var(--thread-link); }
+.result-status.success { color: var(--state-success); text-shadow: 0 0 30px rgba(63, 207, 109, 0.3); }
+.result-status.failure { color: var(--thread-link); text-shadow: 0 0 30px rgba(255, 77, 79, 0.3); }
 
 .result-section {
   display: flex;
@@ -37,6 +41,7 @@
   border-bottom: 1px solid var(--border-window);
   padding-bottom: 0.5rem;
   color: var(--text-secondary);
+  font-weight: 700;
 }
 .score-grid {
   display: grid;
@@ -45,14 +50,20 @@
 }
 .score-item {
   padding: 1rem;
-  background: rgba(255,255,255,0.02);
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-window);
+  border-radius: 10px;
   text-align: center;
+  transition: all 0.2s;
+}
+.score-item:hover {
+  border-color: rgba(232, 163, 61, 0.3);
 }
 .score-val {
   display: block;
   font-size: 2rem;
-  font-weight: bold;
+  font-weight: 800;
   color: var(--interaction-cool);
+  font-family: 'Fira Code', monospace;
 }
-.score-label { font-size: 0.8rem; opacity: 0.6; }
+.score-label { font-size: 0.8rem; opacity: 0.65; }
