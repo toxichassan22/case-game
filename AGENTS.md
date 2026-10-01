@@ -10,6 +10,16 @@
 
 لعبة تحقيقات بوليسية **multiplayer** ("نظام التحقيق الموحد"): اللاعبون يجمعون أدلة، يستجوبون مشتبهين، يبنون Timeline، ويقدّمون اتهامات في مرحلة Tribunal. المحتوى كله **JSON data-driven**. **الحالة الحالية: المحتوى القديم كله اتمسح لإعادة بناء القصة من الصفر — `cases/` فاضية إلا `_template`، والـ registry في `runtime/src/cases/registry.ts` بدون قضايا.** الواجهة عربية RTL.
 
+### 1.5 اتفاقيات إعادة البناء — تُقرأ قبل أي شغل سردي
+
+- **القاعدة الصفرية — بوابة المالك (إلزامية):** مفيش اعتماد تلقائي لأي محتوى قضية. كل ملفات `cases/caseXX/` (plan + truth + JSON + blueprints) تُكتب ثم **تقف** حتى المالك يقرأها بنفسه ويملي التعديلات. لا JSON قبل موافقته الصريحة على القصة نفسه، ولا commit للمحتوى قبل إذنه. أي مراجع خارجي دوره **استشاري** — ملاحظاته ترجع للمالك للبت.
+- **حيطة السبويلر:** `story/grand_truth.md` فيه الحبكة الكبرى كاملة — **لا تكشف محتواه** في الردود أو الملفات العامة أو رسائل الـ commit. الإطار العلني المعتمد: `story/frame.md` — اقرأه أولًا.
+- **اتفاقية الملفين لكل قضية:** `plan_caseXX_01.md` (وجه مكشوف — هيكل بلا حل) + `truth_caseXX_01.md` (حمولة مغلقة — الحبكة كاملة). المالك يقرأ ما يشاء منهما.
+- **المراجع الخارجي:** بريفه في `judge_instructions.md` (الجذر) — يكتب رده في `judge_verdict_caseXX.md` في الجذر.
+- **العدد مفتوح:** بنية عمود فقري (milestones) + slots — سجل القوس الافتتاحي في `story/roster.md`. لا رقم نهائي مفروض (59 كانت النسخة القديمة فقط).
+- **الأدوار الظاهرة ملغاة:** لا اختيار تخصص للاعب. المحاور الثلاثة (زمني/جنائي/سلوكي) تبقى **قياسًا داخليًا** عبر `route_weight` / `route_usage_stats`.
+- **القيود السردية المعتمدة:** ممنوع خارق للطبيعة وسياسة/وقائع معاصرة؛ نبرة خلطة (واقعية + نوار)؛ الميتا قوي لكن **دييجتك** — كل شيء موجّه لشخصية «المحقق» لا للاعب.
+
 ## 2. خريطة الريبو
 
 | المسار | الوظيفة | الستاك |
@@ -19,7 +29,7 @@
 | `runtime/` | محرك اللعبة الحتمي (tick-based) | TypeScript + vitest — حزمة محلية يستهلكها السيرفر عبر `"runtime": "file:../runtime"` |
 | `cases/caseXX/` | محتوى القضايا | `caseXX.json` + `blueprints.json` + ملفات تخطيط `.md` |
 | `scripts/` | اختبارات smoke و validators | `.mjs` / `.ts` — تُشغَّل من الجذر |
-| `story/` | وثائق التصميم السردي (عربي) | schema.md · rule.md (187 قاعدة) · behavior.md · case rules.md · grand_truth.md |
+| `story/` | وثائق التصميم السردي (عربي) | schema.md · rule.md (187 قاعدة) · behavior.md · case rules.md · **frame.md** (علني) · roster.md (سجل القوس) · grand_truth.md (⚠️ خلف الحيطة) |
 | `docs/` | وثائق المطورين | API.md · DEVELOPER_GUIDE.md · CONTRIBUTING.md |
 | `engine_runtime_spec.md` | العقد التنفيذي الحتمي للمحرك | مرجع معماري |
 | `.agents/workflows/` | الـ workflows المعتمدة | `workflow.md` = قانون بناء القضايا |
@@ -86,7 +96,7 @@ Get-Content D:\game\cases\caseXX\blueprints.json | ConvertFrom-Json | Out-Null
 
 ## 5. قواعد حتمية لبناء القضايا (ملخص — التفاصيل الكاملة في `workflow.md`)
 
-1. **Planning Gate:** لا `caseXX.json` قبل إنشاء `plan_caseXX_01.md` واعتماده.
+1. **Planning Gate:** لا `caseXX.json` قبل إنشاء `plan_caseXX_01.md` + `truth_caseXX_01.md` واعتمادهما **من المالك شخصيًا** (القاعدة الصفرية §1.5).
 2. **لا حقل ناقص:** كل حقول `CaseEvidence`/`suspects` إلزامية. الفارغ = `[]` أو `null` أو `""`. حذف `completion_triggers` = crash.
 3. **`blueprints.json` = Interaction Mapping فقط** (`prefixSourceTypes` + `closureCatalog`). ممنوع triggers أو قواعد لعب فيه.
 4. **العتبات:** `base_collapse_threshold` و `base_lawyer_up_threshold` — ممنوع `collapse_threshold`.
@@ -143,7 +153,10 @@ Get-Content D:\game\cases\caseXX\blueprints.json | ConvertFrom-Json | Out-Null
 | شكل بيانات القضية التعاقدي | `story/schema.md` + `runtime/src/types.ts` |
 | قواعد السرد الـ 187 | `story/rule.md` |
 | سلوك الاستجواب والمعادلات | `story/behavior.md` + `engine_runtime_spec.md` §المرحلة ٦ في workflow |
-| الثالوث والحقيقة الكبرى | `story/grand_truth.md` |
+| الإطار المعماري العلني للحبكة | `story/frame.md` |
+| سجل القوس/الـ slots | `story/roster.md` |
+| الحقيقة الكبرى — ⚠️ سبويلر كامل | `story/grand_truth.md` (لا تكشف محتواه) |
+| مراجعة قضية بوكيل خارجي | `judge_instructions.md` → رده في `judge_verdict_caseXX.md` |
 | API السيرفر | `docs/API.md` |
 | Setup تفصيلي | `docs/DEVELOPER_GUIDE.md` |
 
