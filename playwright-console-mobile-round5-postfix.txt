@@ -1,5 +1,0 @@
-Total messages: 4 (Errors: 0, Warnings: 0)
-Returning 2 messages for level "info"
-
-[INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/react-dom_client.js?v=63c87a51:14336
-[LOG] [WS] Connected to server @ http://127.0.0.1:5173/src/services/websocket.ts?t=1774313214716:38
