@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
-  <rect width="200" height="200" fill="#1a365d"/>
-  <circle cx="100" cy="80" r="40" fill="#2c5282"/>
-  <rect x="60" y="130" width="80" height="50" rx="10" fill="#2c5282"/>
-  <text x="100" y="195" font-family="Arial" font-size="12" fill="#90cdf4" text-anchor="middle">المقدم أحمد رشدي</text>
-</svg>

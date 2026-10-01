@@ -1,5 +1,0 @@
-https://aistudio.google.com/generate-speech
-شريف = PUCK
-ابو خالد = charon
-ليلي = zephyr
-بَرِيفِينْج رَئِيسِ الْمَبَاحِثِ = sadachbia

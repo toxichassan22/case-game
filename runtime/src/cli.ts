@@ -2,7 +2,6 @@ import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import { listRegisteredCases, createRegisteredRuntime } from "./cases/registry.js";
 import { PLAYER_ACTION_TYPE } from "./engine/constants.js";
-import { scenarioDefinitions } from "./case01/scenarios.js";
 import type { CoreEngine } from "./engine/runtime.js";
 import type { ClosureAttempt, PlayerAction, ProcessedActionResult } from "./types.js";
 
@@ -70,17 +69,6 @@ async function executeCommand(runtime: CoreEngine, args: string[]): Promise<void
     case "closure":
       printResult(runtime.processAction({ type: PLAYER_ACTION_TYPE.ATTEMPT_CASE_CLOSURE, attempt: parseClosureAttempt(rest) }));
       return;
-    case "scenario": {
-      const scenario = scenarioDefinitions[rest[0] ?? ""];
-      if (!scenario) {
-        throw new Error(`Unknown scenario: ${rest[0] ?? ""}`);
-      }
-      for (const step of scenario.steps) {
-        printResult(runtime.processAction(step));
-      }
-      output.write(`${JSON.stringify(runtime.getSnapshot(), null, 2)}\n`);
-      return;
-    }
     case "cases":
       printCases();
       return;
