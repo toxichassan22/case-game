@@ -139,9 +139,21 @@ export interface ClosureRules {
   requires_method_or_opportunity: boolean;
   minimum_evidence_count: number;
   accepted_true_motive_ids: string[];
+  /**
+   * Suspects that count as the true culprit for a true_success verdict.
+   * If omitted or empty, any suspect present in the closure catalog qualifies
+   * (legacy behavior: the verdict is keyed on the motive only).
+   */
+  accepted_true_culprit_ids?: string[];
   accepted_true_method_ids?: string[];
   false_success_motive_ids: string[];
   false_success_flag: string;
+  /**
+   * Extra flags granted on a false_success verdict, keyed by the accused
+   * suspect id — e.g. { "char_samy": ["c01_accused_wrong"] } records that the
+   * tribunal convicted the wrong man, not just the wrong motive.
+   */
+  false_success_flags_by_suspect?: Record<string, string[]>;
   validate_closure: ValidateClosureRules;
   available_motive_descriptions?: Record<string, string>;
   available_method_descriptions?: Record<string, string>;

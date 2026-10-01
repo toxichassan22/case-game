@@ -91,8 +91,11 @@
     "requires_method_or_opportunity": true,
     "minimum_evidence_count": 3,
     "accepted_true_motive_ids": ["___TRUE_MOTIVE___"],
+    "accepted_true_culprit_ids": ["___SUSPECT_ID_1___"],
+    "accepted_true_method_ids": ["___TRUE_METHOD___"],
     "false_success_motive_ids": ["___FALSE_MOTIVE___"],
     "false_success_flag": "caseXX_false_close",
+    "false_success_flags_by_suspect": {},
     "accepted_motive_ids": ["___TRUE_MOTIVE___", "___FALSE_MOTIVE___"],
     "validate_closure": {
       "minimum_behavioral_chain_verified": 1,

@@ -93,10 +93,22 @@ export class ClosureSystem {
       };
     }
 
-    const isTrueSuccess = this.definition.closure_rules.accepted_true_motive_ids.includes(attempt.submitted_motive);
+    const trueCulpritIds = this.definition.closure_rules.accepted_true_culprit_ids;
+    const suspectMatchesTrueCulprit =
+      !trueCulpritIds || trueCulpritIds.length === 0
+        ? true
+        : trueCulpritIds.includes(attempt.submitted_suspect);
+
+    const isTrueSuccess =
+      this.definition.closure_rules.accepted_true_motive_ids.includes(attempt.submitted_motive) &&
+      suspectMatchesTrueCulprit;
     const grantedFlags = isTrueSuccess
       ? [...this.definition.outcome_flags.success]
-      : [...this.definition.outcome_flags.partial, this.definition.closure_rules.false_success_flag];
+      : [
+          ...this.definition.outcome_flags.partial,
+          this.definition.closure_rules.false_success_flag,
+          ...(this.definition.closure_rules.false_success_flags_by_suspect?.[attempt.submitted_suspect] ?? []),
+        ];
 
     // Carryover flags are now handled by triggers or specific outcome_flags in CaseDefinition
 

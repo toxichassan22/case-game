@@ -144,10 +144,16 @@ closure_submission_valid =
   and shared_evidence_between_roles_count == 0
 ```
 
+- `culprit_is_present` تعني الوجود في `closureCatalog.suspect_ids` فقط — وليست صحة الاتهام.
+- بعد اجتياز البوابة، يُحسم الحكم كالتالي:
+  - `true_success`: يتطلب `submitted_motive ∈ accepted_true_motive_ids` **و** `submitted_suspect ∈ accepted_true_culprit_ids` (إن صُرّحت؛ وإلا يكفي أي مشتبه في الـ catalog — سلوك قديم).
+  - `false_success`: أي اتهام مقبول بوابة لكنه لا يحقق `true_success` — يُدين بريئًا أو يخطئ الدافع — ويمنح `outcome_flags.partial + false_success_flag + false_success_flags_by_suspect[submitted_suspect]`.
+  - `rejected`: فشل البوابة — بأكواد الأسباب الصريحة.
 - إذا فشل هذا التحقق:
   - يرفض الإغلاق
   - يطلق `RUNTIME_CLOSURE_VALIDATION_FAILED`
   - ويعيد سببًا صريحًا مثل:
+    - `missing_culprit`
     - `missing_behavioral_chain`
     - `missing_cross_route_evidence`
     - `shared_evidence_used_twice`

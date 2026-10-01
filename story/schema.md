@@ -677,8 +677,8 @@ derived_route_profile(route) =
 - `MBTI_Type: string | null`
 - `Cognitive_Profile: object`
 - `Cognitive_Profile` يفضل أن يحتوي على:
-  - `collapse_threshold: number`
-  - `lawyer_up_threshold: number`
+  - `base_collapse_threshold: number`
+  - `base_lawyer_up_threshold: number`
   - `aggression_tolerance: number`
   - `rapport_affinity: number`
   - `evidence_rigidity: number`
@@ -706,18 +706,16 @@ derived_route_profile(route) =
 - درجة اليقين
 
 ### ما الذي يحسب نجاحًا كاملًا أو جزئيًا؟
-- `full_success`
-  - الجاني صحيح
-  - الدافع صحيح
-  - الوسيلة أو الفرصة صحيحة
-  - 3 أدلة على الأقل صالحة
-  - لا توجد عقوبة حرجة ما زالت فعالة عند الإغلاق
-- `partial_success`
-  - الإمساك بالمنفذ مع خطأ في الرأس المدبر أو الدافع
-  - أو الوصول للحقيقة مع خسارة ثقة أو إغلاق مسار بسبب التخمين الزائد
-- `failure`
-  - اتهام غير صالح أو أدلة ظرفية غير كافية
-  - أو تفعيل عقوبة حرجة تجعل الملف غير قابل للإغلاق القانوني في هذه المرحلة
+- `true_success`
+  - `submitted_suspect ∈ closure_rules.accepted_true_culprit_ids` (إن صُرّحت — وإلا أي مشتبه في الـ `closureCatalog`)
+  - و`submitted_motive ∈ accepted_true_motive_ids`
+  - مع اجتياز بوابة الإغلاق كاملة (أدلة موثقة، سلسلة سلوكية، ربط عابر)
+- `false_success`
+  - الاتهام اجتاز البوابة لكنه لا يحقق `true_success`: مشتبه من الـ catalog ليس الجاني الحقيقي، أو دافع من `false_success_motive_ids`
+  - يمنح `outcome_flags.partial` + `closure_rules.false_success_flag` + `closure_rules.false_success_flags_by_suspect[submitted_suspect]` (flags خاصة بكل مشتت يُظلم)
+- `rejected`
+  - فشل بوابة الإغلاق: مشتبه خارج الـ `closureCatalog`، دافع غير معروف، طريقة غير معروفة، أو نقص في الأدلة/السلاسل المطلوبة
+  - لا تُمنح أي `outcome_flags`؛ الأسباب تُعاد في `reason_codes`
 
 ### كيف تولد النتائج Flags جديدة؟
 - كل إغلاق يولد:
